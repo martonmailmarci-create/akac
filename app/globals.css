@@ -18,6 +18,66 @@
   --radius-card: 20px;
 }
 
+/* ─── Design tokens ──────────────────────────────────── */
+@theme {
+  --spacing-section-x: 100px;
+  --spacing-section-overlap: 60px;
+}
+
+/* ─── Layout utilities ───────────────────────────────── */
+@utility section-px {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+@utility section-rounded-top {
+  border-radius: 60px 60px 0 0;
+  overflow: hidden;
+}
+
+@utility section-overlap {
+  margin-top: -60px;
+  position: relative;
+}
+
+/* ─── Typography utilities ───────────────────────────── */
+@utility text-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18px;
+  text-transform: uppercase;
+  line-height: 18px;
+}
+
+@utility text-section-title {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  line-height: 32px;
+}
+
+@utility text-hero-title {
+  font-size: 55px;
+  font-weight: 600;
+  letter-spacing: -1.1px;
+  line-height: 1.1;
+}
+
+@utility text-body-copy {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.24px;
+  line-height: 1.6;
+}
+
+/* ─── Component utilities ────────────────────────────── */
+@utility orange-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #ED6D40;
+  flex-shrink: 0;
+}
+
 *,
 *::before,
 *::after {
@@ -26,6 +86,10 @@
 
 html {
   scroll-behavior: auto;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {

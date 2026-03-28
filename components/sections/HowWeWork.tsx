@@ -1,78 +1,53 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const cards = [
   {
-    number: "01",
-    total: "04",
+    number: "01", total: "04",
     title: "TAILORED BY DEFAULT",
     body: "No two clients are the same, so no two projects look the same. We study your brand, your audience, and your goals before a single pixel is placed. The result is a website that feels unmistakably yours, not a template with your logo swapped in.",
-    bg: "#111111",
-    titleColor: "#F9F9F4",
-    counterColor: "rgba(249,249,244,0.4)",
-    bodyColor: "#F9F9F4",
-    borderRadius: "20px 0 0 20px",
+    bg: "#111111", titleColor: "#F9F9F4", counterColor: "rgba(249,249,244,0.4)", bodyColor: "#F9F9F4",
   },
   {
-    number: "02",
-    total: "04",
+    number: "02", total: "04",
     title: "DESIGN THAT PERFORMS",
     body: "Beautiful sites that don't convert are just expensive art. Every layout, colour choice, and interaction we make is deliberate, crafted to look exceptional and drive real results. Your site should work as hard as you do.",
-    bg: "#5C939F",
-    titleColor: "#000000",
-    counterColor: "rgba(0,0,0,0.4)",
-    bodyColor: "#000000",
-    borderRadius: "20px 0 0 20px",
+    bg: "#5C939F", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000",
   },
   {
-    number: "03",
-    total: "04",
+    number: "03", total: "04",
     title: "DELIVERED IN WEEKS",
     body: "Most agencies quote months. We deliver in 2 to 4 weeks without cutting corners. A small, focused team means fewer handoffs, faster decisions, and a site that launches while your competitors are still in kickoff meetings.",
-    bg: "#ED6D40",
-    titleColor: "#000000",
-    counterColor: "rgba(0,0,0,0.4)",
-    bodyColor: "#000000",
-    borderRadius: "20px 0 0 20px",
+    bg: "#ED6D40", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000",
   },
   {
-    number: "04",
-    total: "04",
+    number: "04", total: "04",
     title: "EASY FROM START TO FINISH",
     body: "We've worked with local businesses, e-commerce brands, studios, and enterprise clients — and they all say the same thing: working with us is refreshingly straightforward. Clear communication, honest timelines, and zero drama from brief to launch.",
-    bg: "#E4E4E4",
-    titleColor: "#111111",
-    counterColor: "rgba(17,17,17,0.4)",
-    bodyColor: "#111111",
-    borderRadius: "20px 0 0 20px",
+    bg: "#E4E4E4", titleColor: "#111111", counterColor: "rgba(17,17,17,0.4)", bodyColor: "#111111",
   },
 ];
 
 export default function HowWeWork() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const mobileCardsRef = useRef<HTMLDivElement>(null);
+  const desktopCardsRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   useEffect(() => {
     let ctx: { revert: () => void } | null = null;
-    const prefersReduced =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     (async () => {
       const { gsap, ScrollTrigger } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
-        gsap.from(cardsRef.current?.children ?? [], {
-          y: 60,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
+        const target = window.innerWidth < 768 ? mobileCardsRef.current : desktopCardsRef.current;
+        gsap.from(target?.children ?? [], {
+          y: 60, opacity: 0, duration: 0.8, stagger: 0.12, ease: "power3.out",
+          scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
         });
       });
     })();
@@ -83,185 +58,73 @@ export default function HowWeWork() {
   return (
     <section
       ref={sectionRef}
-      className="bg-akac-light overflow-hidden"
-      style={{ padding: "240px 100px 240px", borderRadius: "60px 60px 0 0" }}
+      className="bg-akac-light rounded-t-[24px] md:rounded-t-[60px] overflow-hidden pt-20 pb-20 px-6 md:pt-[240px] md:pb-[240px] md:px-[100px]"
     >
-      {/* Header row */}
-      <div style={{ position: "relative", marginBottom: "100px" }}>
-        <div>
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: 500,
-              color: "#111111",
-              textTransform: "uppercase",
-              letterSpacing: "0.18px",
-            }}
-          >
-            / OUR ETHOS
-          </span>
-          <h2
-            style={{
-              fontSize: "30px",
-              fontWeight: 500,
-              color: "#111111",
-              letterSpacing: "-0.6px",
-              lineHeight: "32px",
-              marginTop: "8px",
-            }}
-          >
-            HOW WE WORK
-          </h2>
-        </div>
+      <SectionHeader
+        label="/ OUR ETHOS"
+        title="HOW WE WORK"
+        body="We build websites that work as hard as your business does. With design that commands attention and code that never lets you down, we move fast without cutting corners. This isn't template-filling. It's deliberate, precise, and built to perform from day one."
+        cta={{ text: "LET'S TALK", href: "#contact" }}
+        mbClass="mb-12 md:mb-[100px]"
+      />
 
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: "50%",
-            width: "45%",
-          }}
-        >
+      {/* ── Mobile cards: simple vertical stack ── */}
+      <div ref={mobileCardsRef} className="flex flex-col gap-3 md:hidden">
+        {cards.map((card) => (
           <div
-            style={{
-              width: "100%",
-              height: "1px",
-              backgroundColor: "rgba(17,17,17,0.2)",
-              marginBottom: "16px",
-            }}
-          />
-          <p
-            style={{
-              fontSize: "16px",
-              fontWeight: 500,
-              color: "#111111",
-              lineHeight: "18px",
-              letterSpacing: "0.24px",
-              marginBottom: "24px",
-            }}
+            key={card.number}
+            className="w-full min-h-[280px] rounded-[20px] p-6 flex flex-col justify-between"
+            style={{ backgroundColor: card.bg }}
           >
-            We build websites that work as hard as your business does. With
-            design that commands attention and code that never lets you down, we
-            move fast without cutting corners. This isn&apos;t template-filling.
-            It&apos;s deliberate, precise, and built to perform from day one.
-          </p>
-
-          <a
-            href="#contact"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "#111111",
-              letterSpacing: "0.18px",
-              textDecoration: "none",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.5")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            [ LET&apos;S TALK ]
-          </a>
-        </div>
+            <p style={{ fontSize: "11px", fontWeight: 500, color: card.counterColor, letterSpacing: "0.18px" }}>
+              {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
+            </p>
+            <div>
+              <p className="text-[22px] font-medium leading-[26px] tracking-[-0.44px] mb-4" style={{ color: card.titleColor }}>
+                {card.title}
+              </p>
+              <p className="text-[13px] font-medium uppercase leading-[15px] tracking-[0.18px]" style={{ color: card.bodyColor }}>
+                {card.body}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Cards — expand on hover, full width */}
+      {/* ── Desktop cards: expanding flex row ── */}
       <div
-        ref={cardsRef}
-        style={{
-          display: "flex",
-          gap: "0px",
-          width: "100%",
-          height: "648px",
-        }}
+        ref={desktopCardsRef}
+        className="hidden md:flex h-[648px]"
         onMouseLeave={() => setActiveCard(null)}
       >
         {cards.map((card, i) => {
           const isActive = activeCard === i;
           const isInactive = activeCard !== null && !isActive;
-
           return (
             <div
               key={card.number}
               onMouseEnter={() => setActiveCard(i)}
+              className="overflow-hidden cursor-default relative"
               style={{
                 flexGrow: isActive ? 1.7 : isInactive ? 0.85 : 1,
                 flexShrink: 1,
                 flexBasis: 0,
                 minWidth: 0,
                 backgroundColor: card.bg,
-                borderRadius: card.borderRadius,
-                overflow: "hidden",
-                cursor: "default",
+                borderRadius: "20px 0 0 20px",
                 transition: "flex-grow 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                position: "relative",
                 zIndex: i + 1,
                 marginRight: i < cards.length - 1 ? "-20px" : 0,
               }}
             >
-              {/* Fixed-width inner wrapper — centered, layout never reflows */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "380px",
-                  height: "100%",
-                }}
-              >
-                {/* Title — pinned to top */}
-                <p
-                  style={{
-                    position: "absolute",
-                    top: "32px",
-                    left: "24px",
-                    right: "24px",
-                    fontSize: "30px",
-                    fontWeight: 500,
-                    color: card.titleColor,
-                    textAlign: "center",
-                    letterSpacing: "-0.6px",
-                    lineHeight: "32px",
-                  }}
-                >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[380px] h-full">
+                <p className="absolute top-8 left-6 right-6 text-[30px] font-medium text-center leading-[32px] tracking-[-0.6px]" style={{ color: card.titleColor }}>
                   {card.title}
                 </p>
-
-                {/* Counter — fixed distance above body */}
-                <p
-                  style={{
-                    position: "absolute",
-                    bottom: "150px",
-                    left: "24px",
-                    right: "24px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: card.counterColor,
-                    textAlign: "center",
-                    letterSpacing: "0.18px",
-                  }}
-                >
+                <p className="absolute bottom-[150px] left-6 right-6 text-[13px] font-medium text-center tracking-[0.18px]" style={{ color: card.counterColor }}>
                   {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
                 </p>
-
-                {/* Body — pinned to bottom */}
-                <p
-                  style={{
-                    position: "absolute",
-                    bottom: "32px",
-                    left: "24px",
-                    right: "24px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: card.bodyColor,
-                    textAlign: "center",
-                    textTransform: "uppercase",
-                    lineHeight: "15px",
-                    letterSpacing: "0.18px",
-                  }}
-                >
+                <p className="absolute bottom-8 left-6 right-6 text-[13px] font-medium text-center uppercase leading-[15px] tracking-[0.18px]" style={{ color: card.bodyColor }}>
                   {card.body}
                 </p>
               </div>

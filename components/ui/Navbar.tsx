@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import BracketButton from "@/components/ui/BracketButton";
+
+const navLinks = ["WHY US", "PORTFOLIO", "OUR TEAM", "PRICING", "CONTACT"];
 
 export default function Navbar() {
-  const navRef = useRef<HTMLElement>(null);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -15,89 +18,77 @@ export default function Navbar() {
       setHidden(y > lastScrollY.current && y > 80);
       lastScrollY.current = y;
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
-    <header
-      ref={navRef}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        transition: "transform 0.5s ease, background-color 0.5s ease",
-        backgroundColor: scrolled ? "#111111" : "transparent",
-        transform: hidden ? "translateY(-100%)" : "translateY(0)",
-      }}
-    >
-      <nav
+    <>
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-[transform,background-color] duration-500"
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "24px 100px",
+          backgroundColor: scrolled ? "#111111" : "transparent",
+          transform: hidden && !menuOpen ? "translateY(-100%)" : "translateY(0)",
         }}
       >
-        {/* Logo — left */}
-        <a
-          href="/"
-          style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
-        >
-          <span
-            style={{
-              color: "#D9D9D9",
-              fontSize: "26px",
-              letterSpacing: "-0.52px",
-              fontWeight: 600,
-            }}
-          >
-            akac
-          </span>
-          <span
-            style={{
-              color: "#D9D9D9",
-              fontSize: "26px",
-              letterSpacing: "-0.52px",
-              fontWeight: 900,
-            }}
-          >
-            .
-          </span>
-          <span
-            style={{
-              color: "#D9D9D9",
-              fontSize: "26px",
-              letterSpacing: "-0.52px",
-              fontWeight: 700,
-            }}
-          >
-            studio
-          </span>
-        </a>
-
-        {/* Right side — white square icon + bracket button */}
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <a
-            href="#contact"
-            style={{
-              color: "#D9D9D9",
-              fontSize: "13px",
-              letterSpacing: "0.18px",
-              fontWeight: 500,
-              textDecoration: "none",
-              transition: "opacity 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.5")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            [ TELL US WHAT YOU NEED ]
+        <nav className="flex items-center justify-between h-14 md:h-auto px-6 md:px-[100px] md:py-6">
+          {/* Logo */}
+          <a href="/" className="flex items-center no-underline">
+            <span className="text-akac-light text-[26px] tracking-[-0.52px] font-semibold">akac</span>
+            <span className="text-akac-light text-[26px] tracking-[-0.52px] font-black">.</span>
+            <span className="text-akac-light text-[26px] tracking-[-0.52px] font-bold">studio</span>
           </a>
-        </div>
-      </nav>
-    </header>
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] bg-transparent border-none cursor-pointer"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            <span
+              className="block w-5 h-[1.5px] bg-akac-light transition-all duration-300"
+              style={{ transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none" }}
+            />
+            <span
+              className="block w-5 h-[1.5px] bg-akac-light transition-all duration-300"
+              style={{ opacity: menuOpen ? 0 : 1 }}
+            />
+            <span
+              className="block w-5 h-[1.5px] bg-akac-light transition-all duration-300"
+              style={{ transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }}
+            />
+          </button>
+        </nav>
+      </header>
+
+      {/* Mobile fullscreen overlay */}
+      <div
+        className="fixed inset-0 z-40 bg-akac-black flex flex-col justify-center items-center gap-8 transition-opacity duration-300 md:hidden"
+        style={{ opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? "auto" : "none" }}
+      >
+        {navLinks.map((link) => (
+          <a
+            key={link}
+            href={`#${link.toLowerCase().replace(/\s/g, "-")}`}
+            className="text-akac-light text-[32px] font-medium tracking-[-0.6px] no-underline hover:opacity-50 transition-opacity"
+            onClick={() => setMenuOpen(false)}
+          >
+            {link}
+          </a>
+        ))}
+        <BracketButton
+          label="BOOK A CALL"
+          color="#ED6D40"
+          href="mailto:hello@akac.studio"
+          onClick={() => setMenuOpen(false)}
+        />
+      </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SectionLabel from "@/components/ui/SectionLabel";
 import { AnimatePresence, motion } from "framer-motion";
 
 const faqs = [
@@ -32,37 +33,25 @@ const faqs = [
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
-
   return (
     <div className="border-b border-akac-light/10">
       <button
-        className="w-full flex items-center justify-between gap-6 py-5 text-left cursor-pointer"
+        className="w-full flex items-center justify-between gap-4 py-5 text-left cursor-pointer bg-transparent border-none"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        <span className="text-[16px] font-medium text-akac-cream uppercase tracking-[0.24px] leading-[18px]">
+        <span className="text-[14px] md:text-[16px] font-medium text-akac-cream uppercase tracking-[0.24px] leading-[18px]">
           {q}
         </span>
         <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="flex-shrink-0"
-          style={{ transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)", transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
+          width="20" height="20" viewBox="0 0 20 20" fill="none"
+          className="flex-shrink-0 transition-transform duration-300"
+          style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
           aria-hidden="true"
         >
-          <path
-            d="M10 4V16M4 10H16"
-            stroke="#D9D9D9"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <path d="M10 4V16M4 10H16" stroke="#D9D9D9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -72,7 +61,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-[16px] font-medium text-akac-light/60 leading-[1.6] tracking-[0.24px] pb-5 pr-12">
+            <p className="text-[16px] font-medium text-akac-light/60 leading-[1.6] tracking-[0.24px] pb-5 pr-8">
               {a}
             </p>
           </motion.div>
@@ -84,24 +73,22 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section className="bg-akac-black overflow-hidden px-[100px] pt-[280px] pb-[260px]"
-      style={{ borderRadius: "60px 60px 0 0", marginTop: "-60px", position: "relative", zIndex: 1 }}>
-      <div className="flex gap-20">
-        {/* Left label + title */}
-        <div className="w-[340px] flex-shrink-0">
-          <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-4">
-            / FAQ
-          </span>
+    <section
+      className="bg-akac-black overflow-hidden rounded-t-[24px] md:rounded-t-[60px] px-6 pt-20 pb-24 md:px-[100px] md:pt-[280px] md:pb-[260px]"
+      style={{ marginTop: "-60px", position: "relative", zIndex: 1 }}
+    >
+      <div className="flex flex-col gap-8 md:flex-row md:gap-20">
+        {/* Left */}
+        <div className="w-full md:w-[340px] md:flex-shrink-0">
+          <SectionLabel dark>/ FAQ</SectionLabel>
           <h2 className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px]">
             COMMON QUESTIONS
           </h2>
         </div>
 
-        {/* Right accordion */}
+        {/* Accordion */}
         <div className="flex-1">
-          {faqs.map((item) => (
-            <FAQItem key={item.q} q={item.q} a={item.a} />
-          ))}
+          {faqs.map((item) => <FAQItem key={item.q} q={item.q} a={item.a} />)}
         </div>
       </div>
     </section>

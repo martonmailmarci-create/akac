@@ -20,6 +20,8 @@ const projects = [
 export default function FeaturedWork() {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const desktopLayoutRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
   // Scroll-based active detection
@@ -34,23 +36,34 @@ export default function FeaturedWork() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // Parallax — desktop only
+  // Desktop: pin left column + parallax
   useEffect(() => {
     if (window.innerWidth < 768) return;
     let ctx: { revert: () => void } | null = null;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
 
     (async () => {
       const { gsap, ScrollTrigger } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
-        imageRefs.current.forEach((el) => {
-          if (!el) return;
-          gsap.fromTo(el.querySelector(".parallax-inner"), { yPercent: -8 }, {
-            yPercent: 8, ease: "none",
-            scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 1.5 },
-          });
+        // Pin left column like sticky — uses ScrollTrigger to avoid CSS sticky issues
+        ScrollTrigger.create({
+          trigger: leftColRef.current,
+          start: "top 80px",
+          endTrigger: desktopLayoutRef.current,
+          end: "bottom bottom",
+          pin: leftColRef.current,
+          pinSpacing: false,
         });
+
+        if (!prefersReduced) {
+          imageRefs.current.forEach((el) => {
+            if (!el) return;
+            gsap.fromTo(el.querySelector(".parallax-inner"), { yPercent: -8 }, {
+              yPercent: 8, ease: "none",
+              scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 1.5 },
+            });
+          });
+        }
       });
     })();
 
@@ -111,11 +124,13 @@ export default function FeaturedWork() {
 
       {/* ── Desktop layout ── */}
       <div
+        ref={desktopLayoutRef}
         className="hidden md:flex items-start gap-[60px]"
         style={{ padding: "340px 0 280px 100px" }}
       >
-        {/* Left column — sticky */}
-        <div style={{ width: "33%", minWidth: "400px", flexShrink: 0, position: "sticky", top: "60px", marginTop: "-100px" }}>
+        {/* Left column — outer div holds flex space, inner div gets pinned */}
+        <div style={{ width: "33%", minWidth: "400px", flexShrink: 0, marginTop: "-100px" }}>
+        <div ref={leftColRef}>
           <span style={{ fontSize: "12px", fontWeight: 500, color: "#D9D9D9", textTransform: "uppercase", letterSpacing: "0.18px", display: "block", marginBottom: "12px" }}>
             / OUR WORK
           </span>
@@ -144,6 +159,7 @@ export default function FeaturedWork() {
           </div>
 
           <BracketButton label="VIEW ALL" color="#ED6D40" href="#" />
+        </div>
         </div>
 
         {/* Right — images stacked, bleed to edge */}

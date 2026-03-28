@@ -43,7 +43,7 @@ export default function WhyUs() {
         title="WHY CHOOSE US?"
         body="Most agencies put an account manager between you and the work. We don't. You get two specialists who care about the outcome as much as you do, one focused on design, one on code, working together on your project from day one to launch. No handoffs, no delays, no inflated timelines to justify a bigger team."
         cta={{ text: "START A PROJECT", href: "#contact" }}
-        mbClass="mb-12 md:mb-[150px]"
+        mbClass="mb-12 md:mb-[185px]"
       />
 
       {/* Comparison cards — stack on mobile */}

@@ -73,7 +73,7 @@ export default function SectionHeader({
               color,
               lineHeight: "18px",
               letterSpacing: "0.24px",
-              marginBottom: cta ? "24px" : 0,
+              marginBottom: cta ? "40px" : 0,
             }}
           >
             {body}

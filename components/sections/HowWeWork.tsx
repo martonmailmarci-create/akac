@@ -65,7 +65,7 @@ export default function HowWeWork() {
         title="HOW WE WORK"
         body="We build websites that work as hard as your business does. With design that commands attention and code that never lets you down, we move fast without cutting corners. This isn't template-filling. It's deliberate, precise, and built to perform from day one."
         cta={{ text: "LET'S TALK", href: "#contact" }}
-        mbClass="mb-12 md:mb-[100px]"
+        mbClass="mb-12 md:mb-[160px]"
       />
 
       {/* ── Mobile cards: simple vertical stack ── */}

@@ -31,7 +31,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-akac-black overflow-hidden">
+    <section className="relative h-[100svh] bg-akac-black overflow-hidden flex flex-col md:block">
 
       {/* Top-right body copy — desktop only */}
       <p
@@ -61,7 +61,7 @@ export default function Hero() {
 
       {/* Headline line 2 — "Right now" */}
       {/* Mobile: right-6, top-[44vh] | Desktop: left-[calc(41.67%+99px)], top-[52vh] */}
-      <div className="absolute right-6 left-auto top-[44vh] md:right-auto md:left-[calc(41.67%_+_99px)] md:top-[52vh] ">
+      <div className="absolute right-6 top-[44vh] md:right-[100px] md:top-[52vh]">
         <div
           ref={line2Ref}
           className="font-normal text-akac-light leading-none whitespace-nowrap"
@@ -72,7 +72,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar */}
-      <div ref={bottomRef} className="absolute bottom-0 left-0 right-0 pt-[60px]">
+      <div ref={bottomRef} className="mt-auto md:absolute md:bottom-0 left-0 right-0 pt-[60px]">
         {/* Divider */}
         <div
           className="mx-6 md:mx-[100px] h-px"
@@ -102,7 +102,7 @@ export default function Hero() {
             alt="AKAC"
             width={148}
             height={148}
-            className="flex-shrink-0 opacity-90 w-[60px] h-[60px] md:w-[148px] md:h-[148px] md:translate-x-[41px]"
+            className="flex-shrink-0 opacity-90 w-[60px] h-[60px] md:w-[110px] md:h-[110px]"
           />
         </div>
       </div>

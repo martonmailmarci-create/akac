@@ -29,7 +29,7 @@ export default function OurFocus() {
   return (
     <section
       ref={sectionRef}
-      className="bg-akac-light overflow-hidden flex items-center min-h-[60vh] md:min-h-screen py-20 px-6 md:py-[60px] md:px-[100px] md:pb-[260px]"
+      className="bg-akac-light overflow-hidden flex items-center justify-center min-h-screen md:min-h-screen px-6 pb-32 -mt-px md:mt-0 md:pb-0 md:py-[60px] md:px-[100px] md:pb-[260px]"
     >
       <div className="max-w-[1000px] mx-auto text-center w-full">
         <SectionLabel className="mb-8">/ OUR FOCUS</SectionLabel>

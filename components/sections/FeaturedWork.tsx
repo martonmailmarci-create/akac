@@ -85,7 +85,7 @@ export default function FeaturedWork() {
         </p>
 
         {/* Thumbnails row */}
-        <div className="flex flex-row gap-3 mb-8 overflow-x-auto pb-1">
+        <div className="hidden flex-row gap-3 mb-8 overflow-x-auto pb-1">
           {projects.map((p, i) => (
             <div
               key={p.id}

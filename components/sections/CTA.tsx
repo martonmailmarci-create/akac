@@ -30,7 +30,7 @@ export default function CTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-20 pb-40 md:px-[100px] md:pt-[120px] md:pb-[420px]"
+      className="bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-20 pb-32 min-h-screen md:min-h-0 md:px-[100px] md:pt-[120px] md:pb-[420px] flex flex-col items-center justify-center md:block"
     >
       <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-6">
         / LET&apos;S TALK

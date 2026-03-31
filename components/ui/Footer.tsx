@@ -6,7 +6,7 @@ const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
 
 export default function Footer() {
   return (
-    <footer className="bg-akac-orange overflow-hidden relative flex flex-col rounded-t-[24px] md:rounded-t-[60px] min-h-auto md:min-h-[780px] px-6 pb-12 pt-12 md:px-[100px] md:pb-12 md:pt-6">
+    <footer className="bg-akac-orange overflow-hidden relative flex flex-col rounded-t-[24px] md:rounded-t-[60px] min-h-[85vh] md:min-h-[780px] px-6 pb-12 pt-12 md:px-[100px] md:pb-12 md:pt-6">
 
       {/* Top row */}
       <div className="flex justify-between items-start">
@@ -22,9 +22,9 @@ export default function Footer() {
           <Image
             src="/logo.svg"
             alt="AKAC Studio"
-            width={600}
-            height={600}
-            className="brightness-0 absolute top-[-40px] right-[-66px]"
+            width={290}
+            height={290}
+            className="brightness-[0.078] absolute top-[124px] right-[100px]"
           />
         </div>
 
@@ -32,14 +32,14 @@ export default function Footer() {
         <Image
           src="/logo.svg"
           alt="AKAC Studio"
-          width={100}
-          height={100}
-          className="md:hidden brightness-0 mt-10"
+          width={75}
+          height={75}
+          className="md:hidden brightness-[0.078] mt-10"
         />
       </div>
 
       {/* Bottom area */}
-      <div className="mt-12 md:mt-auto flex flex-col md:flex-row md:justify-between md:items-end gap-8 md:gap-0">
+      <div className="mt-auto flex flex-col md:flex-row md:justify-between md:items-end gap-8 md:gap-0">
         <div>
           {/* Nav links */}
           <nav className="mb-6">

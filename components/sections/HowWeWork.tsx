@@ -73,15 +73,15 @@ export default function HowWeWork() {
         {cards.map((card) => (
           <div
             key={card.number}
-            className="w-full min-h-[280px] rounded-[20px] p-6 flex flex-col justify-between"
+            className="w-full min-h-[580px] rounded-[20px] p-6 flex flex-col justify-between text-center"
             style={{ backgroundColor: card.bg }}
           >
-            <p style={{ fontSize: "11px", fontWeight: 500, color: card.counterColor, letterSpacing: "0.18px" }}>
-              {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
+            <p className="text-[22px] font-medium leading-[26px] tracking-[-0.44px]" style={{ color: card.titleColor }}>
+              {card.title}
             </p>
             <div>
-              <p className="text-[22px] font-medium leading-[26px] tracking-[-0.44px] mb-4" style={{ color: card.titleColor }}>
-                {card.title}
+              <p className="mb-4" style={{ fontSize: "11px", fontWeight: 500, color: card.counterColor, letterSpacing: "0.18px" }}>
+                {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
               </p>
               <p className="text-[13px] font-medium uppercase leading-[15px] tracking-[0.18px]" style={{ color: card.bodyColor }}>
                 {card.body}
@@ -95,6 +95,7 @@ export default function HowWeWork() {
       <div
         ref={desktopCardsRef}
         className="hidden md:flex h-[648px]"
+        style={{ margin: "0 -60px" }}
         onMouseLeave={() => setActiveCard(null)}
       >
         {cards.map((card, i) => {
@@ -106,7 +107,7 @@ export default function HowWeWork() {
               onMouseEnter={() => setActiveCard(i)}
               className="overflow-hidden cursor-default relative"
               style={{
-                flexGrow: isActive ? 1.7 : isInactive ? 0.85 : 1,
+                flexGrow: isActive ? 1.4 : isInactive ? 0.9 : 1,
                 flexShrink: 1,
                 flexBasis: 0,
                 minWidth: 0,

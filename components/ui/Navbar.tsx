@@ -13,7 +13,13 @@ const navLinks = [
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setRevealed(true), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -31,7 +37,7 @@ export default function Navbar() {
         position: "fixed",
         top: "20px",
         left: "50%",
-        transform: `translateX(-50%) translateY(${hidden ? "calc(-100% - 25px)" : "0"})`,
+        transform: `translateX(-50%) translateY(${!revealed || hidden ? "calc(-100% - 25px)" : "0"})`,
         width: "min(647px, 90vw)",
         height: "55px",
         backgroundColor: "#111111",

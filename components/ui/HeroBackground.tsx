@@ -49,6 +49,8 @@ export default function HeroBackground() {
       }
     }
 
+    const isMobile = window.innerWidth < 768
+
     let time = 0
     const mouse = { x: -9999, y: -9999 }
     const MOUSE_RADIUS = 220  // px — how far the orange spreads
@@ -59,8 +61,10 @@ export default function HeroBackground() {
       mouse.y = e.clientY - rect.top
     }
     const onMouseLeave = () => { mouse.x = -9999; mouse.y = -9999 }
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseleave', onMouseLeave)
+    if (!isMobile) {
+      window.addEventListener('mousemove', onMouseMove)
+      window.addEventListener('mouseleave', onMouseLeave)
+    }
 
     const resize = () => {
       canvas.width = canvas.offsetWidth
@@ -90,7 +94,7 @@ export default function HeroBackground() {
 
         const cellW = W / COLS
         const cellH = H / ROWS
-        const fontSize = Math.min(cellW * 1.2, cellH * 1.5, 13)
+        const fontSize = Math.min(cellW * 1.2, cellH * 1.5, isMobile ? 20 : 13)
 
         ctx.font = `${fontSize}px 'Courier New', monospace`
         ctx.textAlign = 'center'
@@ -159,8 +163,10 @@ export default function HeroBackground() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseleave', onMouseLeave)
+      if (!isMobile) {
+        window.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('mouseleave', onMouseLeave)
+      }
     }
   }, [])
 

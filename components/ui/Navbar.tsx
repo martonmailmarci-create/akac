@@ -97,48 +97,33 @@ export default function Navbar() {
         ))}
       </nav>
 
-      {/* ── Mobile: logo pill (left) + hamburger pill (right) ── */}
-      <div className="flex md:hidden" style={{ position: "fixed", top: "20px", left: "20px", right: "20px", zIndex: 50, pointerEvents: "none" }}>
-        {/* Logo pill */}
-        <a
-          href="/"
-          style={{
-            ...PILL,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "55px",
-            pointerEvents: "auto",
-            transform: `translateY(${slideY})`,
-            transition,
-          }}
-        >
-          <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
+      {/* ── Mobile: combined logo + hamburger pill (top-right) ── */}
+      <div
+        className="flex md:hidden"
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          zIndex: 50,
+          ...PILL,
+          alignItems: "center",
+          gap: "12px",
+          padding: "0 16px 0 12px",
+          transform: `translateY(${slideY})`,
+          transition,
+        }}
+      >
+        <a href="/" style={{ display: "flex", alignItems: "center" }}>
+          <Image src="/icons/akac-logo.svg" alt="AKAC" width={28} height={28} />
         </a>
-
-        {/* Hamburger pill */}
         <button
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
-          style={{
-            ...PILL,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "55px",
-            marginLeft: "auto",
-            pointerEvents: "auto",
-            border: "none",
-            cursor: "pointer",
-            transform: `translateY(${slideY})`,
-            transition,
-          }}
+          style={{ display: "flex", flexDirection: "column", gap: "5px", background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            {[0, 1, 2].map((i) => (
-              <span key={i} style={{ display: "block", width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px" }} />
-            ))}
-          </div>
+          {[0, 1, 2].map((i) => (
+            <span key={i} style={{ display: "block", width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px" }} />
+          ))}
         </button>
       </div>
 

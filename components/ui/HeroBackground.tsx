@@ -3,11 +3,14 @@
 import { useEffect, useRef } from 'react'
 
 const CHAR_SET = ' .,:;=+*#@'
+const FONT_SIZE = 12        // fixed px — same on every screen width
+const CHAR_W = FONT_SIZE * 0.6  // approx monospace glyph width
 
 export default function HeroBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rafRef = useRef<number>(0)
   const imageDataRef = useRef<ImageData | null>(null)
+  const srcImgRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -15,45 +18,49 @@ export default function HeroBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    const isMobile = window.innerWidth < 768
+
+    const resample = () => {
+      const img = srcImgRef.current
+      if (!img) return
+      const COLS = Math.max(1, Math.floor(canvas.width / CHAR_W))
+      const ROWS = Math.max(1, Math.floor(canvas.height / FONT_SIZE))
+      const offscreen = document.createElement('canvas')
+      offscreen.width = COLS
+      offscreen.height = ROWS
+      const offCtx = offscreen.getContext('2d')!
+      offCtx.drawImage(img, 0, 0, COLS, ROWS)
+      imageDataRef.current = offCtx.getImageData(0, 0, COLS, ROWS)
+    }
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+      resample()
+    }
+
     const img = new Image()
     img.src = '/images/s-curve.jpg'
 
     img.onload = () => {
-      const SAMPLE_W = 120
-      const SAMPLE_H = 55
-
-      const offscreen = document.createElement('canvas')
-      offscreen.width = SAMPLE_W
-      offscreen.height = SAMPLE_H
-      const offCtx = offscreen.getContext('2d')!
-      offCtx.drawImage(img, 0, 0, SAMPLE_W, SAMPLE_H)
-      imageDataRef.current = offCtx.getImageData(0, 0, SAMPLE_W, SAMPLE_H)
-
+      srcImgRef.current = img
+      resample()
       startAnimation()
     }
 
-    // Fallback: if s-curve.jpg not found, try the existing ascii-art.png
     img.onerror = () => {
       const fallback = new Image()
       fallback.src = '/images/ascii-art.png'
       fallback.onload = () => {
-        const SAMPLE_W = 120
-        const SAMPLE_H = 55
-        const offscreen = document.createElement('canvas')
-        offscreen.width = SAMPLE_W
-        offscreen.height = SAMPLE_H
-        const offCtx = offscreen.getContext('2d')!
-        offCtx.drawImage(fallback, 0, 0, SAMPLE_W, SAMPLE_H)
-        imageDataRef.current = offCtx.getImageData(0, 0, SAMPLE_W, SAMPLE_H)
+        srcImgRef.current = fallback
+        resample()
         startAnimation()
       }
     }
 
-    const isMobile = window.innerWidth < 768
-
     let time = 0
     const mouse = { x: -9999, y: -9999 }
-    const MOUSE_RADIUS = 220  // px — how far the orange spreads
+    const MOUSE_RADIUS = 220
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()
@@ -64,11 +71,6 @@ export default function HeroBackground() {
     if (!isMobile) {
       window.addEventListener('mousemove', onMouseMove)
       window.addEventListener('mouseleave', onMouseLeave)
-    }
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
     }
 
     const getPixelBrightness = (data: ImageData, col: number, row: number): number => {
@@ -94,9 +96,8 @@ export default function HeroBackground() {
 
         const cellW = W / COLS
         const cellH = H / ROWS
-        const fontSize = Math.min(cellW * 1.2, cellH * 1.5, isMobile ? 20 : 13)
 
-        ctx.font = `${fontSize}px 'Courier New', monospace`
+        ctx.font = `${FONT_SIZE}px 'Courier New', monospace`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
 
@@ -111,13 +112,10 @@ export default function HeroBackground() {
 
             if (char === ' ') continue
 
-            // Traveling wave drifts downward
             const wave = Math.sin(time * 1.4 - row * 0.2 + col * 0.05) * 0.22
-            // Slow overall breathe
             const pulse = Math.sin(time * 0.6) * 0.12
             const finalBrightness = Math.min(1, Math.max(0, brightness + wave + pulse))
 
-            // Character changes with animated brightness — creates visible char cycling
             const animCharIndex = Math.floor(finalBrightness * (CHAR_SET.length - 1))
             const animChar = CHAR_SET[Math.max(0, animCharIndex)]
 
@@ -129,7 +127,7 @@ export default function HeroBackground() {
             const dy = y - mouse.y
             const dist = Math.sqrt(dx * dx + dy * dy)
             const orangeStrength = Math.max(0, 1 - dist / MOUSE_RADIUS)
-            const eased = orangeStrength * (2 - orangeStrength) // ease-out: strong center, soft edge
+            const eased = orangeStrength * (2 - orangeStrength)
 
             const v = Math.round(100 + finalBrightness * 155)
             const gr = Math.round(v + (237 - v) * eased)
@@ -152,7 +150,6 @@ export default function HeroBackground() {
 
     resize()
 
-    // Fade in after a short delay so it syncs with the content animation
     setTimeout(() => {
       canvas.style.transition = 'opacity 1.2s ease'
       canvas.style.opacity = '0.7'

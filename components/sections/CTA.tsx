@@ -30,22 +30,22 @@ export default function CTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-20 pb-32 min-h-screen md:min-h-0 md:px-[100px] md:pt-[120px] md:pb-[420px] flex flex-col items-center justify-center md:block"
+      className="bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-28 pb-32 min-h-screen md:min-h-0 md:px-[100px] md:pt-[120px] md:pb-[420px] flex flex-col items-center justify-center md:block"
     >
-      <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-6">
+      <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-10">
         / LET&apos;S TALK
       </span>
 
       <h2
         ref={headlineRef}
-        className="text-[22px] md:text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[28px] md:leading-[32px] mb-10 max-w-[700px] mx-auto uppercase"
+        className="text-[22px] md:text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[28px] md:leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
       >
         LET US TAKE YOU FURTHER
         <br />
         THAN YOU&apos;VE EVER BEEN
       </h2>
 
-      <p className="text-[16px] font-semibold text-akac-light tracking-[0.24px] leading-[1.5] mb-10 max-w-[560px] mx-auto uppercase">
+      <p className="text-[16px] font-semibold text-akac-light tracking-[0.24px] leading-[1.5] mb-12 max-w-[560px] mx-auto uppercase">
         BOOK A 15-MINUTE CALL OR SEND US A MESSAGE.
         <br />
         NO PREPARATION NEEDED.

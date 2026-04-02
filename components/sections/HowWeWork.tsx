@@ -32,6 +32,7 @@ const cards = [
 
 export default function HowWeWork() {
   const sectionRef = useRef<HTMLElement>(null);
+  const wipeRef = useRef<HTMLDivElement>(null);
   const mobileCardsRef = useRef<HTMLDivElement>(null);
   const desktopCardsRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -39,16 +40,28 @@ export default function HowWeWork() {
   useEffect(() => {
     let ctx: { revert: () => void } | null = null;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
+    if (prefersReduced) {
+      if (wipeRef.current) wipeRef.current.style.display = "none";
+      return;
+    }
 
     (async () => {
       const { gsap, ScrollTrigger } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
-        const target = window.innerWidth < 768 ? mobileCardsRef.current : desktopCardsRef.current;
-        gsap.from(target?.children ?? [], {
-          y: 60, opacity: 0, duration: 0.8, stagger: 0.12, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
-        });
+        gsap.fromTo(
+          wipeRef.current,
+          { xPercent: 0 },
+          {
+            xPercent: 100,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 110%",
+              end: "top 60%",
+              scrub: 1,
+            },
+          }
+        );
       });
     })();
 
@@ -58,18 +71,30 @@ export default function HowWeWork() {
   return (
     <section
       ref={sectionRef}
-      className="bg-akac-light rounded-t-[24px] md:rounded-t-[60px] overflow-hidden pt-20 pb-20 px-6 md:pt-[240px] md:pb-[240px] md:px-[100px]"
+      className="relative bg-akac-light rounded-t-[24px] md:rounded-t-[60px] overflow-hidden pt-28 pb-28 px-6 md:pt-[240px] md:pb-[240px] md:px-[100px]"
     >
+      {/* Wipe overlay — slides right on scroll to reveal section */}
+      <div
+        ref={wipeRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "#111111",
+          zIndex: 10,
+          pointerEvents: "none",
+        }}
+      />
+
       <SectionHeader
         label="/ OUR ETHOS"
         title="HOW WE WORK"
         body="We build websites that work as hard as your business does. With design that commands attention and code that never lets you down, we move fast without cutting corners. This isn't template-filling. It's deliberate, precise, and built to perform from day one."
         cta={{ text: "LET'S TALK", href: "#contact" }}
-        mbClass="mb-12 md:mb-[160px]"
+        mbClass="mb-20 md:mb-[160px]"
       />
 
       {/* ── Mobile cards: simple vertical stack ── */}
-      <div ref={mobileCardsRef} className="flex flex-col gap-3 md:hidden">
+      <div ref={mobileCardsRef} className="flex flex-col gap-5 md:hidden">
         {cards.map((card) => (
           <div
             key={card.number}

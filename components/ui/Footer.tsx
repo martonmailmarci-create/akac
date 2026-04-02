@@ -6,12 +6,12 @@ const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
 
 export default function Footer() {
   return (
-    <footer className="bg-akac-orange overflow-hidden relative flex flex-col rounded-t-[24px] md:rounded-t-[60px] min-h-[85vh] md:min-h-[780px] px-6 pb-12 pt-12 md:px-[100px] md:pb-12 md:pt-6">
+    <footer className="bg-akac-orange overflow-hidden relative flex flex-col rounded-t-[24px] md:rounded-t-[60px] min-h-[85vh] md:min-h-[780px] px-6 pb-16 pt-16 md:px-[100px] md:pb-12 md:pt-6">
 
       {/* Top row */}
       <div className="flex justify-between items-start">
-        <div className="pt-10 md:pt-[100px]">
-          <h2 className="text-[22px] md:text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[28px] md:leading-[32px] uppercase mb-8">
+        <div className="pt-14 md:pt-[100px]">
+          <h2 className="text-[22px] md:text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[28px] md:leading-[32px] uppercase mb-12">
             TELL US WHAT YOU NEED.
           </h2>
           <BracketButton label="CONTACT US" color="#111111" href="#contact" />
@@ -42,7 +42,7 @@ export default function Footer() {
       <div className="mt-auto flex flex-col md:flex-row md:justify-between md:items-end gap-8 md:gap-0">
         <div>
           {/* Nav links */}
-          <nav className="mb-6">
+          <nav className="mb-10">
             {navLinks.map((link) => (
               <a
                 key={link}

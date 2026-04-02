@@ -77,10 +77,10 @@ export default function FeaturedWork() {
       style={{ marginTop: "-60px", position: "relative", zIndex: 2 }}
     >
       {/* ── Mobile layout ── */}
-      <div className="md:hidden px-6 pt-20 pb-20">
-        <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-3">/ OUR WORK</span>
-        <h2 className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-4">FEATURED WORK</h2>
-        <p className="text-[16px] font-medium text-akac-light leading-[18px] tracking-[0.24px] mb-8">
+      <div className="md:hidden px-6 pt-28 pb-28">
+        <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-5">/ OUR WORK</span>
+        <h2 className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-6">FEATURED WORK</h2>
+        <p className="text-[16px] font-medium text-akac-light leading-[18px] tracking-[0.24px] mb-14">
           Every decision we make, from layout to load time, is measured against one thing: what moves the needle for your business.
         </p>
 
@@ -98,13 +98,13 @@ export default function FeaturedWork() {
         </div>
 
         {/* Project images stacked */}
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-16">
           {projects.map((p, i) => (
             <div key={p.id} ref={(el) => { imageRefs.current[i] = el; }}>
               <div className="relative aspect-video rounded-[20px] overflow-hidden">
                 <Image src={p.large} alt={p.name} fill className="object-cover" sizes="100vw" />
               </div>
-              <div className="flex items-center justify-between mt-3">
+              <div className="flex items-center justify-between mt-5">
                 <span className="text-[12px] font-medium text-akac-light/40 uppercase tracking-[0.18px]">{p.id}</span>
                 <div className="flex items-center gap-2 flex-wrap justify-end">
                   <span className="text-[14px] font-semibold text-akac-light tracking-[-0.28px]">{p.name}</span>
@@ -119,7 +119,7 @@ export default function FeaturedWork() {
           ))}
         </div>
 
-        <BracketButton label="VIEW ALL" color="#ED6D40" href="#" className="mt-10" />
+        <BracketButton label="VIEW ALL" color="#ED6D40" href="#" className="mt-14" />
       </div>
 
       {/* ── Desktop layout ── */}

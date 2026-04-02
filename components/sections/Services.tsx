@@ -55,10 +55,10 @@ export default function Services() {
   return (
     <section
       ref={sectionRef}
-      className="bg-akac-light overflow-hidden rounded-t-[24px] md:rounded-t-[60px] px-6 pt-16 pb-20 md:px-[100px] md:py-[120px]"
+      className="bg-akac-light overflow-hidden rounded-t-[24px] md:rounded-t-[60px] px-6 pt-24 pb-28 md:px-[100px] md:py-[120px]"
     >
       {/* Header */}
-      <div className="mb-12">
+      <div className="mb-16">
         <SectionLabel>/ OUR SERVICES</SectionLabel>
         <h2 className="text-[28px] md:text-[55px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1] max-w-[800px]">
           Web Design &amp; Development, End to End.
@@ -68,7 +68,7 @@ export default function Services() {
       {/* Grid — 1 col mobile, 3 col desktop */}
       <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-0">
         {services.map((service) => (
-          <div key={service.title} className="py-8 border-t border-akac-black/15">
+          <div key={service.title} className="py-10 border-t border-akac-black/15">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-[6.897px] h-[6.897px] rounded-sm bg-akac-orange flex-shrink-0" aria-hidden="true" />
               <h3 className="text-[16px] font-bold text-akac-black uppercase tracking-[0.32px]">

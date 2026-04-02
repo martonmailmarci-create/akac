@@ -71,7 +71,7 @@ export default function Pricing() {
   return (
     <section
       ref={sectionRef}
-      className="bg-akac-light overflow-hidden rounded-t-[24px] md:rounded-t-[60px] pt-20 pb-24 px-6 md:pt-[200px] md:pb-[260px] md:px-[100px]"
+      className="bg-akac-light overflow-hidden rounded-t-[24px] md:rounded-t-[60px] pt-20 pb-36 px-6 md:pt-[200px] md:pb-[260px] md:px-[100px]"
     >
       {/* Header */}
       <div className="text-center mb-12">

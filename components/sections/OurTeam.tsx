@@ -55,9 +55,9 @@ export default function OurTeam() {
       className="bg-akac-black overflow-hidden rounded-t-[24px] md:rounded-t-[60px] min-h-screen md:min-h-0"
       style={{ marginTop: "-60px", position: "relative", zIndex: 1 }}
     >
-      <div className="px-6 pt-20 pb-20 md:px-[100px] md:pt-[180px] md:pb-0">
+      <div className="px-6 pt-28 pb-28 md:px-[100px] md:pt-[180px] md:pb-0">
         {/* Top labels */}
-        <div className="flex justify-between mb-12">
+        <div className="flex justify-between mb-16">
           <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
           <span className="hidden md:inline text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
           <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
@@ -68,7 +68,7 @@ export default function OurTeam() {
           {/* Headline — 1st on mobile, 3rd on desktop */}
           <h2
             ref={headlineRef}
-            className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-10 md:mb-16"
+            className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-14 md:mb-16"
           >
             WE DON&apos;T HAND OFF. /
             <br />
@@ -76,14 +76,14 @@ export default function OurTeam() {
           </h2>
 
           {/* Descriptor — 2nd on mobile, 1st on desktop */}
-          <p className="order-2 md:order-1 text-[16px] font-medium text-akac-light uppercase tracking-[0.24px] leading-[18px] text-center mb-10">
+          <p className="order-2 md:order-1 text-[16px] font-medium text-akac-light uppercase tracking-[0.24px] leading-[18px] text-center mb-14">
             TWO PEOPLE. ONE SHARED OBSESSION.
             <br />
             DESIGN AND CODE, UNDER ONE ROOF.
           </p>
 
           {/* CTA — 3rd on mobile, 2nd on desktop */}
-          <div className="order-3 md:order-2 flex justify-center mb-16">
+          <div className="order-3 md:order-2 flex justify-center mb-20">
             <BracketButton label="MEET THE TEAM" color="#D9D9D9" href="#contact" />
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function OurTeam() {
           </div>
 
           {/* Navigation row */}
-          <div className="flex items-center justify-between mt-10">
+          <div className="flex items-center justify-between mt-14">
             <button
               onClick={prev}
               className="text-akac-light text-[20px] font-medium w-8 h-8 flex items-center justify-center"
@@ -130,7 +130,7 @@ export default function OurTeam() {
           </div>
 
           {/* Name + Role */}
-          <div className="flex justify-between items-baseline mt-8">
+          <div className="flex justify-between items-baseline mt-12">
             <span className="text-[16px] font-medium text-akac-light uppercase tracking-[0.18px]">
               {member.name}
             </span>
@@ -140,12 +140,12 @@ export default function OurTeam() {
           </div>
 
           {/* Description */}
-          <p className="text-[16px] font-medium text-akac-light tracking-[0.24px] leading-[1.6] mt-8">
+          <p className="text-[16px] font-medium text-akac-light tracking-[0.24px] leading-[1.6] mt-10">
             {member.description}
           </p>
 
           {/* CTA buttons */}
-          <div className="flex gap-6 mt-10">
+          <div className="flex gap-6 mt-14">
             <BracketButton label={`CONNECT WITH ${member.name.split(" ")[0]}`} color="#D9D9D9" href="#contact" />
           </div>
         </div>

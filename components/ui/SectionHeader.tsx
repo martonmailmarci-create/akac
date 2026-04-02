@@ -64,8 +64,8 @@ export default function SectionHeader({
 
       {/* Body block — stacks on mobile, absolute on desktop */}
       {body && (
-        <div className="mt-6 md:mt-0 md:absolute md:top-0 md:left-[50%] md:w-[45%]">
-          <div style={{ width: "100%", height: "1px", backgroundColor: lineColor, marginBottom: "16px" }} />
+        <div className="mt-10 md:mt-0 md:absolute md:top-0 md:left-[50%] md:w-[45%]">
+          <div style={{ width: "100%", height: "1px", backgroundColor: lineColor, marginBottom: "20px" }} />
           <p
             style={{
               fontSize: "16px",
@@ -73,7 +73,7 @@ export default function SectionHeader({
               color,
               lineHeight: "18px",
               letterSpacing: "0.24px",
-              marginBottom: cta ? "40px" : 0,
+              marginBottom: cta ? "48px" : 0,
             }}
           >
             {body}

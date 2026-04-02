@@ -117,7 +117,7 @@ export default function Navbar() {
         <a href="/" style={{ display: "flex", alignItems: "center" }}>
           <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
         </a>
-        <span style={{ color: "#F9F9F4", fontSize: "12px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "lowercase" }}>
+        <span style={{ color: "#F9F9F4", fontSize: "24px", fontWeight: 600, letterSpacing: "-0.5px" }}>
           akac.studio
         </span>
         <button

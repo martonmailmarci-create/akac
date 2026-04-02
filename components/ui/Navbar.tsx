@@ -107,15 +107,12 @@ export default function Navbar() {
           zIndex: 50,
           ...PILL,
           alignItems: "center",
-          gap: "12px",
-          padding: "0 16px 0 12px",
+          gap: "20px",
+          padding: "0 12px 0 16px",
           transform: `translateY(${slideY})`,
           transition,
         }}
       >
-        <a href="/" style={{ display: "flex", alignItems: "center" }}>
-          <Image src="/icons/akac-logo.svg" alt="AKAC" width={28} height={28} />
-        </a>
         <button
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
@@ -125,6 +122,9 @@ export default function Navbar() {
             <span key={i} style={{ display: "block", width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px" }} />
           ))}
         </button>
+        <a href="/" style={{ display: "flex", alignItems: "center" }}>
+          <Image src="/icons/akac-logo.svg" alt="AKAC" width={28} height={28} />
+        </a>
       </div>
 
       {/* ── Mobile fullscreen menu overlay ── */}

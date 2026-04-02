@@ -51,7 +51,7 @@ export default function HeroBackground() {
 
     let time = 0
     const mouse = { x: -9999, y: -9999 }
-    const MOUSE_RADIUS = 180  // px — how far the orange spreads
+    const MOUSE_RADIUS = 280  // px — how far the orange spreads
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()
@@ -125,7 +125,7 @@ export default function HeroBackground() {
             const dy = y - mouse.y
             const dist = Math.sqrt(dx * dx + dy * dy)
             const orangeStrength = Math.max(0, 1 - dist / MOUSE_RADIUS)
-            const eased = orangeStrength * orangeStrength
+            const eased = orangeStrength * (2 - orangeStrength) // ease-out: strong center, soft edge
 
             const v = Math.round(100 + finalBrightness * 155)
             const gr = Math.round(v + (237 - v) * eased)

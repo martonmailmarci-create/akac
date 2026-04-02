@@ -147,6 +147,13 @@ export default function HeroBackground() {
     }
 
     resize()
+
+    // Fade in after a short delay so it syncs with the content animation
+    setTimeout(() => {
+      canvas.style.transition = 'opacity 1.2s ease'
+      canvas.style.opacity = '0.7'
+    }, 300)
+
     window.addEventListener('resize', resize)
 
     return () => {
@@ -167,7 +174,7 @@ export default function HeroBackground() {
         height: '100%',
         pointerEvents: 'none',
         zIndex: 0,
-        opacity: 0.7,
+        opacity: 0,
       }}
     />
   )

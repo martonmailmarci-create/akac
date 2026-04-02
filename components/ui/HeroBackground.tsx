@@ -51,7 +51,7 @@ export default function HeroBackground() {
 
     let time = 0
     const mouse = { x: -9999, y: -9999 }
-    const MOUSE_RADIUS = 280  // px — how far the orange spreads
+    const MOUSE_RADIUS = 220  // px — how far the orange spreads
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()

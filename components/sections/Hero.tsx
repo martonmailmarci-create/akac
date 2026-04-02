@@ -1,110 +1,116 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
+import HeroBackground from "@/components/ui/HeroBackground";
 
 export default function Hero() {
-  const line1Ref = useRef<HTMLDivElement>(null);
-  const line2Ref = useRef<HTMLDivElement>(null);
-  const bodyTopRef = useRef<HTMLParagraphElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const ctxRef = useRef<{ revert: () => void } | null>(null);
 
   useEffect(() => {
-    let ctx: { revert: () => void } | null = null;
+    let mounted = true;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     (async () => {
-      const { gsap, SplitText } = await import("@/lib/gsap");
-      ctx = gsap.context(() => {
-        const split1 = new SplitText(line1Ref.current, { type: "chars" });
-        const split2 = new SplitText(line2Ref.current, { type: "chars" });
-        const tl = gsap.timeline({ delay: 0.2 });
-        tl.from(split1.chars, { y: 80, opacity: 0, duration: 0.9, stagger: 0.025, ease: "power3.out" })
-          .from(split2.chars, { y: 80, opacity: 0, duration: 0.9, stagger: 0.025, ease: "power3.out" }, "-=0.6")
-          .from([bodyTopRef.current, bottomRef.current], { y: 16, opacity: 0, duration: 0.7, stagger: 0.12, ease: "power2.out" }, "-=0.5");
+      const { gsap } = await import("@/lib/gsap");
+      if (!mounted || !contentRef.current) return;
+      ctxRef.current?.revert();
+      ctxRef.current = gsap.context(() => {
+        gsap.fromTo(
+          contentRef.current,
+          { autoAlpha: 0, y: 24 },
+          { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.15 }
+        );
       });
     })();
 
-    return () => ctx?.revert();
+    return () => {
+      mounted = false;
+      ctxRef.current?.revert();
+      ctxRef.current = null;
+    };
   }, []);
 
   return (
-    <section className="relative h-[100svh] bg-akac-black overflow-hidden flex flex-col md:block">
+    <section
+      style={{
+        position: "relative",
+        height: "100svh",
+        backgroundColor: "#111111",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* Three.js ASCII S-curve background */}
+      <HeroBackground />
 
-      {/* Top-right body copy — desktop only */}
-      <p
-        ref={bodyTopRef}
-        className="hidden md:block absolute top-[120px] right-[100px] text-akac-light text-[12px] font-medium tracking-[0.18px] uppercase text-right leading-[18px] w-[280px]"
+      {/* Soft radial vignette behind content — no hard edges */}
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "900px",
+        height: "500px",
+        background: "radial-gradient(ellipse at center, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.5) 45%, rgba(17,17,17,0.15) 70%, transparent 90%)",
+        pointerEvents: "none",
+        zIndex: 1,
+      }} />
+
+      {/* Content — centered column */}
+      <div
+        ref={contentRef}
+        style={{
+          position: "relative",
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          padding: "48px 48px",
+          gap: "32px",
+          maxWidth: "1100px",
+          width: "100%",
+          visibility: "hidden",
+        }}
       >
-        THE WEB MOVES FAST.
-        <br />
-        YOUR BRAND SHOULD TOO.
-        <br />
-        WE BUILD SITES THAT PERFORM
-        <br />
-        FROM DAY ONE.
-      </p>
-
-      {/* Headline line 1 — "Built for" */}
-      {/* Mobile: left-6, top-[28vh] | Desktop: left-[138px], top-[35vh] */}
-      <div className="absolute left-6 top-[28vh] md:left-[138px] md:top-[35vh] ">
-        <div
-          ref={line1Ref}
-          className="font-normal text-akac-light leading-none whitespace-nowrap"
-          style={{ fontSize: "clamp(52px, 13vw, 192px)", letterSpacing: "clamp(-1.04px, -0.2vw, -3.84px)" }}
+        {/* Headline */}
+        <h1
+          style={{
+            fontSize: "clamp(32px, 7vw, 64px)",
+            fontWeight: 500,
+            color: "#D9D9D9",
+            letterSpacing: "-1.28px",
+            lineHeight: "1.156",
+            margin: 0,
+          }}
         >
-          Built for
-        </div>
-      </div>
+          We are a two-person studio building{" "}
+          <span style={{ color: "#ED6D40" }}>websites</span>
+          {" "}that perform.
+        </h1>
 
-      {/* Headline line 2 — "Right now" */}
-      {/* Mobile: right-6, top-[44vh] | Desktop: left-[calc(41.67%+99px)], top-[52vh] */}
-      <div className="absolute right-6 top-[44vh] md:right-[100px] md:top-[52vh]">
-        <div
-          ref={line2Ref}
-          className="font-normal text-akac-light leading-none whitespace-nowrap"
-          style={{ fontSize: "clamp(52px, 13vw, 192px)", letterSpacing: "clamp(-1.04px, -0.2vw, -3.84px)" }}
+        {/* Subcopy */}
+        <p
+          style={{
+            fontSize: "clamp(16px, 2vw, 20px)",
+            fontWeight: 400,
+            color: "#F9F9F4",
+            lineHeight: "1.45",
+            maxWidth: "661px",
+            margin: 0,
+          }}
         >
-          Right now
-        </div>
-      </div>
+          Design and development under one roof. Fast turnaround, unlimited
+          revisions, and a team that actually picks up the phone.
+        </p>
 
-      {/* Bottom bar */}
-      <div ref={bottomRef} className="mt-auto md:absolute md:bottom-0 left-0 right-0 pt-[60px]">
-        {/* Divider */}
-        <div
-          className="mx-6 md:mx-[100px] h-px"
-          style={{ background: "linear-gradient(to right, transparent, rgba(217,217,217,0.2) 60px, rgba(217,217,217,0.2) calc(100% - 60px), transparent)" }}
-        />
-
-        {/* Bottom row */}
-        <div className="relative flex items-center justify-between px-6 md:px-[100px] py-1">
-          {/* Left — bracket CTA */}
-          <BracketButton label="CONTACT US" color="#D9D9D9" href="#contact" className="flex-shrink-0" />
-
-          {/* Center paragraph — desktop only */}
-          <p
-            className="hidden md:block absolute left-[50%] right-[260px] text-akac-light text-[12px] font-medium tracking-[0.18px] uppercase leading-[15px] text-left m-0"
-          >
-            THE WEB MOVES FAST. MOST AGENCIES DON&apos;T. WE WERE BUILT FROM
-            THE GROUND UP FOR THE WAY BUSINESSES NEED TO OPERATE TODAY, WHERE
-            SPEED MATTERS, FIRST IMPRESSIONS ARE EVERYTHING, AND YOUR WEBSITE
-            CAN&apos;T AFFORD TO BE AN AFTERTHOUGHT. WE BRING TOGETHER SHARP
-            DESIGN, CLEAN CODE, AND A PROCESS THAT ACTUALLY RESPECTS YOUR TIME.
-            NO LEGACY BAGGAGE. NO OUTDATED PLAYBOOKS.
-          </p>
-
-          {/* Right — AKAC logo mark */}
-          <Image
-            src="/logo.svg"
-            alt="AKAC"
-            width={148}
-            height={148}
-            className="flex-shrink-0 opacity-90 w-[60px] h-[60px] md:w-[110px] md:h-[110px]"
-          />
-        </div>
+        {/* CTA */}
+        <BracketButton label="GET IN TOUCH" color="#D9D9D9" href="#contact" />
       </div>
     </section>
   );

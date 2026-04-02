@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 export default function AsciiBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number>(0)
 
   useEffect(() => {
     const canvas = canvasRef.current

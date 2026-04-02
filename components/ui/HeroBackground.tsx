@@ -6,7 +6,7 @@ const CHAR_SET = ' .,:;=+*#@'
 
 export default function HeroBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number>(0)
   const imageDataRef = useRef<ImageData | null>(null)
 
   useEffect(() => {

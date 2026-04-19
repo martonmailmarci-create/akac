@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Navbar />
       <main>
-        <Hero />
+        <Hero ready={true} />
         <HowWeWork />
         <OurFocus />
         <OurTeam />

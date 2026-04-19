@@ -1,11 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
 
+function scrollTo(href: string) {
+  const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
+  if (lenis) {
+    lenis.scrollTo(href);
+  } else {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 const navLinks = [
-  { label: "WHY AKAC", href: "#why-us" },
-  { label: "WORK", href: "#featured-work" },
-  { label: "OUR TEAM", href: "#our-team" },
+  { label: "WORK", href: "#work" },
+  { label: "SERVICES", href: "#services" },
   { label: "PRICING", href: "#pricing" },
+  { label: "TEAM", href: "#team" },
   { label: "CONTACT", href: "#contact" },
 ];
 const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
@@ -102,6 +113,7 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
+                  onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
                   className="block text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[32px] no-underline hover:opacity-60 transition-opacity"
                 >
                   {link.label}

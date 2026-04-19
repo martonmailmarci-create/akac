@@ -2,20 +2,30 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ScrambleText from "@/components/ui/ScrambleText";
+
+function scrollTo(href: string) {
+  const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
+  if (lenis) {
+    lenis.scrollTo(href);
+  } else {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
 const navLinks = [
-  { label: "WHY AKAC", href: "#why-us" },
-  { label: "TEAM", href: "#our-team" },
-  { label: "WORK", href: "#featured-work" },
+  { label: "WORK", href: "#work" },
   { label: "SERVICES", href: "#services" },
+  { label: "PRICING", href: "#pricing" },
+  { label: "TEAM", href: "#team" },
   { label: "CONTACT", href: "#contact" },
 ];
 
 const desktopLinks = [
-  { label: "WHY AKAC", href: "#why-us" },
-  { label: "TEAM", href: "#our-team" },
-  { label: "WORK", href: "#featured-work" },
+  { label: "WORK", href: "#work" },
   { label: "SERVICES", href: "#services" },
+  { label: "PRICING", href: "#pricing" },
+  { label: "TEAM", href: "#team" },
   { label: "CONTACT", href: "#contact" },
 ];
 
@@ -68,18 +78,14 @@ export default function Navbar() {
           <a
             key={link.label}
             href={link.href}
-            style={{
-              color: "#F9F9F4",
-              fontSize: "clamp(10px, 1.5vw, 12px)",
-              fontWeight: 500,
-              letterSpacing: "0.18px",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              flexShrink: 1,
-              whiteSpace: "nowrap",
-            }}
+            onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
+            style={{ textDecoration: "none", flexShrink: 1 }}
           >
-            {link.label}
+            <ScrambleText
+              text={link.label}
+              color="#F9F9F4"
+              style={{ fontSize: "clamp(10px, 1.5vw, 12px)", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", whiteSpace: "nowrap" }}
+            />
           </a>
         ))}
       </nav>
@@ -176,17 +182,14 @@ export default function Navbar() {
                   <a
                     key={link.label}
                     href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      color: "#F9F9F4",
-                      fontSize: "28px",
-                      fontWeight: 600,
-                      letterSpacing: "-0.8px",
-                      textDecoration: "none",
-                      lineHeight: 1.15,
-                    }}
+                    onClick={(e) => { e.preventDefault(); scrollTo(link.href); setMenuOpen(false); }}
+                    style={{ textDecoration: "none", lineHeight: 1.15 }}
                   >
-                    {link.label}
+                    <ScrambleText
+                      text={link.label}
+                      color="#F9F9F4"
+                      style={{ fontSize: "28px", fontWeight: 600, letterSpacing: "-0.8px" }}
+                    />
                   </a>
                 ))}
               </nav>

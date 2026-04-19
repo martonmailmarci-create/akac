@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { AnimatePresence, motion } from "framer-motion";
+import RevealHeadline from "@/components/ui/RevealHeadline";
 
 const faqs = [
   {
@@ -81,9 +82,9 @@ export default function FAQ() {
         {/* Left */}
         <div className="w-full md:w-[340px] md:flex-shrink-0">
           <SectionLabel dark>/ FAQ</SectionLabel>
-          <h2 className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px]">
+          <RevealHeadline className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px]">
             COMMON QUESTIONS
-          </h2>
+          </RevealHeadline>
         </div>
 
         {/* Accordion */}

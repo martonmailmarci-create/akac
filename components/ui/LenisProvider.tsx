@@ -26,6 +26,7 @@ export default function LenisProvider({
     });
 
     lenisRef.current = lenis;
+    (window as unknown as Record<string, unknown>).__lenis = lenis;
 
     // Sync Lenis with GSAP ticker
     gsap.ticker.add((time) => {

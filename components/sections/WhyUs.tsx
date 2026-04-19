@@ -35,6 +35,7 @@ export default function WhyUs() {
 
   return (
     <section
+      id="why-akac"
       ref={sectionRef}
       className="bg-akac-light px-6 pt-24 pb-32 md:px-[100px] md:pt-[80px] md:pb-[200px]"
     >

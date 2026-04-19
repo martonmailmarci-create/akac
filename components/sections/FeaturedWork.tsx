@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
+import RevealHeadline from "@/components/ui/RevealHeadline";
 
 const projects = [
   {
@@ -72,6 +73,7 @@ export default function FeaturedWork() {
 
   return (
     <section
+      id="work"
       ref={sectionRef}
       className="bg-akac-black rounded-t-[24px] md:rounded-t-[60px]"
       style={{ marginTop: "-60px", position: "relative", zIndex: 2 }}
@@ -79,7 +81,7 @@ export default function FeaturedWork() {
       {/* ── Mobile layout ── */}
       <div className="md:hidden px-6 pt-28 pb-28">
         <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-5">/ OUR WORK</span>
-        <h2 className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-6">FEATURED WORK</h2>
+        <RevealHeadline className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-6">FEATURED WORK</RevealHeadline>
         <p className="text-[16px] font-medium text-akac-light leading-[18px] tracking-[0.24px] mb-14">
           Every decision we make, from layout to load time, is measured against one thing: what moves the needle for your business.
         </p>

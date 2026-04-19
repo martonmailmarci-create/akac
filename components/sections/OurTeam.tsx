@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
+import RevealHeadline from "@/components/ui/RevealHeadline";
 
 const team = [
   {
@@ -23,28 +24,10 @@ const team = [
 
 export default function OurTeam() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    let ctx: { revert: () => void } | null = null;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
-
-    (async () => {
-      const { gsap, ScrollTrigger, SplitText } = await import("@/lib/gsap");
-      ctx = gsap.context(() => {
-        const split = new SplitText(headlineRef.current, { type: "words" });
-        gsap.from(split.words, {
-          y: 40, opacity: 0, duration: 0.8, stagger: 0.07, ease: "power3.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
-        });
-      });
-    })();
-
-    return () => ctx?.revert();
-  }, []);
 
   return (
     <section
+      id="team"
       ref={sectionRef}
       className="bg-akac-black overflow-hidden rounded-t-[24px] md:rounded-t-[60px] min-h-screen md:min-h-0"
       style={{ marginTop: "-60px", position: "relative", zIndex: 1 }}
@@ -60,14 +43,11 @@ export default function OurTeam() {
         {/* Reorderable block */}
         <div className="flex flex-col">
           {/* Headline — 1st on mobile, 3rd on desktop */}
-          <h2
-            ref={headlineRef}
-            className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-14 md:mb-16"
-          >
+          <RevealHeadline className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-14 md:mb-16">
             WE DON&apos;T HAND OFF.
             <br />
             WE SEE IT THROUGH.
-          </h2>
+          </RevealHeadline>
 
           {/* Descriptor — 2nd on mobile, 1st on desktop */}
           <p className="order-2 md:order-1 text-[16px] font-medium text-akac-light uppercase tracking-[0.24px] leading-[18px] text-center mb-14">

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 import SectionLabel from "@/components/ui/SectionLabel";
+import RevealHeadline from "@/components/ui/RevealHeadline";
 
 const plans = [
   {
@@ -70,15 +71,16 @@ export default function Pricing() {
 
   return (
     <section
+      id="pricing"
       ref={sectionRef}
       className="bg-akac-light overflow-hidden rounded-t-[24px] md:rounded-t-[60px] pt-20 pb-36 px-6 md:pt-[200px] md:pb-[260px] md:px-[100px]"
     >
       {/* Header */}
       <div className="text-center mb-12">
         <SectionLabel className="mb-6">/ OUR PRICES</SectionLabel>
-        <h2 className="text-[28px] md:text-[55px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1]">
+        <RevealHeadline className="text-[28px] md:text-[55px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1]">
           SIMPLE, TRANSPARENT PRICING
-        </h2>
+        </RevealHeadline>
       </div>
 
       {/* Cards — stack on mobile, row on desktop */}

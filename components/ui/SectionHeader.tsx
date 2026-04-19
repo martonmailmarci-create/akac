@@ -1,4 +1,7 @@
+"use client";
+
 import BracketButton from "@/components/ui/BracketButton";
+import RevealHeadline from "@/components/ui/RevealHeadline";
 
 interface SectionHeaderProps {
   label: string;
@@ -48,7 +51,7 @@ export default function SectionHeader({
         >
           {label}
         </span>
-        <h2
+        <RevealHeadline
           style={{
             fontSize: "30px",
             fontWeight: 500,
@@ -59,7 +62,7 @@ export default function SectionHeader({
           }}
         >
           {title}
-        </h2>
+        </RevealHeadline>
       </div>
 
       {/* Body block — stacks on mobile, absolute on desktop */}

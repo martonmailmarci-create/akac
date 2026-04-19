@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 import HeroBackground from "@/components/ui/HeroBackground";
 
-export default function Hero() {
+export default function Hero({ ready }: { ready: boolean }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -13,6 +13,8 @@ export default function Hero() {
   const ctxRef = useRef<{ revert: () => void } | null>(null);
 
   useEffect(() => {
+    if (!ready) return;
+
     let mounted = true;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
@@ -30,22 +32,18 @@ export default function Hero() {
         const split = new SplitText(headlineRef.current, { type: "words" });
         const tl = gsap.timeline({ delay: 0.15 });
 
-        // 7 — label fades up first
         tl.from(labelRef.current, {
           autoAlpha: 0, y: 10, duration: 0.5, ease: "power3.out",
         });
 
-        // 6 — headline word by word
         tl.from(split.words, {
           autoAlpha: 0, y: 22, duration: 0.65, stagger: 0.045, ease: "power3.out",
         }, "-=0.15");
 
-        // 6 — subcopy fades up
         tl.from(subcopyRef.current, {
           autoAlpha: 0, y: 16, duration: 0.6, ease: "power3.out",
         }, "-=0.25");
 
-        // 6 — CTA fades up last
         tl.from(ctaRef.current, {
           autoAlpha: 0, y: 12, duration: 0.5, ease: "power3.out",
         }, "-=0.3");
@@ -57,7 +55,7 @@ export default function Hero() {
       ctxRef.current?.revert();
       ctxRef.current = null;
     };
-  }, []);
+  }, [ready]);
 
   return (
     <section

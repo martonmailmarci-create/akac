@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/ui/LenisProvider";
+import KonamiEgg from "@/components/ui/KonamiEgg";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <LenisProvider>{children}</LenisProvider>
+        <KonamiEgg />
       </body>
     </html>
   );

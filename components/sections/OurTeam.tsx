@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
 
@@ -24,8 +24,6 @@ const team = [
 export default function OurTeam() {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
   useEffect(() => {
     let ctx: { revert: () => void } | null = null;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -44,10 +42,6 @@ export default function OurTeam() {
 
     return () => ctx?.revert();
   }, []);
-
-  const prev = () => setActiveIndex((i) => (i - 1 + team.length) % team.length);
-  const next = () => setActiveIndex((i) => (i + 1) % team.length);
-  const member = team[activeIndex];
 
   return (
     <section
@@ -70,7 +64,7 @@ export default function OurTeam() {
             ref={headlineRef}
             className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-14 md:mb-16"
           >
-            WE DON&apos;T HAND OFF. /
+            WE DON&apos;T HAND OFF.
             <br />
             WE SEE IT THROUGH.
           </h2>
@@ -88,66 +82,43 @@ export default function OurTeam() {
           </div>
         </div>
 
-        {/* ── Mobile: carousel ── */}
-        <div className="md:hidden">
-          {/* Photo */}
-          <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "3/4" }}>
-            <Image
-              src={member.photo}
-              alt={member.name}
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            {/* Founder badge */}
-            <div className="absolute bottom-4 right-4 flex items-center gap-2">
-              <div className="w-[7px] h-[7px] rounded-full bg-akac-orange flex-shrink-0" />
-              <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">
-                {member.label}
-              </span>
+        {/* ── Mobile: stacked cards ── */}
+        <div className="md:hidden flex flex-col gap-20">
+          {team.map((m) => (
+            <div key={m.name}>
+              {/* Photo */}
+              <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "3/4" }}>
+                <Image src={m.photo} alt={m.name} fill className="object-cover" sizes="100vw" />
+                {/* Founder badge */}
+                <div className="absolute bottom-4 right-4 flex items-center gap-2">
+                  <div className="w-[7px] h-[7px] rounded-full bg-akac-orange flex-shrink-0" />
+                  <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">
+                    {m.label}
+                  </span>
+                </div>
+              </div>
+
+              {/* Name + Role */}
+              <div className="flex justify-between items-baseline mt-12">
+                <span className="text-[16px] font-medium text-akac-light uppercase tracking-[0.18px]">
+                  {m.name}
+                </span>
+                <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">
+                  {m.role}
+                </span>
+              </div>
+
+              {/* Description */}
+              <p className="text-[16px] font-medium text-akac-light tracking-[0.24px] leading-[1.6] mt-10">
+                {m.description}
+              </p>
+
+              {/* CTA */}
+              <div className="flex mt-14">
+                <BracketButton label={`CONNECT WITH ${m.name.split(" ")[0]}`} color="#D9D9D9" href="#contact" />
+              </div>
             </div>
-          </div>
-
-          {/* Navigation row */}
-          <div className="flex items-center justify-between mt-14">
-            <button
-              onClick={prev}
-              className="text-akac-light text-[20px] font-medium w-8 h-8 flex items-center justify-center"
-              aria-label="Previous"
-            >
-              &lt;
-            </button>
-            <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">
-              {String(activeIndex + 1).padStart(2, "0")}&nbsp;&nbsp;/&nbsp;&nbsp;{String(team.length).padStart(2, "0")}
-            </span>
-            <button
-              onClick={next}
-              className="text-akac-light text-[20px] font-medium w-8 h-8 flex items-center justify-center"
-              aria-label="Next"
-            >
-              &gt;
-            </button>
-          </div>
-
-          {/* Name + Role */}
-          <div className="flex justify-between items-baseline mt-12">
-            <span className="text-[16px] font-medium text-akac-light uppercase tracking-[0.18px]">
-              {member.name}
-            </span>
-            <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">
-              {member.role}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="text-[16px] font-medium text-akac-light tracking-[0.24px] leading-[1.6] mt-10">
-            {member.description}
-          </p>
-
-          {/* CTA buttons */}
-          <div className="flex gap-6 mt-14">
-            <BracketButton label={`CONNECT WITH ${member.name.split(" ")[0]}`} color="#D9D9D9" href="#contact" />
-          </div>
+          ))}
         </div>
 
         {/* ── Desktop: side-by-side with overlap ── */}

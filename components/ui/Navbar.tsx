@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const navLinks = [
@@ -12,11 +12,11 @@ const navLinks = [
 ];
 
 const desktopLinks = [
-  { label: "WHY AKAC", href: "#why-us", mobileHide: false },
-  { label: "TEAM", href: "#our-team", mobileHide: true },
-  { label: "WORK", href: "#featured-work", mobileHide: true },
-  { label: "SERVICES", href: "#services", mobileHide: false },
-  { label: "CONTACT", href: "#contact", mobileHide: false },
+  { label: "WHY AKAC", href: "#why-us" },
+  { label: "TEAM", href: "#our-team" },
+  { label: "WORK", href: "#featured-work" },
+  { label: "SERVICES", href: "#services" },
+  { label: "CONTACT", href: "#contact" },
 ];
 
 const PILL = {
@@ -26,10 +26,8 @@ const PILL = {
 } as const;
 
 export default function Navbar() {
-  const [hidden, setHidden] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setRevealed(true), 800);
@@ -37,23 +35,12 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setHidden(y > lastScrollY.current && y > 80);
-      lastScrollY.current = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Lock body scroll when menu is open
-  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const slideY = !revealed || hidden ? "calc(-100% - 25px)" : "0";
-  const transition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
+  const slideY = !revealed ? "calc(-100% - 25px)" : "0";
+  const pillTransition = "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
 
   return (
     <>
@@ -71,7 +58,7 @@ export default function Navbar() {
           justifyContent: "space-between",
           padding: "0 20px",
           zIndex: 50,
-          transition,
+          transition: pillTransition,
         }}
       >
         <a href="/" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
@@ -97,98 +84,161 @@ export default function Navbar() {
         ))}
       </nav>
 
-      {/* ── Mobile: full-width strip — logo left, hamburger right ── */}
+      {/* ── Mobile: expandable pill ── */}
       <div
-        className="flex md:hidden"
+        className="md:hidden"
         style={{
           position: "fixed",
           top: "20px",
           left: "20px",
           right: "20px",
           zIndex: 50,
-          ...PILL,
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 20px",
-          transform: `translateY(${slideY})`,
-          transition,
-        }}
-      >
-        <a href="/" style={{ display: "flex", alignItems: "center" }}>
-          <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
-        </a>
-        <span style={{ color: "#F9F9F4", fontSize: "24px", fontWeight: 600, letterSpacing: "-0.5px" }}>
-          akac.studio
-        </span>
-        <button
-          onClick={() => setMenuOpen(true)}
-          aria-label="Open menu"
-          style={{ display: "flex", flexDirection: "column", gap: "5px", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-        >
-          {[0, 1, 2].map((i) => (
-            <span key={i} style={{ display: "block", width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px" }} />
-          ))}
-        </button>
-      </div>
-
-      {/* ── Mobile fullscreen menu overlay ── */}
-      <div
-        className="flex md:hidden"
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 100,
           backgroundColor: "#111111",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "40px",
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? "auto" : "none",
-          transition: "opacity 0.3s ease",
+          borderRadius: "10px",
+          transform: `translateY(${slideY})`,
+          transition: pillTransition,
+          overflow: "hidden",
         }}
       >
-        {/* Close button */}
-        <button
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close menu"
+        {/* Strip — always visible */}
+        <div
           style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            ...PILL,
-            width: "55px",
+            height: "55px",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: "#1e1e1e",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            flexShrink: 0,
           }}
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <line x1="1" y1="1" x2="15" y2="15" stroke="#F9F9F4" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="15" y1="1" x2="1" y2="15" stroke="#F9F9F4" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        {navLinks.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-            style={{
-              color: "#F9F9F4",
-              fontSize: "28px",
-              fontWeight: 600,
-              letterSpacing: "-0.5px",
-              textTransform: "uppercase",
-              textDecoration: "none",
-            }}
-          >
-            {link.label}
+          <a href="/" style={{ display: "flex", alignItems: "center" }}>
+            <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
           </a>
-        ))}
+          {/* Hamburger / close toggle */}
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0, width: "24px", height: "24px", position: "relative" }}
+          >
+            {/* Bar 1 */}
+            <span style={{
+              position: "absolute",
+              left: 0,
+              width: "20px",
+              height: "1.5px",
+              backgroundColor: "#F9F9F4",
+              borderRadius: "2px",
+              top: menuOpen ? "11px" : "6px",
+              transform: menuOpen ? "rotate(45deg)" : "none",
+              transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease",
+            }} />
+            {/* Bar 2 */}
+            <span style={{
+              position: "absolute",
+              left: 0,
+              width: "20px",
+              height: "1.5px",
+              backgroundColor: "#F9F9F4",
+              borderRadius: "2px",
+              top: "11px",
+              opacity: menuOpen ? 0 : 1,
+              transition: "opacity 0.2s ease",
+            }} />
+            {/* Bar 3 */}
+            <span style={{
+              position: "absolute",
+              left: 0,
+              width: "20px",
+              height: "1.5px",
+              backgroundColor: "#F9F9F4",
+              borderRadius: "2px",
+              top: menuOpen ? "11px" : "16px",
+              transform: menuOpen ? "rotate(-45deg)" : "none",
+              transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease",
+            }} />
+          </button>
+        </div>
+
+        {/* Expandable content — grid trick for smooth height animation */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: menuOpen ? "1fr" : "0fr",
+            transition: "grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        >
+          <div style={{ overflow: "hidden", minHeight: 0 }}>
+            <div style={{ padding: "36px 24px 36px" }}>
+
+              {/* Nav links */}
+              <nav style={{ display: "flex", flexDirection: "column", gap: "2px", marginBottom: "36px" }}>
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    style={{
+                      color: "#F9F9F4",
+                      fontSize: "28px",
+                      fontWeight: 600,
+                      letterSpacing: "-0.8px",
+                      textDecoration: "none",
+                      lineHeight: 1.15,
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+
+              {/* Divider */}
+              <div style={{ height: "1px", backgroundColor: "#2a2a2a", marginBottom: "24px" }} />
+
+              {/* Contact */}
+              <div style={{ marginBottom: "20px" }}>
+                <span style={{ color: "#666", fontSize: "10px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>
+                  CONTACT
+                </span>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 14px", letterSpacing: "0.1px" }}>
+                  info@akac.studio
+                </p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>
+                  Marcell: marcell@akac.studio
+                </p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>
+                  Viktor: viktor@akac.studio
+                </p>
+              </div>
+
+              {/* Socials */}
+              <div style={{ marginBottom: "24px" }}>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>
+                  Instagram: @akac.studio
+                </p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>
+                  LinkedIn: @akac-studio
+                </p>
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: "1px", backgroundColor: "#2a2a2a", marginBottom: "20px" }} />
+
+              {/* Status */}
+              <div>
+                <span style={{ color: "#666", fontSize: "10px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", display: "block", marginBottom: "12px" }}>
+                  WORKING GLOBALLY
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                  <span style={{ width: "8px", height: "8px", backgroundColor: "#E8572A", borderRadius: "2px", flexShrink: 0 }} />
+                  <span style={{ color: "#F9F9F4", fontSize: "11px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase" }}>
+                    ACCEPTING PROJECTS. GET IN TOUCH.
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

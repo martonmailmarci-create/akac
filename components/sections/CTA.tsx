@@ -38,7 +38,7 @@ export default function CTA() {
 
       <h2
         ref={headlineRef}
-        className="text-[22px] md:text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[28px] md:leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
+        className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
       >
         LET US TAKE YOU FURTHER
         <br />

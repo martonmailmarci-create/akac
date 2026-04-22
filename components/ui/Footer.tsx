@@ -1,27 +1,36 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import BracketButton from "@/components/ui/BracketButton";
 
-function scrollTo(href: string) {
+function lenisScrollTo(anchor: string) {
   const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
   if (lenis) {
-    lenis.scrollTo(href);
+    lenis.scrollTo(anchor);
   } else {
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(anchor)?.scrollIntoView({ behavior: "smooth" });
   }
 }
 
 const navLinks = [
-  { label: "WORK", href: "#work" },
-  { label: "SERVICES", href: "#services" },
-  { label: "PRICING", href: "#pricing" },
-  { label: "TEAM", href: "#team" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "WORK", href: "/work" },
+  { label: "SERVICES", href: "/#services" },
+  { label: "PRICING", href: "/pricing" },
+  { label: "TEAM", href: "/#team" },
+  { label: "CONTACT", href: "/#contact" },
 ];
 const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      e.preventDefault();
+      lenisScrollTo(href.slice(1));
+    }
+  };
   return (
     <footer className="bg-akac-orange overflow-hidden relative flex flex-col rounded-t-[24px] md:rounded-t-[60px] md:min-h-[780px] md:px-[100px] md:pb-12 md:pt-6">
 
@@ -113,7 +122,7 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
+                  onClick={(e) => handleNav(e, link.href)}
                   className="block text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[32px] no-underline hover:opacity-60 transition-opacity"
                 >
                   {link.label}

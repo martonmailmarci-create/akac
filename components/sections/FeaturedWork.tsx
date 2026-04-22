@@ -121,7 +121,7 @@ export default function FeaturedWork() {
           ))}
         </div>
 
-        <BracketButton label="VIEW ALL" color="#ED6D40" href="#" className="mt-14" />
+        <BracketButton label="VIEW ALL" color="#ED6D40" href="/work" className="mt-14" />
       </div>
 
       {/* ── Desktop layout ── */}
@@ -160,7 +160,7 @@ export default function FeaturedWork() {
             ))}
           </div>
 
-          <BracketButton label="VIEW ALL" color="#ED6D40" href="#" />
+          <BracketButton label="VIEW ALL" color="#ED6D40" href="/work" />
         </div>
         </div>
 

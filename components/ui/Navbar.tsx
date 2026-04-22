@@ -1,32 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ScrambleText from "@/components/ui/ScrambleText";
 
-function scrollTo(href: string) {
+function lenisScrollTo(anchor: string) {
   const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
   if (lenis) {
-    lenis.scrollTo(href);
+    lenis.scrollTo(anchor);
   } else {
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(anchor)?.scrollIntoView({ behavior: "smooth" });
   }
 }
 
 const navLinks = [
-  { label: "WORK", href: "#work" },
-  { label: "SERVICES", href: "#services" },
-  { label: "PRICING", href: "#pricing" },
-  { label: "TEAM", href: "#team" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "WORK", href: "/work" },
+  { label: "SERVICES", href: "/#services" },
+  { label: "PRICING", href: "/pricing" },
+  { label: "TEAM", href: "/#team" },
+  { label: "CONTACT", href: "/#contact" },
 ];
 
 const desktopLinks = [
-  { label: "WORK", href: "#work" },
-  { label: "SERVICES", href: "#services" },
-  { label: "PRICING", href: "#pricing" },
-  { label: "TEAM", href: "#team" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "WORK", href: "/work" },
+  { label: "SERVICES", href: "/#services" },
+  { label: "PRICING", href: "/pricing" },
+  { label: "TEAM", href: "/#team" },
+  { label: "CONTACT", href: "/#contact" },
 ];
 
 const PILL = {
@@ -38,6 +39,18 @@ const PILL = {
 export default function Navbar() {
   const [revealed, setRevealed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#")) {
+      if (pathname === "/") {
+        e.preventDefault();
+        lenisScrollTo(href.slice(1));
+      }
+      // else let browser navigate to /#section naturally
+    }
+    // /work and other page links navigate normally
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setRevealed(true), 800);
@@ -78,7 +91,7 @@ export default function Navbar() {
           <a
             key={link.label}
             href={link.href}
-            onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
+            onClick={(e) => handleNav(e, link.href)}
             style={{ textDecoration: "none", flexShrink: 1 }}
           >
             <ScrambleText
@@ -182,7 +195,7 @@ export default function Navbar() {
                   <a
                     key={link.label}
                     href={link.href}
-                    onClick={(e) => { e.preventDefault(); scrollTo(link.href); setMenuOpen(false); }}
+                    onClick={(e) => { handleNav(e, link.href); setMenuOpen(false); }}
                     style={{ textDecoration: "none", lineHeight: 1.15 }}
                   >
                     <ScrambleText

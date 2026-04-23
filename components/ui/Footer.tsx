@@ -18,7 +18,7 @@ const navLinks = [
   { label: "SERVICES", href: "/#services" },
   { label: "PRICING", href: "/pricing" },
   { label: "TEAM", href: "/#team" },
-  { label: "CONTACT", href: "/#contact" },
+  { label: "CONTACT", href: "/contact" },
 ];
 const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 
-export default function CTA({ centered = false }: { centered?: boolean }) {
+export default function CTA({ centered = false, bgImage }: { centered?: boolean; bgImage?: string }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -31,6 +31,7 @@ export default function CTA({ centered = false }: { centered?: boolean }) {
       id="contact"
       ref={sectionRef}
       className={`bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-40 pb-32 min-h-screen md:px-[100px] flex flex-col items-center ${centered ? "md:min-h-[900px] md:py-[80px] justify-center" : "md:min-h-0 md:pt-[220px] md:pb-[420px] justify-start"}`}
+      style={bgImage ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)), url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
     >
       <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-10">
         / LET&apos;S TALK

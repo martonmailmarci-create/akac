@@ -167,6 +167,7 @@ function Grid3View({ projects }: { projects: Project[] }) {
 
 // ── Main Component ───────────────────────────────────────────────────────────
 export default function WorkGallery() {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const [view, setView] = useState<View>("grid2");
   const [activeIndex, setActiveIndex] = useState(0);
   const [filter, setFilter] = useState("ALL");
@@ -178,13 +179,13 @@ export default function WorkGallery() {
 
   const prev = () => {
     setDirection(-1);
-    setView("slide");
+    if (!isMobile) setView("slide");
     setActiveIndex((i) => (i - 1 + filtered.length) % filtered.length);
   };
 
   const next = () => {
     setDirection(1);
-    setView("slide");
+    if (!isMobile) setView("slide");
     setActiveIndex((i) => (i + 1) % filtered.length);
   };
 
@@ -268,14 +269,14 @@ export default function WorkGallery() {
         {/* View toggles + arrows */}
         <div className="flex items-center gap-1">
           {([
-            { key: "slide" as View, Icon: SlideIcon },
-            { key: "grid2" as View, Icon: Grid2Icon },
-            { key: "grid3" as View, Icon: Grid3Icon },
-          ]).map(({ key, Icon }) => (
+            { key: "slide" as View, Icon: SlideIcon, mobileHidden: true },
+            { key: "grid2" as View, Icon: Grid2Icon, mobileHidden: false },
+            { key: "grid3" as View, Icon: Grid3Icon, mobileHidden: false },
+          ]).map(({ key, Icon, mobileHidden }) => (
             <button
               key={key}
               onClick={() => setView(key)}
-              className="p-2 rounded-md cursor-pointer transition-colors duration-200"
+              className={`p-2 rounded-md cursor-pointer transition-colors duration-200 ${mobileHidden ? "hidden md:block" : ""}`}
               style={{
                 border: "none",
                 backgroundColor: view === key ? "rgba(237,109,64,0.12)" : "transparent",

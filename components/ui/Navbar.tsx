@@ -19,7 +19,7 @@ const navLinks = [
   { label: "SERVICES", href: "/#services" },
   { label: "PRICING", href: "/pricing" },
   { label: "TEAM", href: "/#team" },
-  { label: "CONTACT", href: "/#contact" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 const desktopLinks = [
@@ -27,7 +27,7 @@ const desktopLinks = [
   { label: "SERVICES", href: "/#services" },
   { label: "PRICING", href: "/pricing" },
   { label: "TEAM", href: "/#team" },
-  { label: "CONTACT", href: "/#contact" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 const PILL = {

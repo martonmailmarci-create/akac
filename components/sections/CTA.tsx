@@ -52,7 +52,7 @@ export default function CTA({ centered = false, bgImage }: { centered?: boolean;
         NO PREPARATION NEEDED.
       </p>
 
-      <BracketButton label="BOOK A CALL" color="#D9D9D9" href="mailto:hello@akac.studio" />
+      <BracketButton label="BOOK A CALL" color="#D9D9D9" href="/contact" />
     </section>
   );
 }

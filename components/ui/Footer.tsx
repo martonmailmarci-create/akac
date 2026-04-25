@@ -42,7 +42,7 @@ export default function Footer() {
           <h2 className="text-[32px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1] uppercase mb-12">
             TELL US WHAT YOU NEED.
           </h2>
-          <BracketButton label="CONTACT US" color="#111111" href="#contact" />
+          <BracketButton label="CONTACT US" color="#111111" href="/contact" />
         </div>
 
         {/* Divider */}
@@ -104,7 +104,7 @@ export default function Footer() {
             <h2 className="text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[32px] uppercase mb-12">
               TELL US WHAT YOU NEED.
             </h2>
-            <BracketButton label="CONTACT US" color="#111111" href="#contact" />
+            <BracketButton label="CONTACT US" color="#111111" href="/contact" />
           </div>
           <Image
             src="/logo.svg"

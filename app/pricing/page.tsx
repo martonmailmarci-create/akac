@@ -16,9 +16,9 @@ export default function PricingPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="bg-akac-light">
         {/* Pricing cards — extra mobile top padding since there's no hero above */}
-        <div className="pt-16 md:pt-0 bg-akac-light md:bg-transparent">
+        <div className="pt-16 md:pt-0">
           <Pricing />
         </div>
 

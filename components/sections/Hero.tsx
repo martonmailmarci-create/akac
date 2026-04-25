@@ -158,7 +158,7 @@ export default function Hero({ ready }: { ready: boolean }) {
 
         {/* CTA */}
         <div ref={ctaRef}>
-          <BracketButton label="GET IN TOUCH" color="#D9D9D9" href="#contact" />
+          <BracketButton label="GET IN TOUCH" color="#D9D9D9" href="/contact" />
         </div>
       </div>
     </section>

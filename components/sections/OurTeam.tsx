@@ -58,7 +58,7 @@ export default function OurTeam() {
 
           {/* CTA — 3rd on mobile, 2nd on desktop */}
           <div className="order-3 md:order-2 flex justify-center mb-20">
-            <BracketButton label="MEET THE TEAM" color="#D9D9D9" href="#contact" />
+            <BracketButton label="MEET THE TEAM" color="#D9D9D9" href="/contact" />
           </div>
         </div>
 
@@ -95,7 +95,7 @@ export default function OurTeam() {
 
               {/* CTA */}
               <div className="flex mt-14">
-                <BracketButton label={`CONNECT WITH ${m.name.split(" ")[0]}`} color="#D9D9D9" href="#contact" />
+                <BracketButton label={`CONNECT WITH ${m.name.split(" ")[0]}`} color="#D9D9D9" href="/contact" />
               </div>
             </div>
           ))}

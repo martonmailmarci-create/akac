@@ -117,7 +117,7 @@ export default function Pricing() {
               ))}
             </div>
 
-            <BracketButton label="GET A QUOTE" color={plan.btnColor} href="#contact" />
+            <BracketButton label="GET A QUOTE" color={plan.btnColor} href="/contact" />
           </div>
         ))}
       </div>
@@ -125,7 +125,7 @@ export default function Pricing() {
       {/* Footer note */}
       <p className="text-center text-[16px] font-medium text-akac-black tracking-[0.24px] leading-[1.6]">
         Not sure which fits? Every project is different.{" "}
-        <a href="#contact" className="text-akac-orange underline underline-offset-2 hover:opacity-70 transition-opacity">
+        <a href="/contact" className="text-akac-orange underline underline-offset-2 hover:opacity-70 transition-opacity">
           Get in touch
         </a>{" "}
         and we&apos;ll put together a proposal tailored to what you actually need.

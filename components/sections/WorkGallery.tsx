@@ -190,7 +190,7 @@ export default function WorkGallery() {
   };
 
   return (
-    <div className="bg-akac-cream min-h-screen" style={{ paddingTop: "180px" }}>
+    <div className="bg-akac-light min-h-screen" style={{ paddingTop: "180px" }}>
       {/* ── Header ── */}
       <div className="text-center px-6 mb-14">
         <p className="text-[12px] font-medium text-akac-black/50 uppercase tracking-[0.18px] mb-3">/ OUR WORK</p>

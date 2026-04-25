@@ -89,7 +89,7 @@ export default function HowWeWork() {
         label="/ OUR ETHOS"
         title="HOW WE WORK"
         body="We build websites that work as hard as your business does. With design that commands attention and code that never lets you down, we move fast without cutting corners. This isn't template-filling. It's deliberate, precise, and built to perform from day one."
-        cta={{ text: "LET'S TALK", href: "#contact" }}
+        cta={{ text: "LET'S TALK", href: "/contact" }}
         mbClass="mb-20 md:mb-[160px]"
       />
 

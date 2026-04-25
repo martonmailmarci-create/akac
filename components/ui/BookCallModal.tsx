@@ -54,7 +54,6 @@ export default function BookCallModal({ onClose }: Props) {
       cal("inline", {
         elementOrSelector: node,
         calLink: "akac-studio/15min",
-        layout: "month_view",
       });
     })();
   }, []);

@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Lighthouse runs locally — no external API, no quota limits.
-// chrome-launcher finds the installed Chrome/Chromium automatically.
-export const maxDuration = 60;
-
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const url = searchParams.get("url");
@@ -24,41 +20,27 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
   }
 
-  const isMobile = strategy === "mobile";
+  const key = process.env.PAGESPEED_API_KEY;
+  const apiUrl =
+    `https://www.googleapis.com/pagespeedonline/v5/runPagespeed` +
+    `?url=${encodeURIComponent(normalized)}&strategy=${strategy}` +
+    (key ? `&key=${key}` : "");
 
-  // Dynamically import so Next.js doesn't try to bundle them for the client
-  const { default: lighthouse } = await import("lighthouse");
-  const chromeLauncher = await import("chrome-launcher");
+  const res = await fetch(apiUrl, { cache: "no-store" });
 
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: ["--headless", "--no-sandbox", "--disable-gpu"],
-  });
-
-  let lhr: Record<string, unknown>;
-  try {
-    const result = await lighthouse(normalized, {
-      port: chrome.port,
-      output: "json",
-      logLevel: "error",
-      onlyCategories: ["performance"],
-      formFactor: isMobile ? "mobile" : "desktop",
-      screenEmulation: isMobile
-        ? { mobile: true, width: 375, height: 812, deviceScaleFactor: 3, disabled: false }
-        : { mobile: false, width: 1350, height: 940, deviceScaleFactor: 1, disabled: false },
-      throttlingMethod: "simulate",
-    });
-    lhr = result!.lhr as unknown as Record<string, unknown>;
-  } finally {
-    await chrome.kill();
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const message = body?.error?.message ?? `PageSpeed API returned ${res.status}`;
+    return NextResponse.json({ error: message }, { status: res.status });
   }
 
-  const categories = lhr.categories as Record<string, { score: number }>;
-  const audits = lhr.audits as Record<string, { displayValue?: string; score?: number; numericValue?: number }>;
+  const data = await res.json();
+  const lhr = data.lighthouseResult;
 
-  const score = Math.round((categories.performance?.score ?? 0) * 100);
+  const score = Math.round((lhr.categories.performance?.score ?? 0) * 100);
 
   const pick = (id: string) => {
-    const audit = audits?.[id];
+    const audit = lhr.audits?.[id];
     return {
       displayValue: audit?.displayValue ?? "—",
       score: audit?.score ?? null,

@@ -45,7 +45,7 @@ function showToast() {
   }, 2800);
 }
 
-function triggerEgg() {
+export function triggerEgg() {
   // Orange flash
   const flash = document.createElement("div");
   flash.style.cssText =

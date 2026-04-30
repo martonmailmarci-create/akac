@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/ui/LenisProvider";
 import KonamiEgg from "@/components/ui/KonamiEgg";
+import ContextMenu from "@/components/ui/ContextMenu";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body>
         <LenisProvider>{children}</LenisProvider>
         <KonamiEgg />
+        <ContextMenu />
       </body>
     </html>
   );

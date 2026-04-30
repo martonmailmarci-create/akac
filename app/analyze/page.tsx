@@ -153,22 +153,28 @@ export default function AnalyzePage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0);
   const resultsRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
+  const barRef = useRef<HTMLDivElement>(null);
+  const barWrapRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
 
-  // Cancel RAF on unmount
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
 
+  function setBarWidth(p: number) {
+    if (barRef.current) barRef.current.style.width = `${p}%`;
+    if (labelRef.current) labelRef.current.textContent = `${Math.floor(p)}%`;
+  }
+
   function startProgress() {
-    setProgress(0);
+    if (barWrapRef.current) barWrapRef.current.style.opacity = "1";
+    if (barRef.current) barRef.current.style.transition = "none";
+    setBarWidth(0);
     startTimeRef.current = performance.now();
 
     const animate = (now: number) => {
       const elapsed = now - startTimeRef.current;
-      // Phase 1: 0→50% in ~4s (fast)
-      // Phase 2: 50→92% exponential crawl (slow, never reaches 100 on its own)
       let p: number;
       if (elapsed < 4000) {
         p = (elapsed / 4000) * 50;
@@ -176,7 +182,7 @@ export default function AnalyzePage() {
         const t = elapsed - 4000;
         p = 50 + 42 * (1 - Math.exp(-t / 14000));
       }
-      setProgress(Math.min(p, 92));
+      setBarWidth(Math.min(p, 92));
       rafRef.current = requestAnimationFrame(animate);
     };
 
@@ -185,9 +191,12 @@ export default function AnalyzePage() {
 
   function completeProgress() {
     if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
-    setProgress(100);
-    // Reset after the fill animation finishes
-    setTimeout(() => setProgress(0), 600);
+    if (barRef.current) barRef.current.style.transition = "width 0.4s ease";
+    setBarWidth(100);
+    setTimeout(() => {
+      if (barWrapRef.current) barWrapRef.current.style.opacity = "0";
+      setTimeout(() => setBarWidth(0), 300);
+    }, 450);
   }
 
   async function handleAnalyze() {
@@ -334,26 +343,48 @@ export default function AnalyzePage() {
             style={{
               width: "100%",
               maxWidth: "660px",
-              height: "3px",
-              background: "#1e1e1e",
-              borderRadius: "99px",
-              overflow: "hidden",
-              opacity: progress > 0 ? 1 : 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              marginTop: "-16px",
+              opacity: 0,
               transition: "opacity 0.3s ease",
-              marginTop: "-20px",
             }}
+            ref={barWrapRef}
           >
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <span
+                ref={labelRef}
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "#ED6D40",
+                  letterSpacing: "0.05em",
+                  fontFamily: "var(--font-inter), sans-serif",
+                }}
+              >
+                0%
+              </span>
+            </div>
             <div
               style={{
-                height: "100%",
-                width: `${progress}%`,
-                background: "linear-gradient(90deg, #ED6D40, #f59e6a)",
+                width: "100%",
+                height: "6px",
+                background: "#1e1e1e",
                 borderRadius: "99px",
-                transition: progress === 100
-                  ? "width 0.4s ease"
-                  : "width 0.08s linear",
+                overflow: "hidden",
               }}
-            />
+            >
+              <div
+                ref={barRef}
+                style={{
+                  height: "100%",
+                  width: "0%",
+                  background: "linear-gradient(90deg, #ED6D40, #f59e6a)",
+                  borderRadius: "99px",
+                }}
+              />
+            </div>
           </div>
 
           {/* Error */}

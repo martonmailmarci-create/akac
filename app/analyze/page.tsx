@@ -15,6 +15,7 @@ interface AnalyzeResult {
   url: string;
   strategy: string;
   score: number;
+  runs: number;
   metrics: {
     fcp: Metric;
     lcp: Metric;
@@ -286,7 +287,7 @@ export default function AnalyzePage() {
                 fontFamily: "var(--font-inter), sans-serif",
               }}
             >
-              {loading ? "Analyzing…" : "Analyze"}
+              {loading ? "Running 3 tests…" : "Analyze"}
             </button>
           </div>
 
@@ -321,7 +322,7 @@ export default function AnalyzePage() {
                 {result.url}
               </span>
               <span style={{ fontSize: "11px", fontWeight: 500, color: "#444", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                {result.strategy} · Powered by Google Lighthouse
+                {result.strategy} · Median of {result.runs} runs · Powered by Google Lighthouse
               </span>
             </div>
 

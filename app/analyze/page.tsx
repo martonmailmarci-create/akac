@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 
@@ -153,19 +153,56 @@ export default function AnalyzePage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(0);
+
+  // Cancel RAF on unmount
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+
+  function startProgress() {
+    setProgress(0);
+    startTimeRef.current = performance.now();
+
+    const animate = (now: number) => {
+      const elapsed = now - startTimeRef.current;
+      // Phase 1: 0→50% in ~4s (fast)
+      // Phase 2: 50→92% exponential crawl (slow, never reaches 100 on its own)
+      let p: number;
+      if (elapsed < 4000) {
+        p = (elapsed / 4000) * 50;
+      } else {
+        const t = elapsed - 4000;
+        p = 50 + 42 * (1 - Math.exp(-t / 14000));
+      }
+      setProgress(Math.min(p, 92));
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+  }
+
+  function completeProgress() {
+    if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
+    setProgress(100);
+    // Reset after the fill animation finishes
+    setTimeout(() => setProgress(0), 600);
+  }
 
   async function handleAnalyze() {
     if (!inputUrl.trim()) return;
     setLoading(true);
     setError(null);
     setResult(null);
+    startProgress();
 
     try {
       const res = await fetch(
         `/api/analyze?url=${encodeURIComponent(inputUrl.trim())}&strategy=${strategy}`
       );
       const data = await res.json();
+      completeProgress();
       if (!res.ok) {
         setError(data.error ?? "Something went wrong.");
       } else {
@@ -175,6 +212,7 @@ export default function AnalyzePage() {
         }, 100);
       }
     } catch {
+      completeProgress();
       setError("Network error — please try again.");
     } finally {
       setLoading(false);
@@ -289,6 +327,33 @@ export default function AnalyzePage() {
             >
               {loading ? "Running 3 tests…" : "Analyze"}
             </button>
+          </div>
+
+          {/* Progress bar */}
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "660px",
+              height: "3px",
+              background: "#1e1e1e",
+              borderRadius: "99px",
+              overflow: "hidden",
+              opacity: progress > 0 ? 1 : 0,
+              transition: "opacity 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+            <div
+              style={{
+                height: "100%",
+                width: `${progress}%`,
+                background: "linear-gradient(90deg, #ED6D40, #f59e6a)",
+                borderRadius: "99px",
+                transition: progress === 100
+                  ? "width 0.4s ease"
+                  : "width 0.08s linear",
+              }}
+            />
           </div>
 
           {/* Error */}

@@ -19,6 +19,7 @@ const navLinks = [
   { label: "SERVICES", href: "/#services" },
   { label: "PRICING", href: "/pricing" },
   { label: "TEAM", href: "/#team" },
+  { label: "SPEED TEST", href: "/analyze" },
   { label: "CONTACT", href: "/contact" },
 ];
 
@@ -27,6 +28,7 @@ const desktopLinks = [
   { label: "SERVICES", href: "/#services" },
   { label: "PRICING", href: "/pricing" },
   { label: "TEAM", href: "/#team" },
+  { label: "SPEED TEST", href: "/analyze" },
   { label: "CONTACT", href: "/contact" },
 ];
 
@@ -75,7 +77,7 @@ export default function Navbar() {
           top: "20px",
           left: "50%",
           transform: `translateX(-50%) translateY(${slideY})`,
-          width: "min(647px, 90vw)",
+          width: "min(760px, 90vw)",
           ...PILL,
           alignItems: "center",
           justifyContent: "space-between",

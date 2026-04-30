@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ["lighthouse", "chrome-launcher", "@paulirish/trace_engine"],
 };
 
 export default nextConfig;

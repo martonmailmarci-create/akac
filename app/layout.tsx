@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import LenisProvider from "@/components/ui/LenisProvider";
 import KonamiEgg from "@/components/ui/KonamiEgg";
@@ -56,6 +57,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6YGXL6DBCF" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-6YGXL6DBCF');
+        `}</Script>
+      </head>
       <body>
         <LenisProvider>{children}</LenisProvider>
         <KonamiEgg />

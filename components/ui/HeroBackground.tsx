@@ -82,7 +82,14 @@ export default function HeroBackground() {
     }
 
     const startAnimation = () => {
+      let frameCount = 0
       const draw = () => {
+        frameCount++
+        // On mobile, draw every 3rd frame to reduce CPU load
+        if (isMobile && frameCount % 3 !== 0) {
+          rafRef.current = requestAnimationFrame(draw)
+          return
+        }
         const imageData = imageDataRef.current
         if (!imageData) return
 

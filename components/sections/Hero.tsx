@@ -17,20 +17,15 @@ export default function Hero({ ready }: { ready: boolean }) {
 
     let mounted = true;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      if (contentRef.current) contentRef.current.style.visibility = "visible";
-      return;
-    }
+    if (prefersReduced) return;
 
     (async () => {
       const { gsap, SplitText } = await import("@/lib/gsap");
       if (!mounted || !contentRef.current) return;
       ctxRef.current?.revert();
       ctxRef.current = gsap.context(() => {
-        gsap.set(contentRef.current, { visibility: "visible" });
-
         const split = new SplitText(headlineRef.current, { type: "words" });
-        const tl = gsap.timeline({ delay: 0.15 });
+        const tl = gsap.timeline({ delay: 0.1 });
 
         tl.from(labelRef.current, {
           autoAlpha: 0, y: 10, duration: 0.5, ease: "power3.out",
@@ -98,7 +93,6 @@ export default function Hero({ ready }: { ready: boolean }) {
           gap: "28px",
           maxWidth: "1100px",
           width: "100%",
-          visibility: "hidden",
         }}
       >
         {/* 7 — Label */}

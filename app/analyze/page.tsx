@@ -335,7 +335,7 @@ export default function AnalyzePage() {
                   </div>
                 )}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (
                   <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} />
                 ))}

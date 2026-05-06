@@ -15,6 +15,7 @@ interface AnalyzeResult {
   url: string;
   strategy: string;
   score: number;
+  screenshot: string | null;
   metrics: {
     fcp: Metric;
     lcp: Metric;
@@ -304,12 +305,35 @@ export default function AnalyzePage() {
 
             {/* Score + metrics */}
             <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "40px", alignItems: "start" }}>
-              <div style={{
-                display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
-                background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "40px 48px",
-              }}>
-                <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
-                <ScoreGauge score={result.score} />
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {/* Score gauge */}
+                <div style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
+                  background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "32px 48px",
+                }}>
+                  <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
+                  <ScoreGauge score={result.score} />
+                </div>
+
+                {/* Screenshot */}
+                {result.screenshot && (
+                  <div style={{
+                    background: "#161616", border: "1px solid #222", borderRadius: "16px",
+                    overflow: "hidden", width: "100%",
+                  }}>
+                    <div style={{ padding: "10px 14px", borderBottom: "1px solid #222" }}>
+                      <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                        Page snapshot
+                      </span>
+                    </div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={result.screenshot}
+                      alt="Page screenshot"
+                      style={{ width: "100%", display: "block", maxWidth: "280px" }}
+                    />
+                  </div>
+                )}
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (

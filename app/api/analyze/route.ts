@@ -45,10 +45,17 @@ export async function GET(req: NextRequest) {
       };
     };
 
+    // Extract the final screenshot included in the Lighthouse result
+    const screenshotAudit = audits?.["final-screenshot"] as
+      | { details?: { data?: string } }
+      | undefined;
+    const screenshot = screenshotAudit?.details?.data ?? null;
+
     return NextResponse.json({
       url: normalized,
       strategy,
       score,
+      screenshot,
       metrics: {
         fcp: pick("first-contentful-paint"),
         lcp: pick("largest-contentful-paint"),

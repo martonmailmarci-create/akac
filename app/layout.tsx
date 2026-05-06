@@ -18,9 +18,34 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "AKAC Studio — Web Design & Development",
+  metadataBase: new URL("https://akac.studio"),
+  title: {
+    default: "AKAC Studio — Web Design & Development",
+    template: "%s — AKAC Studio",
+  },
   description:
     "AKAC Studio builds high-performance marketing websites, web apps, and e-commerce experiences. Delivered in weeks, not months.",
+  keywords: ["web design", "web development", "agency", "marketing website", "e-commerce", "web app"],
+  authors: [{ name: "AKAC Studio", url: "https://akac.studio" }],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://akac.studio",
+    siteName: "AKAC Studio",
+    title: "AKAC Studio — Web Design & Development",
+    description: "High-performance marketing websites, web apps, and e-commerce experiences. Delivered in weeks, not months.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AKAC Studio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AKAC Studio — Web Design & Development",
+    description: "High-performance marketing websites, web apps, and e-commerce experiences. Delivered in weeks, not months.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

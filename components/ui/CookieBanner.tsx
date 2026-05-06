@@ -3,18 +3,33 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+function grantAnalytics() {
+  if (typeof window === "undefined") return;
+  const gtag = (window as unknown as Record<string, (...a: unknown[]) => void>).gtag;
+  if (typeof gtag === "function") {
+    gtag("consent", "update", { analytics_storage: "granted" });
+  }
+}
+
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem("cookie_consent")) {
+    const choice = localStorage.getItem("cookie_consent");
+    if (choice === "accepted") {
+      // Previously accepted — grant analytics immediately, no banner
+      grantAnalytics();
+    } else if (!choice) {
+      // No choice yet — show banner after a short delay
       const t = setTimeout(() => setVisible(true), 1500);
       return () => clearTimeout(t);
     }
+    // If "declined" — do nothing, analytics stays denied
   }, []);
 
   const accept = () => {
     localStorage.setItem("cookie_consent", "accepted");
+    grantAnalytics();
     setVisible(false);
   };
 
@@ -44,7 +59,7 @@ export default function CookieBanner() {
               </span>
             </div>
             <p className="text-[13px] font-medium text-akac-cream/70 leading-[1.6]">
-              We use only essential cookies to keep the site running. No tracking, no ads.{" "}
+              We use cookies to analyze site traffic with Google Analytics. Accept to help us improve, or decline for essential cookies only.{" "}
               <a href="/cookie-policy" className="text-akac-orange underline underline-offset-2 hover:opacity-70 transition-opacity">
                 Learn more
               </a>

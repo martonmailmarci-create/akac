@@ -58,13 +58,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6YGXL6DBCF" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">{`
+        {/* Initialise gtag + set consent defaults to denied before anything loads */}
+        <Script id="gtag-consent-init" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', { analytics_storage: 'denied' });
           gtag('js', new Date());
           gtag('config', 'G-6YGXL6DBCF');
         `}</Script>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6YGXL6DBCF" strategy="afterInteractive" />
       </head>
       <body>
         <LenisProvider>{children}</LenisProvider>

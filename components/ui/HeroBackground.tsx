@@ -40,22 +40,12 @@ export default function HeroBackground() {
     }
 
     const img = new Image()
-    img.src = '/images/s-curve.jpg'
+    img.src = '/images/ascii-art.png'
 
     img.onload = () => {
       srcImgRef.current = img
       resample()
       startAnimation()
-    }
-
-    img.onerror = () => {
-      const fallback = new Image()
-      fallback.src = '/images/ascii-art.png'
-      fallback.onload = () => {
-        srcImgRef.current = fallback
-        resample()
-        startAnimation()
-      }
     }
 
     let time = 0

@@ -303,43 +303,43 @@ export default function AnalyzePage() {
               </button>
             </div>
 
-            {/* Score + metrics */}
-            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "40px", alignItems: "start" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                {/* Score gauge */}
-                <div style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
-                  background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "32px 48px",
-                }}>
-                  <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
-                  <ScoreGauge score={result.score} />
-                </div>
+            {/* Score | Metrics | Screenshot */}
+            <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 220px", gap: "16px", alignItems: "start" }}>
 
-                {/* Screenshot */}
-                {result.screenshot && (
-                  <div style={{
-                    background: "#161616", border: "1px solid #222", borderRadius: "16px",
-                    overflow: "hidden", width: "100%",
-                  }}>
-                    <div style={{ padding: "10px 14px", borderBottom: "1px solid #222" }}>
-                      <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>
-                        Page snapshot
-                      </span>
-                    </div>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={result.screenshot}
-                      alt="Page screenshot"
-                      style={{ width: "100%", display: "block", maxWidth: "280px" }}
-                    />
-                  </div>
-                )}
+              {/* Score gauge */}
+              <div style={{
+                display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
+                background: "#161616", border: "1px solid #222", borderRadius: "20px",
+                padding: "32px 24px", height: "100%", boxSizing: "border-box",
+              }}>
+                <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
+                <ScoreGauge score={result.score} />
               </div>
+
+              {/* Metrics 2×3 */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (
                   <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} />
                 ))}
               </div>
+
+              {/* Screenshot */}
+              {result.screenshot ? (
+                <div style={{
+                  background: "#161616", border: "1px solid #222", borderRadius: "20px",
+                  overflow: "hidden", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column",
+                }}>
+                  <div style={{ padding: "10px 14px", borderBottom: "1px solid #222", flexShrink: 0 }}>
+                    <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                      Page snapshot
+                    </span>
+                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={result.screenshot} alt="Page screenshot" style={{ width: "100%", display: "block", objectFit: "cover", flex: 1 }} />
+                </div>
+              ) : (
+                <div style={{ background: "#161616", border: "1px solid #222", borderRadius: "20px", height: "100%" }} />
+              )}
             </div>
 
             {/* Honest context box */}

@@ -15,7 +15,6 @@ interface AnalyzeResult {
   url: string;
   strategy: string;
   score: number;
-  screenshot: string | null;
   metrics: {
     fcp: Metric;
     lcp: Metric;
@@ -303,43 +302,20 @@ export default function AnalyzePage() {
               </button>
             </div>
 
-            {/* Score | Metrics | Screenshot */}
-            <div style={{ display: "grid", gridTemplateColumns: "220px 1fr 220px", gap: "16px", alignItems: "start" }}>
-
-              {/* Score gauge */}
+            {/* Score + metrics */}
+            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "40px", alignItems: "start" }}>
               <div style={{
                 display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
-                background: "#161616", border: "1px solid #222", borderRadius: "20px",
-                padding: "32px 24px", height: "100%", boxSizing: "border-box",
+                background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "40px 48px",
               }}>
                 <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
                 <ScoreGauge score={result.score} />
               </div>
-
-              {/* Metrics 2×3 */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (
                   <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} />
                 ))}
               </div>
-
-              {/* Screenshot */}
-              {result.screenshot ? (
-                <div style={{
-                  background: "#161616", border: "1px solid #222", borderRadius: "20px",
-                  overflow: "hidden", height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column",
-                }}>
-                  <div style={{ padding: "10px 14px", borderBottom: "1px solid #222", flexShrink: 0 }}>
-                    <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>
-                      Page snapshot
-                    </span>
-                  </div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={result.screenshot} alt="Page screenshot" style={{ width: "100%", display: "block", objectFit: "cover", flex: 1 }} />
-                </div>
-              ) : (
-                <div style={{ background: "#161616", border: "1px solid #222", borderRadius: "20px", height: "100%" }} />
-              )}
             </div>
 
             {/* Honest context box */}

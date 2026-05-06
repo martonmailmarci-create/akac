@@ -40,12 +40,14 @@ function scoreColor(score: number | null): string {
 
 function scoreLabel(score: number): string {
   if (score >= 90) return "GOOD";
+  if (score >= 85) return "NEAR GOOD";
   if (score >= 50) return "NEEDS WORK";
   return "POOR";
 }
 
 function scoreBigColor(score: number): string {
   if (score >= 90) return "#22c55e";
+  if (score >= 85) return "#86efac"; // light green for near-good
   if (score >= 50) return "#ED6D40";
   return "#ef4444";
 }
@@ -57,9 +59,9 @@ function confidenceColor(c: string): string {
 }
 
 function confidenceLabel(c: string): string {
-  if (c === "high") return "High confidence — consistent results";
-  if (c === "medium") return "Medium confidence — some variability";
-  return "Low confidence — results vary significantly";
+  if (c === "high") return "High confidence — spread under 8 pts, result is reliable";
+  if (c === "medium") return "Medium confidence — 8–15 pt spread, treat as an estimate";
+  return "Low confidence — spread over 15 pts, run again for a better picture";
 }
 
 /* ─── Score gauge ────────────────────────────────────────── */

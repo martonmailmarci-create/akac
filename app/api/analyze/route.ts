@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
     individualScores,
     spread,
     deviation,
-    confidence: deviation <= 5 ? "high" : deviation <= 10 ? "medium" : "low",
+    confidence: spread <= 8 ? "high" : spread <= 15 ? "medium" : "low",
     metrics: {
       fcp: pick("first-contentful-paint"),
       lcp: pick("largest-contentful-paint"),

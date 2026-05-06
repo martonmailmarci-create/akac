@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const RUNS = 3;
+const RUNS = 5;
+const DELAY_MS = 1500;
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function runOnce(normalized: string, strategy: string, key: string | undefined) {
   const apiUrl =
@@ -16,10 +21,18 @@ async function runOnce(normalized: string, strategy: string, key: string | undef
   return (await res.json()).lighthouseResult;
 }
 
-function median(values: number[]): number {
+function trimmedMean(values: number[]): number {
+  if (values.length <= 2) return values.reduce((a, b) => a + b, 0) / values.length;
   const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  // Drop highest and lowest, average the rest
+  const trimmed = sorted.slice(1, -1);
+  return Math.round(trimmed.reduce((a, b) => a + b, 0) / trimmed.length);
+}
+
+function stdDev(values: number[]): number {
+  const mean = values.reduce((a, b) => a + b, 0) / values.length;
+  const variance = values.reduce((sum, v) => sum + (v - mean) ** 2, 0) / values.length;
+  return Math.round(Math.sqrt(variance));
 }
 
 export async function GET(req: NextRequest) {
@@ -43,39 +56,42 @@ export async function GET(req: NextRequest) {
   }
 
   const key = process.env.PAGESPEED_API_KEY;
+  const lhrs: Record<string, unknown>[] = [];
+  const individualScores: number[] = [];
 
-  // Run RUNS times in parallel, drop any that fail
-  const results = await Promise.allSettled(
-    Array.from({ length: RUNS }, () => runOnce(normalized, strategy, key))
-  );
-
-  const lhrs = results
-    .filter((r): r is PromiseFulfilledResult<Record<string, unknown>> => r.status === "fulfilled")
-    .map((r) => r.value);
-
-  if (lhrs.length === 0) {
-    const firstError = (results[0] as PromiseRejectedResult).reason as Error;
-    return NextResponse.json({ error: firstError.message }, { status: 500 });
+  // Run sequentially with delay between each to get independent samples
+  for (let i = 0; i < RUNS; i++) {
+    try {
+      const lhr = await runOnce(normalized, strategy, key);
+      const categories = (lhr as { categories: Record<string, { score: number }> }).categories;
+      const score = Math.round((categories?.performance?.score ?? 0) * 100);
+      lhrs.push(lhr as Record<string, unknown>);
+      individualScores.push(score);
+    } catch {
+      // Skip failed runs silently
+    }
+    // Delay between runs (skip delay after the last run)
+    if (i < RUNS - 1) await sleep(DELAY_MS);
   }
 
-  // Pick the median result by performance score
-  const scores = lhrs.map((lhr) => {
-    const categories = lhr.categories as Record<string, { score: number }>;
-    return Math.round((categories.performance?.score ?? 0) * 100);
+  if (lhrs.length === 0) {
+    return NextResponse.json({ error: "All test runs failed. Check the URL and try again." }, { status: 500 });
+  }
+
+  const finalScore = trimmedMean(individualScores);
+  const spread = Math.max(...individualScores) - Math.min(...individualScores);
+  const deviation = stdDev(individualScores);
+
+  // Pick the LHR whose score is closest to the final score for metric details
+  const representativeLhr = lhrs.reduce((prev, curr) => {
+    const prevCats = (prev as { categories: Record<string, { score: number }> }).categories;
+    const currCats = (curr as { categories: Record<string, { score: number }> }).categories;
+    const prevScore = Math.round((prevCats?.performance?.score ?? 0) * 100);
+    const currScore = Math.round((currCats?.performance?.score ?? 0) * 100);
+    return Math.abs(prevScore - finalScore) <= Math.abs(currScore - finalScore) ? prev : curr;
   });
 
-  const medianScore = Math.round(median(scores));
-
-  // Use the LHR whose score is closest to the median for metric details
-  const bestLhr = lhrs.reduce((prev, curr) => {
-    const prevCats = prev.categories as Record<string, { score: number }>;
-    const currCats = curr.categories as Record<string, { score: number }>;
-    const prevScore = Math.round((prevCats.performance?.score ?? 0) * 100);
-    const currScore = Math.round((currCats.performance?.score ?? 0) * 100);
-    return Math.abs(prevScore - medianScore) <= Math.abs(currScore - medianScore) ? prev : curr;
-  });
-
-  const audits = bestLhr.audits as Record<string, { displayValue?: string; score?: number; numericValue?: number }>;
+  const audits = (representativeLhr as { audits: Record<string, { displayValue?: string; score?: number; numericValue?: number }> }).audits;
 
   const pick = (id: string) => {
     const audit = audits?.[id];
@@ -89,8 +105,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     url: normalized,
     strategy,
-    score: medianScore,
+    score: finalScore,
     runs: lhrs.length,
+    individualScores,
+    spread,
+    deviation,
+    confidence: deviation <= 5 ? "high" : deviation <= 10 ? "medium" : "low",
     metrics: {
       fcp: pick("first-contentful-paint"),
       lcp: pick("largest-contentful-paint"),

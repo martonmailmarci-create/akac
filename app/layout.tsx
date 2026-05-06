@@ -6,6 +6,7 @@ import LenisProvider from "@/components/ui/LenisProvider";
 import KonamiEgg from "@/components/ui/KonamiEgg";
 import ContextMenu from "@/components/ui/ContextMenu";
 import CookieBanner from "@/components/ui/CookieBanner";
+import JsonLd from "@/components/ui/JsonLd";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -62,6 +63,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        {/* DNS prefetch for third-party domains */}
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//app.cal.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <JsonLd />
         {/* Initialise gtag + set consent defaults to denied before anything loads */}
         <Script id="gtag-consent-init" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];

@@ -4,6 +4,7 @@ import "./globals.css";
 import LenisProvider from "@/components/ui/LenisProvider";
 import KonamiEgg from "@/components/ui/KonamiEgg";
 import ContextMenu from "@/components/ui/ContextMenu";
+import CookieBanner from "@/components/ui/CookieBanner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,6 +60,7 @@ export default function RootLayout({
         <LenisProvider>{children}</LenisProvider>
         <KonamiEgg />
         <ContextMenu />
+        <CookieBanner />
       </body>
     </html>
   );

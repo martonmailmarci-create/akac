@@ -20,7 +20,11 @@ const navLinks = [
   { label: "TEAM", href: "/#team" },
   { label: "CONTACT", href: "/contact" },
 ];
-const legalLinks = ["PRIVACY POLICY", "TERMS AND CONDITIONS", "COOKIE POLICY"];
+const legalLinks = [
+  { label: "PRIVACY POLICY", href: "/privacy-policy" },
+  { label: "TERMS AND CONDITIONS", href: "/terms" },
+  { label: "COOKIE POLICY", href: "/cookie-policy" },
+];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -84,11 +88,11 @@ export default function Footer() {
         <div className="flex flex-col gap-2">
           {legalLinks.map((link) => (
             <a
-              key={link}
-              href="#"
+              key={link.label}
+              href={link.href}
               className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px] no-underline opacity-50"
             >
-              {link}
+              {link.label}
             </a>
           ))}
           <span className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mt-1">
@@ -142,11 +146,11 @@ export default function Footer() {
           <div className="flex flex-col gap-1 text-right">
             {legalLinks.map((link) => (
               <a
-                key={link}
-                href="#"
+                key={link.label}
+                href={link.href}
                 className="text-[16px] font-semibold text-akac-black tracking-[0.24px] uppercase no-underline hover:opacity-60 transition-opacity"
               >
-                {link}
+                {link.label}
               </a>
             ))}
           </div>

@@ -63,8 +63,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Preload hero canvas image */}
-        <link rel="preload" href="/images/ascii-art.png" as="image" />
         {/* DNS prefetch for third-party domains */}
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//app.cal.com" />

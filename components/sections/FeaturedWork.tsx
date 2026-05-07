@@ -120,7 +120,7 @@ export default function FeaturedWork() {
                 <div className="flex items-center gap-2 flex-wrap justify-end">
                   {p.slug ? (
                     <Link href={`/work/${p.slug}`} className="text-[14px] font-semibold text-akac-light tracking-[-0.28px] hover:text-akac-orange transition-colors">
-                      {p.name} <span className="text-akac-orange">→</span>
+                      {p.name}
                     </Link>
                   ) : (
                     <span className="text-[14px] font-semibold text-akac-light tracking-[-0.28px]">{p.name}</span>
@@ -201,7 +201,7 @@ export default function FeaturedWork() {
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   {p.slug ? (
                     <Link href={`/work/${p.slug}`} style={{ fontSize: "16px", fontWeight: 600, color: "#D9D9D9", letterSpacing: "-0.32px", textDecoration: "none" }}>
-                      {p.name} <span style={{ color: "#ED6D40" }}>→</span>
+                      {p.name}
                     </Link>
                   ) : (
                     <span className="text-[16px] font-semibold text-akac-light tracking-[-0.32px]">{p.name}</span>

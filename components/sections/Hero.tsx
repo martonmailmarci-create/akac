@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 import HeroBackground from "@/components/ui/HeroBackground";
 
 export default function Hero({ ready }: { ready: boolean }) {
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => { setIsDesktop(window.innerWidth >= 768); }, []);
-
   const contentRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -67,7 +64,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         justifyContent: "center",
       }}
     >
-      {isDesktop && <HeroBackground />}
+      <HeroBackground />
 
       {/* Soft radial vignette behind content */}
       <div style={{

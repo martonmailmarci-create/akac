@@ -10,14 +10,8 @@ const projects = [
   {
     id: "01", name: "ANNA ŁABNO",
     tags: ["Web Design & Dev", "Healthcare / Therapy"],
-    thumb: "/annalabno.png", large: "/annalabno.png",
-    slug: "annalabno",
-  },
-  {
-    id: "02", name: "REACH",
-    tags: ["Marketing Site", "Tech / Crypto"],
     thumb: "/project1.png", large: "/project1.png",
-    slug: null,
+    slug: "annalabno",
   },
 ];
 

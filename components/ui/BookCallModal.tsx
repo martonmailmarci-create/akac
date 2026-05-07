@@ -79,12 +79,17 @@ export default function BookCallModal({ onClose }: Props) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed inset-0 z-[101] flex items-center justify-center px-4"
+        className="fixed inset-0 z-[101] flex items-center justify-center px-4 py-4"
         onClick={(e) => e.stopPropagation()}
       >
         <motion.div
-          className="w-full bg-akac-black overflow-hidden"
-          style={{ borderRadius: "24px" }}
+          className="w-full bg-akac-black"
+          style={{
+            borderRadius: "24px",
+            maxHeight: "calc(100dvh - 32px)",
+            overflowY: "auto",
+            WebkitOverflowScrolling: "touch" as React.CSSProperties["WebkitOverflowScrolling"],
+          }}
           animate={{ maxWidth: step === "calendar" ? 900 : 560 }}
           transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         >
@@ -169,7 +174,7 @@ export default function BookCallModal({ onClose }: Props) {
               >
                 <div
                   ref={calRef}
-                  style={{ width: "100%", height: "600px", overflow: "hidden" }}
+                  style={{ width: "100%", minHeight: "600px" }}
                 />
               </motion.div>
             )}

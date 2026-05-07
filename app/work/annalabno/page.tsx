@@ -32,9 +32,13 @@ export default function AnnalabnoPage() {
         {/* ── Hero ── */}
         <section
           style={{
-            paddingTop: "180px",
-            paddingBottom: "100px",
-            backgroundImage: "linear-gradient(rgba(17,17,17,0.72), rgba(17,17,17,0.72)), url('/project1.png')",
+            minHeight: "100svh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            paddingTop: "140px",
+            paddingBottom: "80px",
+            backgroundImage: "linear-gradient(rgba(17,17,17,0.55), rgba(17,17,17,0.55)), url('/project1.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

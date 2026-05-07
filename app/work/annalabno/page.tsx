@@ -4,6 +4,7 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import BracketButton from "@/components/ui/BracketButton";
 import CTA from "@/components/sections/CTA";
+import HeroParallax from "./HeroParallax";
 
 export const metadata: Metadata = {
   title: "Anna Łabno — Case Study | AKAC Studio",
@@ -30,19 +31,7 @@ export default function AnnalabnoPage() {
       <Navbar />
       <main>
         {/* ── Hero ── */}
-        <section
-          style={{
-            minHeight: "100svh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            paddingTop: "140px",
-            paddingBottom: "80px",
-            backgroundImage: "linear-gradient(rgba(17,17,17,0.55), rgba(17,17,17,0.55)), url('/project1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
+        <HeroParallax>
           <div className="px-6 md:px-[100px]">
             <p
               style={{
@@ -80,7 +69,7 @@ export default function AnnalabnoPage() {
               [WEB DESIGN & DEVELOPMENT] — [WARSAW, POLAND] — [2025]
             </p>
           </div>
-        </section>
+        </HeroParallax>
 
         {/* ── Meta bar ── */}
         <section

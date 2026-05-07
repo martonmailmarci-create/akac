@@ -31,8 +31,13 @@ export default function AnnalabnoPage() {
       <main>
         {/* ── Hero ── */}
         <section
-          className="bg-akac-black"
-          style={{ paddingTop: "180px", paddingBottom: "100px" }}
+          style={{
+            paddingTop: "180px",
+            paddingBottom: "100px",
+            backgroundImage: "linear-gradient(rgba(17,17,17,0.72), rgba(17,17,17,0.72)), url('/project1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <div className="px-6 md:px-[100px]">
             <p

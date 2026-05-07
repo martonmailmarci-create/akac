@@ -2,19 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import BracketButton from "@/components/ui/BracketButton";
 import RevealHeadline from "@/components/ui/RevealHeadline";
 
 const projects = [
   {
-    id: "01", name: "REACH",
-    tags: ["Marketing Site", "Tech / Crypto"],
-    thumb: "/project1.png", large: "/project1.png",
+    id: "01", name: "ANNA ŁABNO",
+    tags: ["Web Design & Dev", "Healthcare / Therapy"],
+    thumb: "/annalabno.png", large: "/annalabno.png",
+    slug: "annalabno",
   },
   {
-    id: "02", name: "PROJECT 02",
-    tags: ["Web App", "SaaS"],
-    thumb: "/project2.png", large: "/project2.png",
+    id: "02", name: "REACH",
+    tags: ["Marketing Site", "Tech / Crypto"],
+    thumb: "/project1.png", large: "/project1.png",
+    slug: null,
   },
 ];
 
@@ -103,13 +106,25 @@ export default function FeaturedWork() {
         <div className="flex flex-col gap-16">
           {projects.map((p, i) => (
             <div key={p.id} ref={(el) => { imageRefs.current[i] = el; }}>
-              <div className="relative aspect-video rounded-[20px] overflow-hidden">
-                <Image src={p.large} alt={p.name} fill className="object-cover" sizes="100vw" />
-              </div>
+              {p.slug ? (
+                <Link href={`/work/${p.slug}`} className="block relative aspect-video rounded-[20px] overflow-hidden">
+                  <Image src={p.large} alt={p.name} fill className="object-cover" sizes="100vw" />
+                </Link>
+              ) : (
+                <div className="relative aspect-video rounded-[20px] overflow-hidden">
+                  <Image src={p.large} alt={p.name} fill className="object-cover" sizes="100vw" />
+                </div>
+              )}
               <div className="flex items-center justify-between mt-5">
                 <span className="text-[12px] font-medium text-akac-light/40 uppercase tracking-[0.18px]">{p.id}</span>
                 <div className="flex items-center gap-2 flex-wrap justify-end">
-                  <span className="text-[14px] font-semibold text-akac-light tracking-[-0.28px]">{p.name}</span>
+                  {p.slug ? (
+                    <Link href={`/work/${p.slug}`} className="text-[14px] font-semibold text-akac-light tracking-[-0.28px] hover:text-akac-orange transition-colors">
+                      {p.name} <span className="text-akac-orange">→</span>
+                    </Link>
+                  ) : (
+                    <span className="text-[14px] font-semibold text-akac-light tracking-[-0.28px]">{p.name}</span>
+                  )}
                   {p.tags.map((tag) => (
                     <span key={tag} className="text-[11px] font-medium text-akac-light/50 uppercase tracking-[0.18px] border border-akac-light/20 rounded-full px-2 py-0.5">
                       {tag}
@@ -168,15 +183,29 @@ export default function FeaturedWork() {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "80px" }}>
           {projects.map((p, i) => (
             <div key={p.id} ref={(el) => { imageRefs.current[i] = el; }}>
-              <div style={{ position: "relative", height: "600px", borderRadius: "20px 0 0 20px", overflow: "hidden" }}>
-                <div className="parallax-inner" style={{ position: "absolute", inset: 0, top: "-10%", height: "120%" }}>
-                  <Image src={p.large} alt={p.name} fill className="object-cover" sizes="(max-width: 1920px) 67vw" />
+              {p.slug ? (
+                <Link href={`/work/${p.slug}`} style={{ display: "block", position: "relative", height: "600px", borderRadius: "20px 0 0 20px", overflow: "hidden" }}>
+                  <div className="parallax-inner" style={{ position: "absolute", inset: 0, top: "-10%", height: "120%" }}>
+                    <Image src={p.large} alt={p.name} fill className="object-cover" sizes="(max-width: 1920px) 67vw" />
+                  </div>
+                </Link>
+              ) : (
+                <div style={{ position: "relative", height: "600px", borderRadius: "20px 0 0 20px", overflow: "hidden" }}>
+                  <div className="parallax-inner" style={{ position: "absolute", inset: 0, top: "-10%", height: "120%" }}>
+                    <Image src={p.large} alt={p.name} fill className="object-cover" sizes="(max-width: 1920px) 67vw" />
+                  </div>
                 </div>
-              </div>
+              )}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "16px", paddingRight: "24px" }}>
                 <span className="text-[12px] font-medium text-akac-light/40 uppercase tracking-[0.18px]">{p.id}</span>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <span className="text-[16px] font-semibold text-akac-light tracking-[-0.32px]">{p.name}</span>
+                  {p.slug ? (
+                    <Link href={`/work/${p.slug}`} style={{ fontSize: "16px", fontWeight: 600, color: "#D9D9D9", letterSpacing: "-0.32px", textDecoration: "none" }}>
+                      {p.name} <span style={{ color: "#ED6D40" }}>→</span>
+                    </Link>
+                  ) : (
+                    <span className="text-[16px] font-semibold text-akac-light tracking-[-0.32px]">{p.name}</span>
+                  )}
                   {p.tags.map((tag) => (
                     <span key={tag} className="text-[12px] font-medium text-akac-light/50 uppercase tracking-[0.18px] border border-akac-light/20 rounded-full px-3 py-1">
                       {tag}

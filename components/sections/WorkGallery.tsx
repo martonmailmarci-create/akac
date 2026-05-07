@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 type View = "slide" | "grid2" | "grid3";
@@ -13,16 +14,23 @@ type Project = {
   tags: string[];
   thumb: string;
   large: string;
+  slug?: string;
 };
 
 const ALL_PROJECTS: Project[] = [
   {
-    id: "01", name: "REACH",
+    id: "01", name: "ANNA ŁABNO",
+    category: "WEB DESIGN & DEVELOPMENT", tags: ["HEALTHCARE / THERAPY"],
+    thumb: "/annalabno.png", large: "/annalabno.png",
+    slug: "annalabno",
+  },
+  {
+    id: "02", name: "REACH",
     category: "MARKETING SITE", tags: ["TECH / CRYPTO"],
     thumb: "/project1.png", large: "/project1.png",
   },
   {
-    id: "02", name: "PROJECT 02",
+    id: "03", name: "PROJECT 03",
     category: "WEB APP", tags: ["SAAS"],
     thumb: "/project2.png", large: "/project2.png",
   },
@@ -30,14 +38,26 @@ const ALL_PROJECTS: Project[] = [
 
 const CATEGORIES = ["ALL", ...Array.from(new Set(ALL_PROJECTS.map((p) => p.category)))];
 
-function Meta({ category, tags, name }: { category: string; tags: string[]; name: string }) {
+function ProjectCard({ p, children, className = "" }: { p: Project; children: React.ReactNode; className?: string }) {
+  if (p.slug) {
+    return (
+      <Link href={`/work/${p.slug}`} className={`block group ${className}`}>
+        {children}
+      </Link>
+    );
+  }
+  return <div className={className}>{children}</div>;
+}
+
+function Meta({ category, tags, name, slug }: { category: string; tags: string[]; name: string; slug?: string }) {
   return (
     <div className="flex items-center justify-between mt-3">
       <span className="text-[11px] font-medium text-akac-black/40 uppercase tracking-[0.18px]">
         [{category}] — [{tags.join(", ")}]
       </span>
-      <span className="text-[13px] font-semibold text-akac-black uppercase tracking-[-0.26px]">
+      <span className="text-[13px] font-semibold text-akac-black uppercase tracking-[-0.26px] flex items-center gap-1.5">
         {name}
+        {slug && <span className="text-akac-orange text-[11px]">→</span>}
       </span>
     </div>
   );
@@ -95,17 +115,19 @@ function SlideView({ projects, activeIndex, direction }: {
         exit="exit"
         transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
       >
-        <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/8" }}>
-          <Image
-            src={p.large}
-            alt={p.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, calc(100vw - 200px)"
-            priority
-          />
-        </div>
-        <Meta category={p.category} tags={p.tags} name={p.name} />
+        <ProjectCard p={p}>
+          <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/8" }}>
+            <Image
+              src={p.large}
+              alt={p.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, calc(100vw - 200px)"
+              priority
+            />
+          </div>
+          <Meta category={p.category} tags={p.tags} name={p.name} slug={p.slug} />
+        </ProjectCard>
       </motion.div>
     </AnimatePresence>
   );
@@ -122,16 +144,18 @@ function Grid2View({ projects }: { projects: Project[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         >
-          <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "4/3" }}>
-            <Image
-              src={p.large}
-              alt={p.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-          <Meta category={p.category} tags={p.tags} name={p.name} />
+          <ProjectCard p={p}>
+            <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "4/3" }}>
+              <Image
+                src={p.large}
+                alt={p.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <Meta category={p.category} tags={p.tags} name={p.name} slug={p.slug} />
+          </ProjectCard>
         </motion.div>
       ))}
     </div>
@@ -149,16 +173,18 @@ function Grid3View({ projects }: { projects: Project[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: i * 0.05, ease: [0.4, 0, 0.2, 1] }}
         >
-          <div className="relative w-full rounded-[14px] overflow-hidden" style={{ aspectRatio: "1/1" }}>
-            <Image
-              src={p.large}
-              alt={p.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
-          </div>
-          <Meta category={p.category} tags={p.tags} name={p.name} />
+          <ProjectCard p={p}>
+            <div className="relative w-full rounded-[14px] overflow-hidden" style={{ aspectRatio: "1/1" }}>
+              <Image
+                src={p.large}
+                alt={p.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+            </div>
+            <Meta category={p.category} tags={p.tags} name={p.name} slug={p.slug} />
+          </ProjectCard>
         </motion.div>
       ))}
     </div>

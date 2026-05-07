@@ -13,6 +13,12 @@ const projects = [
     thumb: "/project1.png", large: "/project1.png",
     slug: "annalabno",
   },
+  {
+    id: "02", name: "PROJECT 02",
+    tags: ["Web App", "SaaS"],
+    thumb: "/project2.png", large: "/project2.png",
+    slug: null,
+  },
 ];
 
 export default function FeaturedWork() {

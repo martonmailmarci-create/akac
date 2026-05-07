@@ -125,6 +125,14 @@ export default function AnalyzePage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const resultsRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
@@ -243,13 +251,22 @@ export default function AnalyzePage() {
               onClick={() => handleAnalyze()}
               disabled={loading || !inputUrl.trim()}
               style={{
-                padding: "16px 28px", background: loading ? "#222" : "#ED6D40", border: "none",
-                color: "#111111", fontSize: "12px", fontWeight: 700, letterSpacing: "0.18em",
-                textTransform: "uppercase", cursor: loading || !inputUrl.trim() ? "not-allowed" : "pointer",
-                transition: "background 0.2s ease", whiteSpace: "nowrap", fontFamily: "var(--font-inter), sans-serif",
+                padding: "16px 20px", background: loading ? "#222" : "#ED6D40", border: "none",
+                color: "#111111", cursor: loading || !inputUrl.trim() ? "not-allowed" : "pointer",
+                transition: "background 0.2s ease", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
               }}
             >
-              {loading ? "Analyzing…" : "Analyze"}
+              {loading ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ animation: "spin 1s linear infinite" }}>
+                  <circle cx="10" cy="10" r="8" stroke="#111" strokeWidth="2" strokeDasharray="40 12" strokeLinecap="round" />
+                  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="8.5" cy="8.5" r="5.5" stroke="#111111" strokeWidth="1.8" strokeLinecap="round" />
+                  <path d="M13 13L17 17" stroke="#111111" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              )}
             </button>
           </div>
 
@@ -303,7 +320,12 @@ export default function AnalyzePage() {
             </div>
 
             {/* Score + metrics */}
-            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "40px", alignItems: "start" }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "auto 1fr",
+              gap: isMobile ? "16px" : "40px",
+              alignItems: "start",
+            }}>
               <div style={{
                 display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
                 background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "40px 48px",
@@ -311,7 +333,7 @@ export default function AnalyzePage() {
                 <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
                 <ScoreGauge score={result.score} />
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (
                   <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} />
                 ))}

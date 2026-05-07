@@ -21,13 +21,13 @@ const ALL_PROJECTS: Project[] = [
   {
     id: "01", name: "ANNA ŁABNO",
     category: "WEB DESIGN & DEVELOPMENT", tags: ["HEALTHCARE / THERAPY"],
-    thumb: "/project1.png", large: "/project1.png",
+    thumb: "/project1.jpg", large: "/project1.jpg",
     slug: "annalabno",
   },
   {
     id: "02", name: "PROJECT 02",
     category: "WEB APP", tags: ["SAAS"],
-    thumb: "/project2.png", large: "/project2.png",
+    thumb: "/project2.jpg", large: "/project2.jpg",
   },
 ];
 

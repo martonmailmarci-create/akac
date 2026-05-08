@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import BracketButton from "@/components/ui/BracketButton";
@@ -12,19 +11,6 @@ export const metadata: Metadata = {
   description:
     "How we designed and built a warm, conversion-focused website for Warsaw-based psychotherapist and sexologist Anna Łabno.",
 };
-
-const META = [
-  { label: "CLIENT", value: "Anna Łabno" },
-  { label: "SERVICES", value: "Web Design & Development" },
-  { label: "YEAR", value: "2025" },
-  { label: "LIVE SITE", value: "annalabno.com", href: "https://annalabno.com" },
-];
-
-const STATS = [
-  { value: "5.0", label: "Rating on ZnanyLekarz" },
-  { value: "9+", label: "Client testimonials" },
-  { value: "3", label: "Core services showcased" },
-];
 
 export default function AnnalabnoPage() {
   return (
@@ -47,31 +33,8 @@ export default function AnnalabnoPage() {
           </div>
         </HeroParallax>
 
-        {/* ── Meta strip ── */}
-        <section className="bg-akac-cream" style={{ borderBottom: "1px solid rgba(17,17,17,0.08)" }}>
-          <div className="px-6 md:px-[100px] grid grid-cols-2 md:grid-cols-4" style={{ paddingTop: "36px", paddingBottom: "36px", gap: "32px" }}>
-            {META.map(({ label, value, href }) => (
-              <div key={label}>
-                <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "6px" }}>
-                  {label}
-                </p>
-                {href ? (
-                  <a href={href} target="_blank" rel="noopener noreferrer"
-                    style={{ fontSize: "13px", fontWeight: 600, color: "#ED6D40", textDecoration: "none", letterSpacing: "-0.2px" }}>
-                    {value} ↗
-                  </a>
-                ) : (
-                  <p style={{ fontSize: "13px", fontWeight: 600, color: "#111111", letterSpacing: "-0.2px", margin: 0 }}>
-                    {value}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* ── First impact: iMac testimonials shot ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingTop: "60px", paddingBottom: "0" }}>
+        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingTop: "60px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
             <Image src="/project1/4.jpg" alt="Anna Łabno — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
           </div>
@@ -96,6 +59,21 @@ export default function AnnalabnoPage() {
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px" }}>
                 She came to us needing a website that would build trust with first-time visitors — people who are often hesitant, researching quietly, and deciding whether to reach out. The site needed to feel warm and safe while remaining professional, with a clear path to booking.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Quote block ── */}
+        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "100px" }}>
+          <div style={{ borderTop: "1px solid rgba(17,17,17,0.12)", paddingTop: "60px", maxWidth: "800px" }}>
+            <p style={{ fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 500, color: "#111111", lineHeight: 1.45, letterSpacing: "-0.5px", fontStyle: "italic", marginBottom: "28px" }}>
+              &ldquo;We wanted a site that felt like stepping into a safe space before even booking an appointment — that&apos;s exactly what we got.&rdquo;
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div style={{ width: "7px", height: "7px", backgroundColor: "#ED6D40", borderRadius: "2px", flexShrink: 0 }} />
+              <span style={{ fontSize: "11px", fontWeight: 600, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.18px" }}>
+                Anna Łabno — Client
+              </span>
             </div>
           </div>
         </section>
@@ -139,10 +117,7 @@ export default function AnnalabnoPage() {
         </section>
 
         {/* ── iPad tablet shot: full-width ── */}
-        <section
-          className="bg-akac-black px-6 md:px-[100px]"
-          style={{ paddingBottom: "0" }}
-        >
+        <section className="bg-akac-black px-6 md:px-[100px]" style={{ paddingBottom: "0" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
             <Image src="/project1/5.jpg" alt="Anna Łabno — tablet about page" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
           </div>
@@ -190,7 +165,7 @@ export default function AnnalabnoPage() {
         </section>
 
         {/* ── Desktop + Contact mockups: 6 + 1 ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "80px" }}>
+        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "100px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/10" }}>
               <Image src="/project1/6.jpg" alt="Anna Łabno — practical info" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
@@ -198,22 +173,6 @@ export default function AnnalabnoPage() {
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/10" }}>
               <Image src="/project1/1.jpg" alt="Anna Łabno — contact page" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
-          </div>
-        </section>
-
-        {/* ── Stats ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "100px" }}>
-          <div style={{ borderTop: "1px solid rgba(17,17,17,0.12)", paddingTop: "60px", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
-            {STATS.map(({ value, label }) => (
-              <div key={label}>
-                <p style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#111111", letterSpacing: "-2px", lineHeight: 1, marginBottom: "8px" }}>
-                  {value}
-                </p>
-                <p style={{ fontSize: "11px", fontWeight: 500, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.18px", margin: 0 }}>
-                  {label}
-                </p>
-              </div>
-            ))}
           </div>
         </section>
 

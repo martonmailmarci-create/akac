@@ -10,13 +10,13 @@ const projects = [
   {
     id: "01", name: "ANNA ŁABNO",
     tags: ["Web Design & Dev", "Healthcare / Therapy"],
-    thumb: "/project1.jpg", large: "/project1.jpg",
+    thumb: "/project1/project1.jpg", large: "/project1/project1.jpg",
     slug: "annalabno",
   },
   {
     id: "02", name: "PROJECT 02",
     tags: ["Web App", "SaaS"],
-    thumb: "/project2.jpg", large: "/project2.jpg",
+    thumb: "/project2/project2.jpg", large: "/project2/project2.jpg",
     slug: null,
   },
 ];

@@ -14,10 +14,10 @@ const projects = [
     slug: "annalabno",
   },
   {
-    id: "02", name: "PROJECT 02",
-    tags: ["Web App", "SaaS"],
+    id: "02", name: "BOMBANŐ",
+    tags: ["Web Design & Dev", "Food & Hospitality"],
     thumb: "/project2/project2.jpg", large: "/project2/project2.jpg",
-    slug: null,
+    slug: "bombanno",
   },
 ];
 

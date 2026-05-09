@@ -25,9 +25,10 @@ const ALL_PROJECTS: Project[] = [
     slug: "annalabno",
   },
   {
-    id: "02", name: "PROJECT 02",
-    category: "WEB APP", tags: ["SAAS"],
+    id: "02", name: "BOMBANŐ",
+    category: "WEB DESIGN & DEVELOPMENT", tags: ["FOOD & HOSPITALITY"],
     thumb: "/project2/project2.jpg", large: "/project2/project2.jpg",
+    slug: "bombanno",
   },
 ];
 

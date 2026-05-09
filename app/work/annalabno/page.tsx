@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
-import BracketButton from "@/components/ui/BracketButton";
 import CTA from "@/components/sections/CTA";
 import HeroParallax from "./HeroParallax";
 
@@ -21,27 +20,14 @@ export default function AnnalabnoPage() {
         {/* ── Hero (parallax) ── */}
         <HeroParallax>
           <div className="px-6 md:px-[100px]">
-            <p style={{ fontSize: "12px", fontWeight: 500, color: "rgba(217,217,217,0.5)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "20px" }}>
-              / OUR WORK — 01
-            </p>
-            <h1 style={{ fontSize: "clamp(52px, 9vw, 110px)", fontWeight: 600, color: "#F9F9F4", letterSpacing: "-3px", lineHeight: 1, marginBottom: "28px" }}>
+            <h1 style={{ fontSize: "clamp(52px, 9vw, 110px)", fontWeight: 600, color: "#F9F9F4", letterSpacing: "-3px", lineHeight: 1 }}>
               ANNA ŁABNO
             </h1>
-            <p style={{ fontSize: "14px", fontWeight: 500, color: "rgba(217,217,217,0.5)", textTransform: "uppercase", letterSpacing: "0.18px" }}>
-              [WEB DESIGN & DEVELOPMENT] — [WARSAW, POLAND] — [2025]
-            </p>
           </div>
         </HeroParallax>
 
-        {/* ── First impact: iMac testimonials shot ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingTop: "60px" }}>
-          <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
-            <Image src="/project1/4.jpg" alt="Anna Łabno — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
-          </div>
-        </section>
-
         {/* ── Overview ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingTop: "100px", paddingBottom: "80px" }}>
+        <section className="bg-akac-cream px-6 md:px-[100px] rounded-t-[24px] md:rounded-t-[60px]" style={{ paddingTop: "100px", paddingBottom: "80px" }}>
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
@@ -52,7 +38,6 @@ export default function AnnalabnoPage() {
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
-              <div style={{ width: "100%", height: "1px", backgroundColor: "rgba(17,17,17,0.12)", marginBottom: "28px" }} />
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
                 Anna Łabno is a Warsaw-based psychotherapist and sexologist offering individual therapy, couples therapy using EFT (Emotionally Focused Therapy), and sexology consultations.
               </p>
@@ -63,18 +48,10 @@ export default function AnnalabnoPage() {
           </div>
         </section>
 
-        {/* ── Quote block ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "100px" }}>
-          <div style={{ borderTop: "1px solid rgba(17,17,17,0.12)", paddingTop: "60px", maxWidth: "800px" }}>
-            <p style={{ fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 500, color: "#111111", lineHeight: 1.45, letterSpacing: "-0.5px", fontStyle: "italic", marginBottom: "28px" }}>
-              &ldquo;We wanted a site that felt like stepping into a safe space before even booking an appointment — that&apos;s exactly what we got.&rdquo;
-            </p>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <div style={{ width: "7px", height: "7px", backgroundColor: "#ED6D40", borderRadius: "2px", flexShrink: 0 }} />
-              <span style={{ fontSize: "11px", fontWeight: 600, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.18px" }}>
-                Anna Łabno — Client
-              </span>
-            </div>
+{/* ── First impact: iMac testimonials shot ── */}
+        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "60px" }}>
+          <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
+            <Image src="/project1/4.jpg" alt="Anna Łabno — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
           </div>
         </section>
 
@@ -105,7 +82,6 @@ export default function AnnalabnoPage() {
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
-              <div style={{ width: "100%", height: "1px", backgroundColor: "rgba(217,217,217,0.12)", marginBottom: "28px" }} />
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#D9D9D9", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
                 Therapy is one of the most personal decisions someone makes. Visitors arrive cautious — evaluating credibility, warmth, and approachability all at once, often before they&apos;ve decided to reach out at all.
               </p>
@@ -117,7 +93,7 @@ export default function AnnalabnoPage() {
         </section>
 
         {/* ── iPad tablet shot: full-width ── */}
-        <section className="bg-akac-black px-6 md:px-[100px]" style={{ paddingBottom: "0" }}>
+        <section className="bg-akac-black px-6 md:px-[100px]" style={{ paddingBottom: "80px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
             <Image src="/project1/5.jpg" alt="Anna Łabno — tablet about page" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
           </div>
@@ -138,14 +114,13 @@ export default function AnnalabnoPage() {
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
-              <div style={{ width: "100%", height: "1px", backgroundColor: "rgba(17,17,17,0.12)", marginBottom: "28px" }} />
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
                 A clean, image-led website with a calm visual language that mirrors the therapeutic space: soft photography, generous whitespace, and warm typography.
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px", marginBottom: "40px" }}>
                 Each service has its own dedicated section with clear pricing and a direct path to contact. We built in a workshop calendar for Anna&apos;s couples retreats, a structured FAQ, and pulled in authentic client testimonials from ZnanyLekarz.
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "40px" }}>
                 {[
                   "Custom design — no templates",
                   "Service pages with transparent pricing",
@@ -160,6 +135,10 @@ export default function AnnalabnoPage() {
                   </div>
                 ))}
               </div>
+              <a href="https://annalabno.com" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: "12px", fontWeight: 600, color: "#ED6D40", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.18px" }}>
+                Visit live site ↗
+              </a>
             </div>
           </div>
         </section>
@@ -174,15 +153,6 @@ export default function AnnalabnoPage() {
               <Image src="/project1/1.jpg" alt="Anna Łabno — contact page" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
-        </section>
-
-        {/* ── Back to work ── */}
-        <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "80px", display: "flex", alignItems: "center", gap: "32px" }}>
-          <BracketButton label="BACK TO WORK" color="#111111" href="/work" />
-          <a href="https://annalabno.com" target="_blank" rel="noopener noreferrer"
-            style={{ fontSize: "12px", fontWeight: 600, color: "#ED6D40", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.18px" }}>
-            Visit live site ↗
-          </a>
         </section>
 
         {/* ── CTA ── */}

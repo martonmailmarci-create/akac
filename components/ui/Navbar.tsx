@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ScrambleText from "@/components/ui/ScrambleText";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function lenisScrollTo(anchor: string) {
   const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
@@ -14,24 +16,6 @@ function lenisScrollTo(anchor: string) {
   }
 }
 
-const navLinks = [
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/#services" },
-  { label: "PRICING", href: "/pricing" },
-  { label: "TEAM", href: "/#team" },
-  { label: "SPEED TEST", href: "/analyze" },
-  { label: "CONTACT", href: "/contact" },
-];
-
-const desktopLinks = [
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/#services" },
-  { label: "PRICING", href: "/pricing" },
-  { label: "TEAM", href: "/#team" },
-  { label: "SPEED TEST", href: "/analyze" },
-  { label: "CONTACT", href: "/contact" },
-];
-
 const PILL = {
   height: "55px",
   backgroundColor: "#111111",
@@ -39,9 +23,19 @@ const PILL = {
 } as const;
 
 export default function Navbar() {
+  const { t } = useLocale();
   const [revealed, setRevealed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const navLinks = [
+    { label: t.nav.work, href: "/work" },
+    { label: t.nav.services, href: "/#services" },
+    { label: t.nav.pricing, href: "/pricing" },
+    { label: t.nav.team, href: "/#team" },
+    { label: t.nav.speedTest, href: "/analyze" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("/#")) {
@@ -49,9 +43,7 @@ export default function Navbar() {
         e.preventDefault();
         lenisScrollTo(href.slice(1));
       }
-      // else let browser navigate to /#section naturally
     }
-    // /work and other page links navigate normally
   };
 
   useEffect(() => {
@@ -73,25 +65,20 @@ export default function Navbar() {
       <nav
         className="hidden md:flex"
         style={{
-          position: "fixed",
-          top: "20px",
-          left: "50%",
+          position: "fixed", top: "20px", left: "50%",
           transform: `translateX(-50%) translateY(${slideY})`,
-          width: "min(760px, 90vw)",
+          width: "min(820px, 90vw)",
           ...PILL,
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 20px",
-          zIndex: 50,
-          transition: pillTransition,
+          alignItems: "center", justifyContent: "space-between",
+          padding: "0 20px", zIndex: 50, transition: pillTransition, gap: "8px",
         }}
       >
         <a href="/" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
           <Image src="/icons/akac-logo.svg" alt="AKAC" width={36} height={36} />
         </a>
-        {desktopLinks.map((link) => (
+        {navLinks.map((link) => (
           <a
-            key={link.label}
+            key={link.href}
             href={link.href}
             onClick={(e) => handleNav(e, link.href)}
             style={{ textDecoration: "none", flexShrink: 1 }}
@@ -103,157 +90,89 @@ export default function Navbar() {
             />
           </a>
         ))}
+        <LanguageSwitcher />
       </nav>
 
       {/* ── Mobile: expandable pill ── */}
       <div
         className="md:hidden"
         style={{
-          position: "fixed",
-          top: "20px",
-          left: "20px",
-          right: "20px",
-          zIndex: 50,
-          backgroundColor: "#111111",
-          borderRadius: "10px",
-          transform: `translateY(${slideY})`,
-          transition: pillTransition,
-          overflow: "hidden",
+          position: "fixed", top: "20px", left: "20px", right: "20px",
+          zIndex: 50, backgroundColor: "#111111", borderRadius: "10px",
+          transform: `translateY(${slideY})`, transition: pillTransition, overflow: "hidden",
         }}
       >
         {/* Strip — always visible */}
-        <div
-          style={{
-            height: "55px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0 20px",
-            flexShrink: 0,
-          }}
-        >
+        <div style={{
+          height: "55px", display: "flex", alignItems: "center",
+          justifyContent: "space-between", padding: "0 20px", flexShrink: 0,
+        }}>
           <a href="/" style={{ display: "flex", alignItems: "center" }}>
             <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
           </a>
-          {/* Hamburger / close toggle */}
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 0, width: "24px", height: "24px", position: "relative" }}
           >
-            {/* Bar 1 */}
-            <span style={{
-              position: "absolute",
-              left: 0,
-              width: "20px",
-              height: "1.5px",
-              backgroundColor: "#F9F9F4",
-              borderRadius: "2px",
-              top: menuOpen ? "11px" : "6px",
-              transform: menuOpen ? "rotate(45deg)" : "none",
-              transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease",
-            }} />
-            {/* Bar 2 */}
-            <span style={{
-              position: "absolute",
-              left: 0,
-              width: "20px",
-              height: "1.5px",
-              backgroundColor: "#F9F9F4",
-              borderRadius: "2px",
-              top: "11px",
-              opacity: menuOpen ? 0 : 1,
-              transition: "opacity 0.2s ease",
-            }} />
-            {/* Bar 3 */}
-            <span style={{
-              position: "absolute",
-              left: 0,
-              width: "20px",
-              height: "1.5px",
-              backgroundColor: "#F9F9F4",
-              borderRadius: "2px",
-              top: menuOpen ? "11px" : "16px",
-              transform: menuOpen ? "rotate(-45deg)" : "none",
-              transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease",
-            }} />
+            <span style={{ position: "absolute", left: 0, width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px", top: menuOpen ? "11px" : "6px", transform: menuOpen ? "rotate(45deg)" : "none", transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease" }} />
+            <span style={{ position: "absolute", left: 0, width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px", top: "11px", opacity: menuOpen ? 0 : 1, transition: "opacity 0.2s ease" }} />
+            <span style={{ position: "absolute", left: 0, width: "20px", height: "1.5px", backgroundColor: "#F9F9F4", borderRadius: "2px", top: menuOpen ? "11px" : "16px", transform: menuOpen ? "rotate(-45deg)" : "none", transition: "top 0.3s ease, transform 0.3s ease, opacity 0.3s ease" }} />
           </button>
         </div>
 
-        {/* Expandable content — grid trick for smooth height animation */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateRows: menuOpen ? "1fr" : "0fr",
-            transition: "grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
-        >
+        {/* Expandable content */}
+        <div style={{ display: "grid", gridTemplateRows: menuOpen ? "1fr" : "0fr", transition: "grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1)" }}>
           <div style={{ overflow: "hidden", minHeight: 0 }}>
             <div style={{ padding: "36px 24px 36px" }}>
-
               {/* Nav links */}
-              <nav style={{ display: "flex", flexDirection: "column", gap: "2px", marginBottom: "36px" }}>
+              <nav style={{ display: "flex", flexDirection: "column", gap: "2px", marginBottom: "20px" }}>
                 {navLinks.map((link) => (
                   <a
-                    key={link.label}
+                    key={link.href}
                     href={link.href}
                     onClick={(e) => { handleNav(e, link.href); setMenuOpen(false); }}
                     style={{ textDecoration: "none", lineHeight: 1.15 }}
                   >
-                    <ScrambleText
-                      text={link.label}
-                      color="#F9F9F4"
-                      style={{ fontSize: "28px", fontWeight: 600, letterSpacing: "-0.8px" }}
-                    />
+                    <ScrambleText text={link.label} color="#F9F9F4" style={{ fontSize: "28px", fontWeight: 600, letterSpacing: "-0.8px" }} />
                   </a>
                 ))}
               </nav>
 
-              {/* Divider */}
+              {/* Language switcher */}
+              <div style={{ marginBottom: "36px" }}>
+                <LanguageSwitcher mobile />
+              </div>
+
               <div style={{ height: "1px", backgroundColor: "#2a2a2a", marginBottom: "24px" }} />
 
-              {/* Contact */}
               <div style={{ marginBottom: "20px" }}>
                 <span style={{ color: "#666", fontSize: "10px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>
-                  CONTACT
+                  {t.nav.contactHeading}
                 </span>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 14px", letterSpacing: "0.1px" }}>
-                  info@akac.studio
-                </p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>
-                  Marcell: marcell@akac.studio
-                </p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>
-                  Viktor: viktor@akac.studio
-                </p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 14px", letterSpacing: "0.1px" }}>info@akac.studio</p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>Marcell: marcell@akac.studio</p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>Viktor: viktor@akac.studio</p>
               </div>
 
-              {/* Socials */}
               <div style={{ marginBottom: "24px" }}>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>
-                  Instagram: @akac.studio
-                </p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>
-                  LinkedIn: @akac-studio
-                </p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>Instagram: @akac.studio</p>
+                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>LinkedIn: @akac-studio</p>
               </div>
 
-              {/* Divider */}
               <div style={{ height: "1px", backgroundColor: "#2a2a2a", marginBottom: "20px" }} />
 
-              {/* Status */}
               <div>
                 <span style={{ color: "#666", fontSize: "10px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", display: "block", marginBottom: "12px" }}>
-                  WORKING GLOBALLY
+                  {t.nav.workingGlobally}
                 </span>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <span style={{ width: "8px", height: "8px", backgroundColor: "#E8572A", borderRadius: "2px", flexShrink: 0 }} />
                   <span style={{ color: "#F9F9F4", fontSize: "11px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase" }}>
-                    ACCEPTING PROJECTS. GET IN TOUCH.
+                    {t.nav.acceptingProjects}
                   </span>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

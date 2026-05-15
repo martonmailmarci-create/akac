@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function CTA({ centered = false, bgImage }: { centered?: boolean; bgImage?: string }) {
+  const { t } = useLocale();
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -34,25 +36,25 @@ export default function CTA({ centered = false, bgImage }: { centered?: boolean;
       style={bgImage ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)), url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
     >
       <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-10">
-        / LET&apos;S TALK
+        {t.cta.label}
       </span>
 
       <h2
         ref={headlineRef}
         className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
       >
-        LET US TAKE YOU FURTHER
+        {t.cta.headlineLine1}
         <br />
-        THAN YOU&apos;VE EVER BEEN
+        {t.cta.headlineLine2}
       </h2>
 
       <p className="text-[16px] font-semibold text-akac-light tracking-[0.24px] leading-[1.5] mb-12 max-w-[560px] mx-auto uppercase">
-        BOOK A 15-MINUTE CALL OR SEND US A MESSAGE.
+        {t.cta.bodyLine1}
         <br />
-        NO PREPARATION NEEDED.
+        {t.cta.bodyLine2}
       </p>
 
-      <BracketButton label="BOOK A CALL" color="#D9D9D9" href="/contact" />
+      <BracketButton label={t.cta.cta} color="#D9D9D9" href="/contact" />
     </section>
   );
 }

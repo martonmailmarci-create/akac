@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import BracketButton from "@/components/ui/BracketButton";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function lenisScrollTo(anchor: string) {
   const lenis = (window as unknown as Record<string, unknown>).__lenis as { scrollTo: (t: string) => void } | undefined;
@@ -13,21 +14,22 @@ function lenisScrollTo(anchor: string) {
   }
 }
 
-const navLinks = [
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/#services" },
-  { label: "PRICING", href: "/pricing" },
-  { label: "TEAM", href: "/#team" },
-  { label: "CONTACT", href: "/contact" },
-];
-const legalLinks = [
-  { label: "PRIVACY POLICY", href: "/privacy-policy" },
-  { label: "TERMS AND CONDITIONS", href: "/terms" },
-  { label: "COOKIE POLICY", href: "/cookie-policy" },
-];
-
 export default function Footer() {
+  const { t } = useLocale();
   const pathname = usePathname();
+
+  const navLinks = [
+    { label: t.nav.work, href: "/work" },
+    { label: t.nav.services, href: "/#services" },
+    { label: t.nav.pricing, href: "/pricing" },
+    { label: t.nav.team, href: "/#team" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
+  const legalLinks = [
+    { label: t.footer.privacy, href: "/privacy-policy" },
+    { label: t.footer.terms, href: "/terms" },
+    { label: t.footer.cookies, href: "/cookie-policy" },
+  ];
 
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("/#") && pathname === "/") {
@@ -44,9 +46,9 @@ export default function Footer() {
         {/* CTA block */}
         <div className="pt-14 mb-16">
           <h2 className="text-[32px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1] uppercase mb-12">
-            TELL US WHAT YOU NEED.
+            {t.footer.cta}
           </h2>
-          <BracketButton label="CONTACT US" color="#111111" href="/contact" />
+          <BracketButton label={t.footer.contactUs} color="#111111" href="/contact" />
         </div>
 
         {/* Divider */}
@@ -55,7 +57,7 @@ export default function Footer() {
         {/* Contact */}
         <div className="mb-5">
           <span className="block text-[10px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mb-3">
-            CONTACT
+            {t.footer.contact}
           </span>
           <p className="text-[13px] font-normal text-akac-black tracking-[0.1px] mb-1">
             info@akac.studio
@@ -71,7 +73,7 @@ export default function Footer() {
         {/* Socials */}
         <div className="mb-10">
           <span className="block text-[10px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mb-3">
-            SOCIALS
+            {t.footer.socials}
           </span>
           <p className="text-[13px] font-normal text-akac-black tracking-[0.1px] mb-1">
             Instagram: @akac.studio
@@ -96,7 +98,7 @@ export default function Footer() {
             </a>
           ))}
           <span className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mt-1">
-            ALL RIGHTS RESERVED &copy; 2026 AKAC STUDIO
+            {t.footer.rights}
           </span>
         </div>
       </div>
@@ -106,9 +108,9 @@ export default function Footer() {
         <div className="flex justify-between items-start">
           <div className="pt-[100px]">
             <h2 className="text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[32px] uppercase mb-12">
-              TELL US WHAT YOU NEED.
+              {t.footer.cta}
             </h2>
-            <BracketButton label="CONTACT US" color="#111111" href="/contact" />
+            <BracketButton label={t.footer.contactUs} color="#111111" href="/contact" />
           </div>
           <Image
             src="/logo.svg"
@@ -135,10 +137,10 @@ export default function Footer() {
             </nav>
             <div className="flex flex-col gap-[2px]">
               <span className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px]">
-                SITE BY AKAC STUDIO
+                {t.footer.siteBy}
               </span>
               <span className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px]">
-                ALL RIGHTS RESERVED &copy; 2026 AKAC STUDIO
+                {t.footer.rights}
               </span>
             </div>
           </div>

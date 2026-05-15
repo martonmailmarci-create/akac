@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function grantAnalytics() {
   if (typeof window === "undefined") return;
@@ -12,6 +13,7 @@ function grantAnalytics() {
 }
 
 export default function CookieBanner() {
+  const { t } = useLocale();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -55,13 +57,13 @@ export default function CookieBanner() {
             <div className="flex items-center gap-2">
               <div className="w-[7px] h-[7px] bg-akac-orange flex-shrink-0" style={{ borderRadius: "2px" }} />
               <span className="text-[10px] font-semibold text-akac-cream/40 uppercase tracking-[0.18px]">
-                COOKIES
+                {t.cookieBanner.label}
               </span>
             </div>
             <p className="text-[13px] font-medium text-akac-cream/70 leading-[1.6]">
-              We use cookies to analyze site traffic with Google Analytics. Accept to help us improve, or decline for essential cookies only.{" "}
+              {t.cookieBanner.message}{" "}
               <a href="/cookie-policy" className="text-akac-orange underline underline-offset-2 hover:opacity-70 transition-opacity">
-                Learn more
+                {t.cookieBanner.learnMore}
               </a>
             </p>
             <div className="flex gap-3">
@@ -70,14 +72,14 @@ export default function CookieBanner() {
                 className="flex-1 py-2 text-[11px] font-semibold uppercase tracking-[0.18px] cursor-pointer transition-opacity hover:opacity-80"
                 style={{ backgroundColor: "#ED6D40", color: "#F9F9F4", borderRadius: "8px", border: "none" }}
               >
-                ACCEPT
+                {t.cookieBanner.accept}
               </button>
               <button
                 onClick={decline}
                 className="flex-1 py-2 text-[11px] font-semibold uppercase tracking-[0.18px] cursor-pointer transition-opacity hover:opacity-60"
                 style={{ background: "transparent", color: "rgba(249,249,244,0.4)", borderRadius: "8px", border: "1px solid rgba(249,249,244,0.12)" }}
               >
-                DECLINE
+                {t.cookieBanner.decline}
               </button>
             </div>
           </div>

@@ -1,17 +1,16 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CTA from "@/components/sections/CTA";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import HeroParallax from "./HeroParallax";
 
-export const metadata: Metadata = {
-  title: "Bombanő — Case Study | AKAC Studio",
-  description:
-    "How we designed and built a bold, appetite-driving website for Budapest-based artisan confectionery Bombanő.",
-};
-
 export default function BombannoPage() {
+  const { t } = useLocale();
+  const b = t.bombanno;
+
   return (
     <>
       <Navbar />
@@ -31,18 +30,18 @@ export default function BombannoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / OVERVIEW
+                {b.overviewLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#111111", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                THE PROJECT
+                {b.overviewTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                Bombanő is a Budapest-based artisan confectionery specialising in hand-crafted bomboloni, seasonal pastries, and private event catering.
+                {b.overviewP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px" }}>
-                They came to us with a strong visual identity but no web presence to match it. The goal was a site that looked as good as the product tastes — appetite-driven, fast to load, and easy to order from.
+                {b.overviewP2}
               </p>
             </div>
           </div>
@@ -75,18 +74,18 @@ export default function BombannoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(217,217,217,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / CHALLENGE
+                {b.challengeLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#D9D9D9", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                THE PROBLEM
+                {b.challengeTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#D9D9D9", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                Artisan food brands live and die on visual impact. Without a proper web presence, Bombanő was losing customers to less talented competitors who simply looked more established online.
+                {b.challengeP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(217,217,217,0.5)", lineHeight: "27px", letterSpacing: "0.1px" }}>
-                The challenge was capturing the warmth and craft of the product in a digital format — translating something you can taste and smell into something you can feel through a screen. The ordering flow also needed to be seamless, with clear options for walk-in, pre-order, and events.
+                {b.challengeP2}
               </p>
             </div>
           </div>
@@ -107,28 +106,21 @@ export default function BombannoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / SOLUTION
+                {b.solutionLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#111111", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                WHAT WE BUILT
+                {b.solutionTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                A rich, image-led website built around the product — full-bleed photography, a bold colour palette, and a layout designed to make every visit feel like a visit to the shop.
+                {b.solutionP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px", marginBottom: "40px" }}>
-                We structured the site around three clear entry points: daily menu, pre-orders, and event catering. Each has a dedicated flow so customers land exactly where they need to be — no confusion, no drop-off.
+                {b.solutionP2}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "40px" }}>
-                {[
-                  "Custom design — no templates",
-                  "Daily menu with seasonal updates",
-                  "Pre-order & event catering flow",
-                  "Full-bleed product photography integration",
-                  "Mobile-first, fully responsive",
-                  "Contact & reservation form",
-                ].map((item) => (
+                {([b.f1, b.f2, b.f3, b.f4, b.f5, b.f6]).map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <div style={{ width: "7px", height: "7px", borderRadius: "2px", backgroundColor: "#ED6D40", flexShrink: 0 }} />
                     <span style={{ fontSize: "14px", fontWeight: 500, color: "#111111", letterSpacing: "0.1px" }}>{item}</span>
@@ -137,7 +129,7 @@ export default function BombannoPage() {
               </div>
               <a href="https://bombano.eu" target="_blank" rel="noopener noreferrer"
                 style={{ fontSize: "12px", fontWeight: 600, color: "#ED6D40", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.18px" }}>
-                Visit live site ↗
+                {b.visitSite}
               </a>
             </div>
           </div>

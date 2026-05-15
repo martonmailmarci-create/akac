@@ -3,8 +3,10 @@
 import { useEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 import HeroBackground from "@/components/ui/HeroBackground";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function Hero({ ready }: { ready: boolean }) {
+  const { t } = useLocale();
   const contentRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -107,7 +109,7 @@ export default function Hero({ ready }: { ready: boolean }) {
             margin: 0,
           }}
         >
-          / AKAC STUDIO
+          {t.hero.label}
         </p>
 
         {/* Headline — 1 italic, 2 weight 600 */}
@@ -122,15 +124,15 @@ export default function Hero({ ready }: { ready: boolean }) {
             margin: 0,
           }}
         >
-          We are a two-person studio building{" "}
+          {t.hero.headlinePre}{" "}
           <span style={{
             color: "#ED6D40",
             fontStyle: "italic",
             textShadow: "0 0 30px rgba(237, 109, 64, 0.3), 0 0 60px rgba(237, 109, 64, 0.12)",
           }}>
-            websites
+            {t.hero.headlineAccent}
           </span>
-          {" "}that perform.
+          {" "}{t.hero.headlinePost}
         </h1>
 
         {/* Subcopy — 3 increased letter-spacing */}
@@ -146,13 +148,12 @@ export default function Hero({ ready }: { ready: boolean }) {
             margin: 0,
           }}
         >
-          Design and development under one roof. Fast turnaround, unlimited
-          revisions, and a team that actually picks up the phone.
+          {t.hero.subcopy}
         </p>
 
         {/* CTA */}
         <div ref={ctaRef}>
-          <BracketButton label="GET IN TOUCH" color="#D9D9D9" href="/contact" />
+          <BracketButton label={t.hero.cta} color="#D9D9D9" href="/contact" />
         </div>
       </div>
     </section>

@@ -2,35 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
-const cards = [
-  {
-    number: "01", total: "04",
-    title: "TAILORED BY DEFAULT",
-    body: "No two clients are the same, so no two projects look the same. We study your brand, your audience, and your goals before a single pixel is placed. The result is a website that feels unmistakably yours, not a template with your logo swapped in.",
-    bg: "#111111", titleColor: "#F9F9F4", counterColor: "rgba(249,249,244,0.4)", bodyColor: "#F9F9F4",
-  },
-  {
-    number: "02", total: "04",
-    title: "DESIGN THAT PERFORMS",
-    body: "Beautiful sites that don't convert are just expensive art. Every layout, colour choice, and interaction we make is deliberate, crafted to look exceptional and drive real results. Your site should work as hard as you do.",
-    bg: "#5C939F", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000",
-  },
-  {
-    number: "03", total: "04",
-    title: "DELIVERED IN WEEKS",
-    body: "Most agencies quote months. We deliver in 2 to 4 weeks without cutting corners. A small, focused team means fewer handoffs, faster decisions, and a site that launches while your competitors are still in kickoff meetings.",
-    bg: "#ED6D40", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000",
-  },
-  {
-    number: "04", total: "04",
-    title: "EASY FROM START TO FINISH",
-    body: "We've worked with local businesses, e-commerce brands, studios, and enterprise clients — and they all say the same thing: working with us is refreshingly straightforward. Clear communication, honest timelines, and zero drama from brief to launch.",
-    bg: "#E4E4E4", titleColor: "#111111", counterColor: "rgba(17,17,17,0.4)", bodyColor: "#111111",
-  },
+const CARD_STYLES = [
+  { number: "01", total: "04", bg: "#111111", titleColor: "#F9F9F4", counterColor: "rgba(249,249,244,0.4)", bodyColor: "#F9F9F4" },
+  { number: "02", total: "04", bg: "#5C939F", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000" },
+  { number: "03", total: "04", bg: "#ED6D40", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000" },
+  { number: "04", total: "04", bg: "#E4E4E4", titleColor: "#111111", counterColor: "rgba(17,17,17,0.4)", bodyColor: "#111111" },
 ];
 
 export default function HowWeWork() {
+  const { t } = useLocale();
+
+  const cards = CARD_STYLES.map((s, i) => ({
+    ...s,
+    title: t.howWeWork[`card${i + 1}Title` as "card1Title"],
+    body: t.howWeWork[`card${i + 1}Body` as "card1Body"],
+  }));
   const sectionRef = useRef<HTMLElement>(null);
   const wipeRef = useRef<HTMLDivElement>(null);
   const mobileCardsRef = useRef<HTMLDivElement>(null);
@@ -86,10 +74,10 @@ export default function HowWeWork() {
       />
 
       <SectionHeader
-        label="/ OUR ETHOS"
-        title="HOW WE WORK"
-        body="We build websites that work as hard as your business does. With design that commands attention and code that never lets you down, we move fast without cutting corners. This isn't template-filling. It's deliberate, precise, and built to perform from day one."
-        cta={{ text: "LET'S TALK", href: "/contact" }}
+        label={t.howWeWork.label}
+        title={t.howWeWork.title}
+        body={t.howWeWork.body}
+        cta={{ text: t.howWeWork.cta, href: "/contact" }}
         mbClass="mb-20 md:mb-[160px]"
       />
 

@@ -4,26 +4,16 @@ import { useRef } from "react";
 import Image from "next/image";
 import BracketButton from "@/components/ui/BracketButton";
 import RevealHeadline from "@/components/ui/RevealHeadline";
-
-const team = [
-  {
-    photo: "/Marcell.png",
-    name: "MARCELL MARTON",
-    role: "CO-FOUNDER",
-    label: "FOUNDER",
-    description: "THE CREATIVE DIRECTOR. EVERY LAYOUT, COLOUR CHOICE, AND INTERACTION IS HIS WORK. OBSESSED WITH DESIGN THAT LOOKS EXCEPTIONAL AND CONVERTS.",
-  },
-  {
-    photo: "/Viktor.png",
-    name: "VIKTOR MILLER",
-    role: "CO-FOUNDER",
-    label: "FOUNDER",
-    description: "THE ENGINEER. CLEAN, PERFORMANT CODE THAT LAUNCHES FAST AND SCALES WITHOUT DRAMA. EVERY SITE WORKS AS WELL AS IT LOOKS.",
-  },
-];
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function OurTeam() {
+  const { t } = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const team = [
+    { photo: "/Marcell.png", name: "MARCELL MARTON", role: t.ourTeam.coFounder, label: t.ourTeam.founder, description: t.ourTeam.marcellDesc },
+    { photo: "/Viktor.png", name: "VIKTOR MILLER", role: t.ourTeam.coFounder, label: t.ourTeam.founder, description: t.ourTeam.viktorDesc },
+  ];
 
   return (
     <section
@@ -35,30 +25,28 @@ export default function OurTeam() {
       <div className="px-6 pt-28 pb-28 md:px-[100px] md:pt-[180px] md:pb-0">
         {/* Top labels */}
         <div className="flex justify-between mb-16">
-          <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
-          <span className="hidden md:inline text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
-          <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">OUR TEAM</span>
+          <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">{t.ourTeam.label}</span>
+          <span className="hidden md:inline text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">{t.ourTeam.label}</span>
+          <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px]">{t.ourTeam.label}</span>
         </div>
 
         {/* Reorderable block */}
         <div className="flex flex-col">
           {/* Headline — 1st on mobile, 3rd on desktop */}
           <RevealHeadline className="order-1 md:order-3 text-[32px] md:text-[55px] font-semibold text-akac-light tracking-[-1.1px] leading-[1.1] text-center mb-14 md:mb-16">
-            WE DON&apos;T HAND OFF.
+            {t.ourTeam.headlineLine1}
             <br />
-            WE SEE IT THROUGH.
+            {t.ourTeam.headlineLine2}
           </RevealHeadline>
 
-          {/* Descriptor — 2nd on mobile, 1st on desktop */}
           <p className="order-2 md:order-1 text-[16px] font-medium text-akac-light uppercase tracking-[0.24px] leading-[18px] text-center mb-14">
-            TWO PEOPLE. ONE SHARED OBSESSION.
+            {t.ourTeam.descriptorLine1}
             <br />
-            DESIGN AND CODE, UNDER ONE ROOF.
+            {t.ourTeam.descriptorLine2}
           </p>
 
-          {/* CTA — 3rd on mobile, 2nd on desktop */}
           <div className="order-3 md:order-2 flex justify-center mb-20">
-            <BracketButton label="MEET THE TEAM" color="#D9D9D9" href="/contact" />
+            <BracketButton label={t.ourTeam.meetCta} color="#D9D9D9" href="/contact" />
           </div>
         </div>
 
@@ -95,7 +83,7 @@ export default function OurTeam() {
 
               {/* CTA */}
               <div className="flex mt-14">
-                <BracketButton label={`CONNECT WITH ${m.name.split(" ")[0]}`} color="#D9D9D9" href="/contact" />
+                <BracketButton label={`${t.ourTeam.connectWith} ${m.name.split(" ")[0]}`} color="#D9D9D9" href="/contact" />
               </div>
             </div>
           ))}

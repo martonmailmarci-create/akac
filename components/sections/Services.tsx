@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ScrambleText from "@/components/ui/ScrambleText";
 import RevealHeadline from "@/components/ui/RevealHeadline";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function ServiceCard({ title, description }: { title: string; description: string }) {
   const [hovered, setHovered] = useState(false);
@@ -34,36 +35,19 @@ function ServiceCard({ title, description }: { title: string; description: strin
   );
 }
 
-const services = [
-  {
-    title: "WEB DESIGN",
-    description: "Pixel-perfect, brand-aligned design that works at every screen size. From wireframe to final handoff, we own the full visual layer.",
-  },
-  {
-    title: "FRONTEND DEVELOPMENT",
-    description: "Clean, performant code built on modern stacks. Fast load times, smooth interactions, and zero tech debt from day one.",
-  },
-  {
-    title: "WEBSHOP & E-COMMERCE",
-    description: "Custom storefronts built to convert. Whether it's Shopify, WooCommerce, or headless — we make buying effortless.",
-  },
-  {
-    title: "WEB APPS & CUSTOM FUNCTIONALITY",
-    description: "Beyond brochure sites. We build dashboards, portals, booking systems, and anything else your users need to get things done.",
-  },
-  {
-    title: "ONGOING MAINTENANCE",
-    description: "We don't disappear after launch. Monthly retainers keep your site fast, secure, and always improving.",
-  },
-  {
-    title: "ALWAYS INCLUDED",
-    description: "SEO foundations, performance optimisation, accessibility, mobile-first build, and a handoff you can actually understand.",
-  },
-];
-
 export default function Services() {
+  const { t } = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const services = [
+    { title: t.services.s1Title, description: t.services.s1Desc },
+    { title: t.services.s2Title, description: t.services.s2Desc },
+    { title: t.services.s3Title, description: t.services.s3Desc },
+    { title: t.services.s4Title, description: t.services.s4Desc },
+    { title: t.services.s5Title, description: t.services.s5Desc },
+    { title: t.services.s6Title, description: t.services.s6Desc },
+  ];
 
   useEffect(() => {
     let ctx: { revert: () => void } | null = null;
@@ -91,9 +75,9 @@ export default function Services() {
     >
       {/* Header */}
       <div className="mb-16">
-        <SectionLabel>/ OUR SERVICES</SectionLabel>
+        <SectionLabel>{t.services.label}</SectionLabel>
         <RevealHeadline className="text-[28px] md:text-[55px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1] max-w-[800px]">
-          Web Design &amp; Development, End to End.
+          {t.services.headline}
         </RevealHeadline>
       </div>
 

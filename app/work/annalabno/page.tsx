@@ -1,17 +1,16 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CTA from "@/components/sections/CTA";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import HeroParallax from "./HeroParallax";
 
-export const metadata: Metadata = {
-  title: "Anna Łabno — Case Study | AKAC Studio",
-  description:
-    "How we designed and built a warm, conversion-focused website for Warsaw-based psychotherapist and sexologist Anna Łabno.",
-};
-
 export default function AnnalabnoPage() {
+  const { t } = useLocale();
+  const a = t.annalabno;
+
   return (
     <>
       <Navbar />
@@ -31,18 +30,18 @@ export default function AnnalabnoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / OVERVIEW
+                {a.overviewLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#111111", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                THE PROJECT
+                {a.overviewTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                Anna Łabno is a Warsaw-based psychotherapist and sexologist offering individual therapy, couples therapy using EFT (Emotionally Focused Therapy), and sexology consultations.
+                {a.overviewP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px" }}>
-                She came to us needing a website that would build trust with first-time visitors — people who are often hesitant, researching quietly, and deciding whether to reach out. The site needed to feel warm and safe while remaining professional, with a clear path to booking.
+                {a.overviewP2}
               </p>
             </div>
           </div>
@@ -75,18 +74,18 @@ export default function AnnalabnoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(217,217,217,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / CHALLENGE
+                {a.challengeLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#D9D9D9", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                THE PROBLEM
+                {a.challengeTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#D9D9D9", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                Therapy is one of the most personal decisions someone makes. Visitors arrive cautious — evaluating credibility, warmth, and approachability all at once, often before they&apos;ve decided to reach out at all.
+                {a.challengeP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(217,217,217,0.5)", lineHeight: "27px", letterSpacing: "0.1px" }}>
-                The challenge was designing a site that doesn&apos;t feel clinical or transactional — while still guiding users clearly toward booking. Three distinct services also needed to be communicated without overwhelming someone who lands in a vulnerable moment.
+                {a.challengeP2}
               </p>
             </div>
           </div>
@@ -107,28 +106,21 @@ export default function AnnalabnoPage() {
           <div className="flex flex-col md:flex-row md:gap-[100px]">
             <div style={{ flexShrink: 0, width: "100%", maxWidth: "300px", marginBottom: "40px" }}>
               <p style={{ fontSize: "10px", fontWeight: 600, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.18px", marginBottom: "12px" }}>
-                / SOLUTION
+                {a.solutionLabel}
               </p>
               <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#111111", letterSpacing: "-0.6px", lineHeight: "32px" }}>
-                WHAT WE BUILT
+                {a.solutionTitle}
               </h2>
             </div>
             <div style={{ maxWidth: "640px" }}>
               <p style={{ fontSize: "17px", fontWeight: 500, color: "#111111", lineHeight: "28px", letterSpacing: "0.1px", marginBottom: "20px" }}>
-                A clean, image-led website with a calm visual language that mirrors the therapeutic space: soft photography, generous whitespace, and warm typography.
+                {a.solutionP1}
               </p>
               <p style={{ fontSize: "16px", fontWeight: 400, color: "rgba(17,17,17,0.55)", lineHeight: "27px", letterSpacing: "0.1px", marginBottom: "40px" }}>
-                Each service has its own dedicated section with clear pricing and a direct path to contact. We built in a workshop calendar for Anna&apos;s couples retreats, a structured FAQ, and pulled in authentic client testimonials from ZnanyLekarz.
+                {a.solutionP2}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "40px" }}>
-                {[
-                  "Custom design — no templates",
-                  "Service pages with transparent pricing",
-                  "Workshop & calendar section",
-                  "Integrated client testimonials",
-                  "Mobile-first, fully responsive",
-                  "Contact form with session type selection",
-                ].map((item) => (
+                {([a.f1, a.f2, a.f3, a.f4, a.f5, a.f6]).map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <div style={{ width: "7px", height: "7px", borderRadius: "2px", backgroundColor: "#ED6D40", flexShrink: 0 }} />
                     <span style={{ fontSize: "14px", fontWeight: 500, color: "#111111", letterSpacing: "0.1px" }}>{item}</span>
@@ -137,7 +129,7 @@ export default function AnnalabnoPage() {
               </div>
               <a href="https://annalabno.com" target="_blank" rel="noopener noreferrer"
                 style={{ fontSize: "12px", fontWeight: 600, color: "#ED6D40", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.18px" }}>
-                Visit live site ↗
+                {a.visitSite}
               </a>
             </div>
           </div>

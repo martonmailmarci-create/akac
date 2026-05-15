@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 type View = "slide" | "grid2" | "grid3";
 
@@ -16,23 +17,6 @@ type Project = {
   large: string;
   slug?: string;
 };
-
-const ALL_PROJECTS: Project[] = [
-  {
-    id: "01", name: "ANNA ŁABNO",
-    category: "WEB DESIGN & DEVELOPMENT", tags: ["HEALTHCARE / THERAPY"],
-    thumb: "/project1/project1.jpg", large: "/project1/project1.jpg",
-    slug: "annalabno",
-  },
-  {
-    id: "02", name: "BOMBANŐ",
-    category: "WEB DESIGN & DEVELOPMENT", tags: ["FOOD & HOSPITALITY"],
-    thumb: "/project2/project2.jpg", large: "/project2/project2.jpg",
-    slug: "bombanno",
-  },
-];
-
-const CATEGORIES = ["ALL", ...Array.from(new Set(ALL_PROJECTS.map((p) => p.category)))];
 
 function ProjectCard({ p, children, className = "" }: { p: Project; children: React.ReactNode; className?: string }) {
   if (p.slug) {
@@ -189,14 +173,22 @@ function Grid3View({ projects }: { projects: Project[] }) {
 
 // ── Main Component ───────────────────────────────────────────────────────────
 export default function WorkGallery() {
+  const { t } = useLocale();
+
+  const ALL_PROJECTS: Project[] = [
+    { id: "01", name: t.workGallery.p1Name, category: t.workGallery.p1Category, tags: [t.workGallery.p1Tag], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
+    { id: "02", name: t.workGallery.p2Name, category: t.workGallery.p2Category, tags: [t.workGallery.p2Tag], thumb: "/project2/project2.jpg", large: "/project2/project2.jpg", slug: "bombanno" },
+  ];
+  const CATEGORIES = [t.workGallery.all, ...Array.from(new Set(ALL_PROJECTS.map((p) => p.category)))];
+
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const [view, setView] = useState<View>("grid2");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [filter, setFilter] = useState("ALL");
+  const [filter, setFilter] = useState<string>(t.workGallery.all);
   const [filterOpen, setFilterOpen] = useState(false);
   const [direction, setDirection] = useState(1);
 
-  const filtered = filter === "ALL" ? ALL_PROJECTS : ALL_PROJECTS.filter((p) => p.category === filter);
+  const filtered = filter === t.workGallery.all ? ALL_PROJECTS : ALL_PROJECTS.filter((p) => p.category === filter);
   const safeActive = Math.min(activeIndex, Math.max(0, filtered.length - 1));
 
   const prev = () => {
@@ -215,12 +207,12 @@ export default function WorkGallery() {
     <div className="bg-akac-light min-h-screen" style={{ paddingTop: "180px" }}>
       {/* ── Header ── */}
       <div className="text-center px-6 mb-14">
-        <p className="text-[12px] font-medium text-akac-black/50 uppercase tracking-[0.18px] mb-3">/ OUR WORK</p>
+        <p className="text-[12px] font-medium text-akac-black/50 uppercase tracking-[0.18px] mb-3">{t.workGallery.label}</p>
         <h1 className="text-[28px] md:text-[55px] font-semibold text-akac-black tracking-[-1.1px] leading-[1.1] mb-4">
-          WHAT WE&apos;VE BUILT
+          {t.workGallery.title}
         </h1>
         <p className="text-[12px] font-medium text-akac-black/40 uppercase tracking-[0.18px]">
-          HAND-CRAFTED. PERFORMANCE-DRIVEN. EVERY TIME.
+          {t.workGallery.subtitle}
         </p>
       </div>
 
@@ -234,7 +226,7 @@ export default function WorkGallery() {
             className="flex items-center gap-1.5 bg-akac-black text-akac-cream rounded-md px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18px] cursor-pointer"
             style={{ border: "none" }}
           >
-            FILTER
+            {t.workGallery.filter}
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M3 4.5L6 7.5L9 4.5" stroke="#F9F9F4" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
@@ -338,7 +330,7 @@ export default function WorkGallery() {
       <div className="px-6 md:px-[100px] pb-24">
         {filtered.length === 0 ? (
           <div className="text-center py-24 text-[13px] font-medium text-akac-black/40 uppercase tracking-[0.18px]">
-            NO PROJECTS MATCH THIS FILTER
+            {t.workGallery.noMatch}
           </div>
         ) : view === "slide" ? (
           <SlideView projects={filtered} activeIndex={safeActive} direction={direction} />

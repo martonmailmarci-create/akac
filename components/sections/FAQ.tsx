@@ -4,33 +4,7 @@ import { useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { AnimatePresence, motion } from "framer-motion";
 import RevealHeadline from "@/components/ui/RevealHeadline";
-
-const faqs = [
-  {
-    q: "HOW LONG DOES A PROJECT TYPICALLY TAKE?",
-    a: "Most projects are delivered in 2–6 weeks depending on scope. Essential packages ship in around 2 weeks, Professional in 3–4 weeks, and Enterprise projects are scoped individually.",
-  },
-  {
-    q: "DO YOU WORK WITH CLIENTS OUTSIDE OF EUROPE?",
-    a: "Yes — we work with clients worldwide. Communication is primarily async via Slack and Loom, with video calls when needed.",
-  },
-  {
-    q: "WHAT DO YOU NEED FROM US TO GET STARTED?",
-    a: "A brief, your brand assets, and a clear idea of what you want to achieve. We'll guide you through the rest in our onboarding call.",
-  },
-  {
-    q: "DO YOU OFFER ONGOING SUPPORT AFTER LAUNCH?",
-    a: "Absolutely. We offer monthly maintenance retainers that cover updates, performance monitoring, and new features as your business grows.",
-  },
-  {
-    q: "CAN YOU REDESIGN OUR EXISTING WEBSITE?",
-    a: "Yes — redesigns are a big part of what we do. We'll audit your current site, identify what's working, and rebuild it better.",
-  },
-  {
-    q: "WHAT MAKES YOU DIFFERENT FROM OTHER STUDIOS?",
-    a: "We're a small, focused team — no account managers, no handoffs, no outsourcing. You work directly with the people building your product from day one to launch.",
-  },
-];
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
@@ -73,6 +47,16 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function FAQ() {
+  const { t } = useLocale();
+  const faqs = [
+    { q: t.faq.q1, a: t.faq.a1 },
+    { q: t.faq.q2, a: t.faq.a2 },
+    { q: t.faq.q3, a: t.faq.a3 },
+    { q: t.faq.q4, a: t.faq.a4 },
+    { q: t.faq.q5, a: t.faq.a5 },
+    { q: t.faq.q6, a: t.faq.a6 },
+  ];
+
   return (
     <section
       className="bg-akac-black overflow-hidden rounded-t-[24px] md:rounded-t-[60px] px-6 pt-20 pb-24 md:px-[100px] md:pt-[280px] md:pb-[260px]"
@@ -81,9 +65,9 @@ export default function FAQ() {
       <div className="flex flex-col gap-8 md:flex-row md:gap-20">
         {/* Left */}
         <div className="w-full md:w-[340px] md:flex-shrink-0">
-          <SectionLabel dark>/ FAQ</SectionLabel>
+          <SectionLabel dark>{t.faq.label}</SectionLabel>
           <RevealHeadline className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px]">
-            COMMON QUESTIONS
+            {t.faq.title}
           </RevealHeadline>
         </div>
 

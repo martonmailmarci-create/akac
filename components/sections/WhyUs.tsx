@@ -2,18 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
-
-const rows = [
-  { other: "MONTHS OF BACK-AND-FORTH",          akac: "LIVE IN 2–4 WEEKS" },
-  { other: "TALK TO AN ACCOUNT MANAGER",         akac: "TALK DIRECTLY TO THE TEAM" },
-  { other: "COOKIE-CUTTER TEMPLATES",            akac: "DESIGNED AROUND YOUR BRAND" },
-  { other: "REVISIONS COST EXTRA",               akac: "WE ITERATE UNTIL YOU'RE HAPPY" },
-  { other: "THREE DEPARTMENTS, ONE PROJECT",     akac: "TWO SPECIALISTS, FULL OWNERSHIP" },
-  { other: "VAGUE TIMELINES, SURPRISE INVOICES", akac: "CLEAR SCOPE, TRANSPARENT PRICING" },
-];
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function WhyUs() {
+  const { t } = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const rows = [
+    { other: t.whyUs.r1Other, akac: t.whyUs.r1Akac },
+    { other: t.whyUs.r2Other, akac: t.whyUs.r2Akac },
+    { other: t.whyUs.r3Other, akac: t.whyUs.r3Akac },
+    { other: t.whyUs.r4Other, akac: t.whyUs.r4Akac },
+    { other: t.whyUs.r5Other, akac: t.whyUs.r5Akac },
+    { other: t.whyUs.r6Other, akac: t.whyUs.r6Akac },
+  ];
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
 
@@ -40,10 +42,10 @@ export default function WhyUs() {
       className="bg-akac-light px-6 pt-24 pb-32 md:px-[100px] md:pt-[80px] md:pb-[200px]"
     >
       <SectionHeader
-        label="/ WHY CHOOSE US"
-        title="WHY CHOOSE US?"
-        body="Most agencies put an account manager between you and the work. We don't. You get two specialists who care about the outcome as much as you do, one focused on design, one on code, working together on your project from day one to launch. No handoffs, no delays, no inflated timelines to justify a bigger team."
-        cta={{ text: "START A PROJECT", href: "/contact" }}
+        label={t.whyUs.label}
+        title={t.whyUs.title}
+        body={t.whyUs.body}
+        cta={{ text: t.whyUs.cta, href: "/contact" }}
         mbClass="mb-20 md:mb-[185px]"
       />
 
@@ -51,7 +53,7 @@ export default function WhyUs() {
       <div className="flex flex-col md:flex-row gap-6">
         <div ref={leftRef} className="flex-1 bg-akac-offwhite rounded-card overflow-hidden">
           <div className="px-8 py-5 border-b border-akac-black/10">
-            <h3 className="text-[13px] font-bold text-akac-black uppercase tracking-[0.18px]">Other Agencies</h3>
+            <h3 className="text-[13px] font-bold text-akac-black uppercase tracking-[0.18px]">{t.whyUs.otherAgencies}</h3>
           </div>
           {rows.map((row, i) => (
             <div key={i} className="flex items-center gap-3 px-8 py-6 border-b border-akac-black/10 last:border-b-0">

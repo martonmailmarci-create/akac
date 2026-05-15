@@ -5,23 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import BracketButton from "@/components/ui/BracketButton";
 import RevealHeadline from "@/components/ui/RevealHeadline";
-
-const projects = [
-  {
-    id: "01", name: "ANNA ŁABNO",
-    tags: ["Web Design & Dev", "Healthcare / Therapy"],
-    thumb: "/project1/project1.jpg", large: "/project1/project1.jpg",
-    slug: "annalabno",
-  },
-  {
-    id: "02", name: "BOMBANŐ",
-    tags: ["Web Design & Dev", "Food & Hospitality"],
-    thumb: "/project2/project2.jpg", large: "/project2/project2.jpg",
-    slug: "bombanno",
-  },
-];
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function FeaturedWork() {
+  const { t } = useLocale();
+
+  const projects = [
+    { id: "01", name: t.featuredWork.p1Name, tags: [t.featuredWork.p1Tag1, t.featuredWork.p1Tag2], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
+    { id: "02", name: t.featuredWork.p2Name, tags: [t.featuredWork.p2Tag1, t.featuredWork.p2Tag2], thumb: "/project2/project2.jpg", large: "/project2/project2.jpg", slug: "bombanno" },
+  ];
   const sectionRef = useRef<HTMLElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const leftColRef = useRef<HTMLDivElement>(null);
@@ -83,10 +75,10 @@ export default function FeaturedWork() {
     >
       {/* ── Mobile layout ── */}
       <div className="md:hidden px-6 pt-28 pb-28">
-        <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-5">/ OUR WORK</span>
-        <RevealHeadline className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-6">FEATURED WORK</RevealHeadline>
+        <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-5">{t.featuredWork.label}</span>
+        <RevealHeadline className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-6">{t.featuredWork.headline}</RevealHeadline>
         <p className="text-[16px] font-medium text-akac-light leading-[18px] tracking-[0.24px] mb-14">
-          Every decision we make, from layout to load time, is measured against one thing: what moves the needle for your business.
+          {t.featuredWork.bodyMobile}
         </p>
 
         {/* Thumbnails row */}
@@ -136,7 +128,7 @@ export default function FeaturedWork() {
           ))}
         </div>
 
-        <BracketButton label="VIEW ALL" color="#ED6D40" href="/work" className="mt-14" />
+        <BracketButton label={t.featuredWork.viewAll} color="#ED6D40" href="/work" className="mt-14" />
       </div>
 
       {/* ── Desktop layout ── */}
@@ -149,13 +141,13 @@ export default function FeaturedWork() {
         <div style={{ width: "33%", minWidth: "400px", flexShrink: 0, marginTop: "-100px" }}>
         <div ref={leftColRef}>
           <span style={{ fontSize: "12px", fontWeight: 500, color: "#D9D9D9", textTransform: "uppercase", letterSpacing: "0.18px", display: "block", marginBottom: "12px" }}>
-            / OUR WORK
+            {t.featuredWork.label}
           </span>
           <h2 style={{ fontSize: "30px", fontWeight: 500, color: "#D7D7D7", letterSpacing: "-0.6px", lineHeight: "32px", marginBottom: "24px" }}>
-            FEATURED WORK
+            {t.featuredWork.headline}
           </h2>
           <p style={{ color: "#D9D9D9", fontSize: "16px", fontWeight: 500, lineHeight: "18px", letterSpacing: "0.24px", maxWidth: "420px", marginBottom: "40px" }}>
-            Every decision we make, from layout to load time, is measured against one thing: what moves the needle for your business. We build sites that strengthen how your brand is perceived, convert visitors into customers, and perform fast enough to never lose one. And when we hand it over, it&apos;s yours to manage with ease, no developer dependency, no guesswork.
+            {t.featuredWork.bodyDesktop}
           </p>
 
           {/* Thumbnails */}
@@ -175,7 +167,7 @@ export default function FeaturedWork() {
             ))}
           </div>
 
-          <BracketButton label="VIEW ALL" color="#ED6D40" href="/work" />
+          <BracketButton label={t.featuredWork.viewAll} color="#ED6D40" href="/work" />
         </div>
         </div>
 

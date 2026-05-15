@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import LenisProvider from "@/components/ui/LenisProvider";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
 import KonamiEgg from "@/components/ui/KonamiEgg";
 import ContextMenu from "@/components/ui/ContextMenu";
 import CookieBanner from "@/components/ui/CookieBanner";
@@ -82,7 +83,9 @@ export default function RootLayout({
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6YGXL6DBCF" strategy="afterInteractive" />
       </head>
       <body>
-        <LenisProvider>{children}</LenisProvider>
+        <LocaleProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </LocaleProvider>
         <KonamiEgg />
         <ContextMenu />
         <CookieBanner />

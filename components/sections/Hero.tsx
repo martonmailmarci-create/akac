@@ -1,18 +1,28 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import BracketButton from "@/components/ui/BracketButton";
 import HeroBackground from "@/components/ui/HeroBackground";
 import { useLocale } from "@/components/providers/LocaleProvider";
 
 export default function Hero({ ready }: { ready: boolean }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const contentRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subcopyRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const ctxRef = useRef<{ revert: () => void } | null>(null);
+
+  // Revert GSAP synchronously BEFORE React commits the new locale text to the DOM.
+  // useEffect cleanup runs after commit, so GSAP's split spans would block React's update.
+  // useLayoutEffect cleanup runs before the mutation phase, giving React a clean DOM.
+  useLayoutEffect(() => {
+    return () => {
+      ctxRef.current?.revert();
+      ctxRef.current = null;
+    };
+  }, [locale]);
 
   useEffect(() => {
     if (!ready) return;
@@ -52,7 +62,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       ctxRef.current?.revert();
       ctxRef.current = null;
     };
-  }, [ready]);
+  }, [ready, locale]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section

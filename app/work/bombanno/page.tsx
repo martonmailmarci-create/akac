@@ -120,7 +120,7 @@ export default function BombannoPage() {
                 {b.solutionP2}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "40px" }}>
-                {([b.f1, b.f2, b.f3, b.f4, b.f5, b.f6]).map((item) => (
+                {([b.f1, b.f2, b.f3, b.f4, b.f5, b.f6, b.f7, b.f8]).map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <div style={{ width: "7px", height: "7px", borderRadius: "2px", backgroundColor: "#ED6D40", flexShrink: 0 }} />
                     <span style={{ fontSize: "14px", fontWeight: 500, color: "#111111", letterSpacing: "0.1px" }}>{item}</span>

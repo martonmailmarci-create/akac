@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 /* ─── Types ─────────────────────────────────────────────── */
 interface Metric {
@@ -40,15 +41,15 @@ function scoreBigColor(score: number): string {
   return "#ef4444";
 }
 
-function scoreLabel(score: number): string {
-  if (score >= 90) return "GOOD";
-  if (score >= 85) return "NEAR GOOD";
-  if (score >= 50) return "NEEDS WORK";
-  return "POOR";
+function scoreLabel(score: number, labels: { good: string; nearGood: string; needsWork: string; poor: string }): string {
+  if (score >= 90) return labels.good;
+  if (score >= 85) return labels.nearGood;
+  if (score >= 50) return labels.needsWork;
+  return labels.poor;
 }
 
 /* ─── Score gauge ────────────────────────────────────────── */
-function ScoreGauge({ score }: { score: number }) {
+function ScoreGauge({ score, labels }: { score: number; labels: { good: string; nearGood: string; needsWork: string; poor: string } }) {
   const r = 70;
   const circ = 2 * Math.PI * r;
   const dash = (score / 100) * circ;
@@ -70,14 +71,14 @@ function ScoreGauge({ score }: { score: number }) {
         <text x="90" y="108" textAnchor="middle" fill="#555" fontSize="12" fontWeight="500" fontFamily="var(--font-inter), sans-serif" letterSpacing="1">/ 100</text>
       </svg>
       <span style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.2em", color, textTransform: "uppercase" }}>
-        {scoreLabel(score)}
+        {scoreLabel(score, labels)}
       </span>
     </div>
   );
 }
 
 /* ─── Metric card ────────────────────────────────────────── */
-function MetricCard({ label, metric, note }: { label: string; metric: Metric; note?: string }) {
+function MetricCard({ label, metric, note, metricLabels }: { label: string; metric: Metric; note?: string; metricLabels: { good: string; needsWork: string; poor: string } }) {
   const color = scoreColor(metric.score);
   return (
     <div style={{
@@ -93,7 +94,7 @@ function MetricCard({ label, metric, note }: { label: string; metric: Metric; no
       <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "0.18em", color: "#666", textTransform: "uppercase" }}>{label}</span>
       <span style={{ fontSize: "26px", fontWeight: 700, color: "#D9D9D9", letterSpacing: "-0.5px", lineHeight: 1 }}>{metric.displayValue}</span>
       <span style={{ fontSize: "11px", fontWeight: 500, color, textTransform: "uppercase", letterSpacing: "0.1em" }}>
-        {metric.score === null ? "—" : metric.score >= 0.9 ? "Good" : metric.score >= 0.5 ? "Needs work" : "Poor"}
+        {metric.score === null ? "—" : metric.score >= 0.9 ? metricLabels.good : metric.score >= 0.5 ? metricLabels.needsWork : metricLabels.poor}
       </span>
       {note && <span style={{ fontSize: "10px", color: "#444", marginTop: "2px", lineHeight: 1.4 }}>{note}</span>}
     </div>
@@ -120,6 +121,10 @@ function StrategyToggle({ value, onChange }: { value: "mobile" | "desktop"; onCh
 
 /* ─── Main page ──────────────────────────────────────────── */
 export default function AnalyzePage() {
+  const { t } = useLocale();
+  const az = t.analyze;
+  const scoreLabels = { good: az.scoreLabelGood, nearGood: az.scoreLabelNearGood, needsWork: az.scoreLabelNeedsWork, poor: az.scoreLabelPoor };
+  const metricLabels = { good: az.metricGood, needsWork: az.metricNeedsWork, poor: az.metricPoor };
   const [inputUrl, setInputUrl] = useState("");
   const [strategy, setStrategy] = useState<"mobile" | "desktop">("mobile");
   const [loading, setLoading] = useState(false);
@@ -219,14 +224,14 @@ export default function AnalyzePage() {
           display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "36px",
         }}>
           <p style={{ fontSize: "12px", fontWeight: 500, color: "#ED6D40", letterSpacing: "0.18em", textTransform: "uppercase", margin: 0 }}>
-            / AKAC STUDIO — FREE TOOL
+            {az.label}
           </p>
           <h1 style={{ fontSize: "clamp(32px, 6vw, 60px)", fontWeight: 600, color: "#D9D9D9", letterSpacing: "-1px", lineHeight: 1.1, margin: 0, maxWidth: "800px" }}>
-            How fast is{" "}
-            <span style={{ color: "#ED6D40", fontStyle: "italic", textShadow: "0 0 30px rgba(237,109,64,0.3)" }}>your site?</span>
+            {az.headlinePre}{" "}
+            <span style={{ color: "#ED6D40", fontStyle: "italic", textShadow: "0 0 30px rgba(237,109,64,0.3)" }}>{az.headlineAccent}</span>
           </h1>
           <p style={{ fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 400, color: "#888", lineHeight: 1.6, maxWidth: "560px", margin: 0 }}>
-            Paste any URL and get a real performance snapshot powered by Google Lighthouse — FCP, LCP, CLS, TBT and more.
+            {az.desc}
           </p>
 
           <StrategyToggle value={strategy} onChange={setStrategy} />
@@ -237,7 +242,7 @@ export default function AnalyzePage() {
           }}>
             <input
               type="url"
-              placeholder="https://yoursite.com"
+              placeholder={az.placeholder}
               value={inputUrl}
               onChange={(e) => setInputUrl(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !loading && handleAnalyze()}
@@ -296,7 +301,7 @@ export default function AnalyzePage() {
             {/* Header */}
             <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <span style={{ fontSize: "11px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Results for</span>
+                <span style={{ fontSize: "11px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>{az.resultsFor}</span>
                 <span style={{ fontSize: "18px", fontWeight: 600, color: "#ED6D40", letterSpacing: "-0.3px", wordBreak: "break-all" }}>{result.url}</span>
                 <span style={{ fontSize: "11px", fontWeight: 500, color: "#444", letterSpacing: "0.1em", textTransform: "uppercase" }}>
                   {result.strategy} · Powered by Google Lighthouse
@@ -315,7 +320,7 @@ export default function AnalyzePage() {
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#ED6D40"; (e.currentTarget as HTMLButtonElement).style.color = "#ED6D40"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#333"; (e.currentTarget as HTMLButtonElement).style.color = "#888"; }}
               >
-                ↻ Re-test
+                {az.reTest}
               </button>
             </div>
 
@@ -330,12 +335,12 @@ export default function AnalyzePage() {
                 display: "flex", flexDirection: "column", alignItems: "center", gap: "16px",
                 background: "#161616", border: "1px solid #222", borderRadius: "20px", padding: "40px 48px",
               }}>
-                <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>Performance</span>
-                <ScoreGauge score={result.score} />
+                <span style={{ fontSize: "10px", fontWeight: 600, color: "#555", letterSpacing: "0.18em", textTransform: "uppercase" }}>{az.performance}</span>
+                <ScoreGauge score={result.score} labels={scoreLabels} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
                 {metricConfig.map(({ label, key, note }) => (
-                  <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} />
+                  <MetricCard key={key} label={label} metric={result.metrics[key]} note={note} metricLabels={metricLabels} />
                 ))}
               </div>
             </div>
@@ -348,22 +353,22 @@ export default function AnalyzePage() {
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <div style={{ width: "7px", height: "7px", background: "#ED6D40", borderRadius: "2px", flexShrink: 0 }} />
                 <span style={{ fontSize: "12px", fontWeight: 600, color: "#D9D9D9", letterSpacing: "0.05em", textTransform: "uppercase" }}>
-                  About this score
+                  {az.aboutTitle}
                 </span>
               </div>
               <p style={{ margin: 0, fontSize: "13px", color: "#666", lineHeight: 1.7 }}>
-                Lighthouse scores vary by <strong style={{ color: "#888" }}>±5–15 points</strong> between runs due to network conditions, server load, and caching on Google&apos;s test infrastructure. A single score is a <strong style={{ color: "#888" }}>snapshot</strong>, not a fixed number — focus on the individual metrics above, which are more stable and more actionable than the overall score.
+                {az.aboutP1}
               </p>
               <p style={{ margin: 0, fontSize: "13px", color: "#666", lineHeight: 1.7 }}>
-                <strong style={{ color: "#888" }}>What actually matters:</strong> LCP under 2.5s, TBT under 200ms, and CLS under 0.1. If those are green, your site is fast for real users — regardless of the overall number.
+                {az.aboutP2}
               </p>
             </div>
 
             {/* CTA */}
             <div style={{ borderTop: "1px solid #1e1e1e", paddingTop: "48px", display: "flex", flexDirection: "column", gap: "12px", maxWidth: "600px" }}>
-              <p style={{ margin: 0, fontSize: "22px", fontWeight: 600, color: "#D9D9D9", letterSpacing: "-0.4px" }}>Want a faster site?</p>
+              <p style={{ margin: 0, fontSize: "22px", fontWeight: 600, color: "#D9D9D9", letterSpacing: "-0.4px" }}>{az.ctaTitle}</p>
               <p style={{ margin: 0, fontSize: "15px", color: "#666", lineHeight: 1.6 }}>
-                We build high-performance websites from the ground up. Zero bloat, sub-second load times, and a score you can be proud of.
+                {az.ctaDesc}
               </p>
               <div style={{ marginTop: "8px" }}>
                 <a
@@ -377,7 +382,7 @@ export default function AnalyzePage() {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#ED6D40"; (e.currentTarget as HTMLAnchorElement).style.color = "#111"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.color = "#ED6D40"; }}
                 >
-                  Let&apos;s talk
+                  {az.ctaBtn}
                 </a>
               </div>
             </div>

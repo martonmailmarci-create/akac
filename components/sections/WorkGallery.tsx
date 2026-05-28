@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -173,7 +173,7 @@ function Grid3View({ projects }: { projects: Project[] }) {
 
 // ── Main Component ───────────────────────────────────────────────────────────
 export default function WorkGallery() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const ALL_PROJECTS: Project[] = [
     { id: "01", name: t.workGallery.p1Name, category: t.workGallery.p1Category, tags: [t.workGallery.p1Tag], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
@@ -190,6 +190,12 @@ export default function WorkGallery() {
 
   const filtered = filter === t.workGallery.all ? ALL_PROJECTS : ALL_PROJECTS.filter((p) => p.category === filter);
   const safeActive = Math.min(activeIndex, Math.max(0, filtered.length - 1));
+
+  // Reset filter to "all" when locale changes so the translated value matches
+  useEffect(() => {
+    setFilter(t.workGallery.all);
+    setActiveIndex(0);
+  }, [locale]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const prev = () => {
     setDirection(-1);

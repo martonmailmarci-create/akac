@@ -71,6 +71,13 @@ export default function BracketButton({
     setIsOrange(chars.map(() => false));
   }, [label]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Reset display immediately when label changes (e.g. locale switch)
+  useEffect(() => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    setDisplay(label.split(""));
+    setIsOrange(label.split("").map(() => false));
+  }, [label]);
+
   useEffect(() => {
     return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); };
   }, []);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 interface Props {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ interface Props {
   start?: string;
 }
 
-export default function RevealHeadline({
+function RevealHeadlineInner({
   children,
   className,
   style,
@@ -60,4 +61,9 @@ export default function RevealHeadline({
       {children}
     </Tag>
   );
+}
+
+export default function RevealHeadline(props: Props) {
+  const { locale } = useLocale();
+  return <RevealHeadlineInner key={locale} {...props} />;
 }

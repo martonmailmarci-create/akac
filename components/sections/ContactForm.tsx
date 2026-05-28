@@ -6,6 +6,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import RevealHeadline from "@/components/ui/RevealHeadline";
 import BracketButton from "@/components/ui/BracketButton";
 import BookCallModal from "@/components/ui/BookCallModal";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -18,6 +19,8 @@ const Dot = () => (
 );
 
 export default function ContactForm() {
+  const { t } = useLocale();
+  const cf = t.contactForm;
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -55,9 +58,9 @@ export default function ContactForm() {
 
       {/* ── Centered header ── */}
       <div className="text-center mb-16 md:mb-24">
-        <SectionLabel dark className="mb-6">/ CONTACT</SectionLabel>
+        <SectionLabel dark className="mb-6">{cf.label}</SectionLabel>
         <RevealHeadline className="text-[28px] md:text-[55px] font-semibold text-akac-cream tracking-[-1.1px] leading-[1.1]">
-          GET IN TOUCH
+          {cf.headline}
         </RevealHeadline>
       </div>
 
@@ -71,21 +74,21 @@ export default function ContactForm() {
           <div className="flex items-center gap-3 mb-4">
             <Dot />
             <h3 className="text-[22px] md:text-[28px] font-semibold text-akac-cream tracking-[-0.6px] leading-[1.1]">
-              BOOK A 15-MINUTE CALL
+              {cf.bookCallTitle}
             </h3>
           </div>
 
           <p className="text-[14px] font-medium text-akac-cream/50 leading-[1.6] mb-10 pl-[19px]">
-            The fastest way to get started. We&apos;ll talk through your project, answer any questions, and figure out if we&apos;re a good fit — no commitment needed.
+            {cf.bookCallDesc}
           </p>
 
           <div className="mt-auto flex flex-col gap-8">
             {/* Contact emails */}
             <div className="flex flex-col gap-3 pl-[19px]">
               {[
-                { label: "GENERAL", value: "info@akac.studio", href: "mailto:info@akac.studio" },
-                { label: "MARCELL", value: "marcell@akac.studio", href: "mailto:marcell@akac.studio" },
-                { label: "VIKTOR", value: "viktor@akac.studio", href: "mailto:viktor@akac.studio" },
+                { label: cf.emailGeneral, value: "info@akac.studio", href: "mailto:info@akac.studio" },
+                { label: cf.emailMarcell, value: "marcell@akac.studio", href: "mailto:marcell@akac.studio" },
+                { label: cf.emailViktor, value: "viktor@akac.studio", href: "mailto:viktor@akac.studio" },
               ].map(({ label, value, href }) => (
                 <div key={label} className="flex items-baseline gap-4">
                   <span className="text-[10px] font-semibold text-akac-cream/30 uppercase tracking-[0.18px] w-[64px] flex-shrink-0">{label}</span>
@@ -97,7 +100,7 @@ export default function ContactForm() {
             </div>
 
             <div className="self-start pl-[19px]">
-              <BracketButton label="BOOK A CALL" color="#F9F9F4" onClick={() => setModalOpen(true)} />
+              <BracketButton label={cf.bookBtn} color="#F9F9F4" onClick={() => setModalOpen(true)} />
             </div>
 
             {modalOpen && (
@@ -113,12 +116,12 @@ export default function ContactForm() {
           <div className="flex items-center gap-3 mb-4">
             <Dot />
             <h3 className="text-[22px] md:text-[28px] font-semibold text-akac-cream tracking-[-0.6px] leading-[1.1]">
-              SEND A MESSAGE
+              {cf.sendTitle}
             </h3>
           </div>
 
           <p className="text-[14px] font-medium text-akac-cream/50 leading-[1.6] mb-10 pl-[19px]">
-            Prefer to write it out? Fill in the form and we&apos;ll get back to you within 24 hours.
+            {cf.sendDesc}
           </p>
 
           <AnimatePresence mode="wait">
@@ -132,10 +135,10 @@ export default function ContactForm() {
               >
                 <Dot />
                 <p className="text-[24px] font-semibold text-akac-cream tracking-[-0.6px] leading-[1.1] mt-6 mb-3">
-                  MESSAGE SENT.
+                  {cf.successTitle}
                 </p>
                 <p className="text-[14px] font-medium text-akac-cream/50 leading-[1.6]">
-                  We&apos;ll be in touch within 24 hours.
+                  {cf.successDesc}
                 </p>
               </motion.div>
             ) : (
@@ -146,15 +149,15 @@ export default function ContactForm() {
                 className="flex flex-col gap-5 pl-[19px]"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <input type="text" name="name" placeholder="Your name *" required className={inputClass} style={inputStyle} />
-                  <input type="text" name="company" placeholder="Company (optional)" className={inputClass} style={inputStyle} />
+                  <input type="text" name="name" placeholder={cf.namePlaceholder} required className={inputClass} style={inputStyle} />
+                  <input type="text" name="company" placeholder={cf.companyPlaceholder} className={inputClass} style={inputStyle} />
                 </div>
 
-                <input type="email" name="email" placeholder="Email address *" required className={inputClass} style={inputStyle} />
+                <input type="email" name="email" placeholder={cf.emailPlaceholder} required className={inputClass} style={inputStyle} />
 
                 <textarea
                   name="message"
-                  placeholder="Tell us about your project *"
+                  placeholder={cf.messagePlaceholder}
                   required
                   rows={5}
                   className={`${inputClass} resize-none`}
@@ -167,7 +170,7 @@ export default function ContactForm() {
 
                 <div style={{ opacity: status === "loading" ? 0.4 : 1, pointerEvents: status === "loading" ? "none" : "auto" }}>
                   <BracketButton
-                    label={status === "loading" ? "SENDING..." : "SEND MESSAGE"}
+                    label={status === "loading" ? cf.sending : cf.sendBtn}
                     color="#F9F9F4"
                   />
                 </div>

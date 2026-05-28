@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -13,6 +14,7 @@ export default function LenisProvider({
   children: React.ReactNode;
 }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -44,6 +46,15 @@ export default function LenisProvider({
       });
     };
   }, []);
+
+  // On every route change: jump to top and recalculate all ScrollTrigger positions.
+  // Without this, triggers set up on the new page use stale scroll measurements
+  // from the previous page, causing sections to stay invisible (autoAlpha: 0).
+  useEffect(() => {
+    lenisRef.current?.scrollTo(0, { immediate: true });
+    const id = setTimeout(() => ScrollTrigger.refresh(), 120);
+    return () => clearTimeout(id);
+  }, [pathname]);
 
   return <>{children}</>;
 }

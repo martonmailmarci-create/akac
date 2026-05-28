@@ -61,6 +61,13 @@ export default function ScrambleText({ text, color, className, style, triggered 
     setIsOrange(text.split("").map(() => false));
   }, [text]);
 
+  // Reset display immediately when the text prop changes (e.g. locale switch)
+  useEffect(() => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    setDisplay(text.split(""));
+    setIsOrange(text.split("").map(() => false));
+  }, [text]);
+
   useEffect(() => {
     if (triggered === undefined) return;
     if (triggered) startScramble(); else stopScramble();

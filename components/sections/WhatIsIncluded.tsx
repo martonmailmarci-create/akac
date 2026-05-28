@@ -3,54 +3,9 @@
 import { useState } from "react";
 import RevealHeadline from "@/components/ui/RevealHeadline";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 const PLANS = ["ESSENTIAL", "PROFESSIONAL", "ENTERPRISE"];
-
-const features = [
-  {
-    category: "DESIGN",
-    items: [
-      { name: "Custom UI/UX design",        essential: true,  professional: true,  enterprise: true  },
-      { name: "Mobile optimised",            essential: true,  professional: true,  enterprise: true  },
-      { name: "Micro-animations",            essential: false, professional: true,  enterprise: true  },
-    ],
-  },
-  {
-    category: "PAGES & SCOPE",
-    items: [
-      { name: "Up to 5 pages",              essential: true,  professional: false, enterprise: false },
-      { name: "Unlimited pages",             essential: false, professional: true,  enterprise: true  },
-      { name: "Contact form",               essential: true,  professional: true,  enterprise: true  },
-    ],
-  },
-  {
-    category: "FUNCTIONALITY",
-    items: [
-      { name: "E-commerce / webshop",       essential: false, professional: true,  enterprise: true  },
-      { name: "Payment integration",         essential: false, professional: true,  enterprise: true  },
-      { name: "Admin panel (CMS)",           essential: false, professional: true,  enterprise: true  },
-      { name: "Custom integrations",         essential: false, professional: false, enterprise: true  },
-      { name: "Multi-language support",      essential: false, professional: false, enterprise: true  },
-      { name: "Email automation",            essential: false, professional: false, enterprise: true  },
-    ],
-  },
-  {
-    category: "PERFORMANCE",
-    items: [
-      { name: "SEO optimised",              essential: true,  professional: true,  enterprise: true  },
-      { name: "Analytics setup",            essential: false, professional: true,  enterprise: true  },
-    ],
-  },
-  {
-    category: "DELIVERY & SUPPORT",
-    items: [
-      { name: "Delivered in 2 weeks",       essential: true,  professional: false, enterprise: false },
-      { name: "Delivered in 2–4 weeks",     essential: false, professional: true,  enterprise: false },
-      { name: "Custom timeline",             essential: false, professional: false, enterprise: true  },
-      { name: "Post-launch support",         essential: false, professional: true,  enterprise: true  },
-    ],
-  },
-];
 
 function Check() {
   return (
@@ -68,7 +23,55 @@ function Dash() {
 }
 
 export default function WhatIsIncluded() {
+  const { t } = useLocale();
+  const wi = t.whatIsIncluded;
   const [activeTab, setActiveTab] = useState(0);
+
+  const features = [
+    {
+      category: wi.cat1,
+      items: [
+        { name: wi.f_customDesign,    essential: true,  professional: true,  enterprise: true  },
+        { name: wi.f_mobileOptimised, essential: true,  professional: true,  enterprise: true  },
+        { name: wi.f_microAnimations, essential: false, professional: true,  enterprise: true  },
+      ],
+    },
+    {
+      category: wi.cat2,
+      items: [
+        { name: wi.f_upTo5Pages,      essential: true,  professional: false, enterprise: false },
+        { name: wi.f_unlimitedPages,  essential: false, professional: true,  enterprise: true  },
+        { name: wi.f_contactForm,     essential: true,  professional: true,  enterprise: true  },
+      ],
+    },
+    {
+      category: wi.cat3,
+      items: [
+        { name: wi.f_ecommerce,          essential: false, professional: true,  enterprise: true  },
+        { name: wi.f_payment,            essential: false, professional: true,  enterprise: true  },
+        { name: wi.f_adminPanel,         essential: false, professional: true,  enterprise: true  },
+        { name: wi.f_customIntegrations, essential: false, professional: false, enterprise: true  },
+        { name: wi.f_multiLanguage,      essential: false, professional: false, enterprise: true  },
+        { name: wi.f_emailAutomation,    essential: false, professional: false, enterprise: true  },
+      ],
+    },
+    {
+      category: wi.cat4,
+      items: [
+        { name: wi.f_seo,       essential: true,  professional: true,  enterprise: true  },
+        { name: wi.f_analytics, essential: false, professional: true,  enterprise: true  },
+      ],
+    },
+    {
+      category: wi.cat5,
+      items: [
+        { name: wi.f_deliver2w,      essential: true,  professional: false, enterprise: false },
+        { name: wi.f_deliver24w,     essential: false, professional: true,  enterprise: false },
+        { name: wi.f_customTimeline, essential: false, professional: false, enterprise: true  },
+        { name: wi.f_postLaunch,     essential: false, professional: true,  enterprise: true  },
+      ],
+    },
+  ];
   return (
     <section
       className="bg-akac-black overflow-hidden rounded-t-[24px] md:rounded-t-[60px] px-6 pt-20 pb-24 md:px-[100px] md:pt-[140px] md:pb-[200px]"
@@ -76,11 +79,11 @@ export default function WhatIsIncluded() {
     >
       {/* Header */}
       <div className="mb-12 md:mb-16">
-        <SectionLabel dark className="mb-3">/ WHAT&apos;S INCLUDED</SectionLabel>
+        <SectionLabel dark className="mb-3">{wi.label}</SectionLabel>
         <RevealHeadline
           className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px]"
         >
-          EVERYTHING IN EACH PLAN
+          {wi.headline}
         </RevealHeadline>
       </div>
 

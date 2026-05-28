@@ -87,16 +87,16 @@ export default function HowWeWork() {
         {cards.map((card) => (
           <div
             key={card.number}
-            className="w-full min-h-[580px] rounded-[20px] p-6 flex flex-col justify-between text-center"
+            className="w-full min-h-[580px] rounded-[20px] p-6 flex flex-col text-center"
             style={{ backgroundColor: card.bg }}
           >
             <p className="text-[22px] font-medium leading-[26px] tracking-[-0.44px]" style={{ color: card.titleColor }}>
               {card.title}
             </p>
+            <div className="flex-1 flex items-center justify-center">
+              <AsciiIcon src={card.icon} size={280} color={card.titleColor} />
+            </div>
             <div>
-              <div className="flex justify-center mb-8">
-                <AsciiIcon src={card.icon} size={220} color={card.titleColor} />
-              </div>
               <p className="mb-4" style={{ fontSize: "11px", fontWeight: 500, color: card.counterColor, letterSpacing: "0.18px" }}>
                 {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
               </p>

@@ -95,7 +95,7 @@ export default function OurFocusBackground() {
           const blue  = Math.round(17 + (64  - 17) * orangeStrength)
 
           ctx.fillStyle = `rgb(${red},${green},${blue})`
-          ctx.globalAlpha = finalBrightness * 0.5
+          ctx.globalAlpha = finalBrightness * 0.75
           ctx.fillText(char, col * cellW + cellW / 2, row * cellH + cellH / 2)
         }
       }

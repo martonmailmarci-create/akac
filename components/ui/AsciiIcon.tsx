@@ -61,13 +61,16 @@ export default function AsciiIcon({ src, size, color }: Props) {
       }
 
       let time = 0
+      let lastTs = 0
       let frame = 0
 
-      const draw = () => {
+      const draw = (ts: number) => {
         rafRef.current = requestAnimationFrame(draw)
-        if (pausedRef.current) return
+        if (pausedRef.current) { lastTs = 0; return }
         frame++
         if (frame % frameSkip !== 0) return
+        const delta = lastTs ? Math.min((ts - lastTs) / 1000, 0.05) : 0.016
+        lastTs = ts
 
         ctx.clearRect(0, 0, size, size)
         ctx.font = `${fontSize}px 'Courier New', monospace`
@@ -87,16 +90,16 @@ export default function AsciiIcon({ src, size, color }: Props) {
             const char = CHAR_SET[Math.floor(final * (CHAR_SET.length - 1))]
             if (char === ' ') continue
 
-            ctx.globalAlpha = Math.min(1, final * 1.2)
+            ctx.globalAlpha = 1
             ctx.fillText(char, col * cellW + cellW / 2, row * cellH + cellH / 2)
           }
         }
 
         ctx.globalAlpha = 1
-        time += 0.012
+        time += delta * 0.45
       }
 
-      draw()
+      rafRef.current = requestAnimationFrame(draw)
     }
 
     return () => {

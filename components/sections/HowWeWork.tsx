@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import AsciiIcon from "@/components/ui/AsciiIcon";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useLocale } from "@/components/providers/LocaleProvider";
 
 const CARD_STYLES = [
-  { number: "01", total: "04", bg: "#111111", titleColor: "#F9F9F4", counterColor: "rgba(249,249,244,0.4)", bodyColor: "#F9F9F4", icon: "/icons/tailored.svg", iconFilter: "brightness(0) invert(1)" },
-  { number: "02", total: "04", bg: "#5C939F", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000", icon: "/icons/perform.svg", iconFilter: "none" },
-  { number: "03", total: "04", bg: "#ED6D40", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000", icon: "/icons/speed.svg", iconFilter: "none" },
-  { number: "04", total: "04", bg: "#E4E4E4", titleColor: "#111111", counterColor: "rgba(17,17,17,0.4)", bodyColor: "#111111", icon: "/icons/easy.svg", iconFilter: "none" },
+  { number: "01", total: "04", bg: "#111111", titleColor: "#F9F9F4", counterColor: "rgba(249,249,244,0.4)", bodyColor: "#F9F9F4", icon: "/icons/tailored.svg" },
+  { number: "02", total: "04", bg: "#5C939F", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000", icon: "/icons/perform.svg" },
+  { number: "03", total: "04", bg: "#ED6D40", titleColor: "#000000", counterColor: "rgba(0,0,0,0.4)", bodyColor: "#000000", icon: "/icons/speed.svg" },
+  { number: "04", total: "04", bg: "#E4E4E4", titleColor: "#111111", counterColor: "rgba(17,17,17,0.4)", bodyColor: "#111111", icon: "/icons/easy.svg" },
 ];
 
 export default function HowWeWork() {
@@ -95,7 +95,7 @@ export default function HowWeWork() {
             </p>
             <div>
               <div className="flex justify-center mb-8">
-                <Image src={card.icon} alt="" width={220} height={220} style={{ filter: card.iconFilter }} />
+                <AsciiIcon src={card.icon} size={220} color={card.titleColor} />
               </div>
               <p className="mb-4" style={{ fontSize: "11px", fontWeight: 500, color: card.counterColor, letterSpacing: "0.18px" }}>
                 {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}
@@ -140,7 +140,7 @@ export default function HowWeWork() {
                   {card.title}
                 </p>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Image src={card.icon} alt="" width={280} height={280} style={{ filter: card.iconFilter }} />
+                  <AsciiIcon src={card.icon} size={280} color={card.titleColor} />
                 </div>
                 <p className="absolute bottom-[150px] left-6 right-6 text-[13px] font-medium text-center tracking-[0.18px]" style={{ color: card.counterColor }}>
                   {card.number}&nbsp;&nbsp;/&nbsp;&nbsp;{card.total}

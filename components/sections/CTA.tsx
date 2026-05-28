@@ -32,29 +32,31 @@ export default function CTA({ centered = false, bgImage }: { centered?: boolean;
     <section
       id="contact"
       ref={sectionRef}
-      className={`bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-40 pb-32 min-h-screen md:px-[100px] flex flex-col items-center ${centered ? "md:min-h-[900px] md:py-[80px] justify-center" : "md:min-h-0 md:pt-[220px] md:pb-[420px] justify-start"}`}
+      className={`relative bg-akac-black rounded-[24px] md:rounded-section text-center overflow-hidden mx-2 my-2 md:mx-4 md:my-4 px-6 pt-40 pb-32 min-h-screen md:px-[100px] flex flex-col items-center ${centered ? "md:min-h-[900px] md:py-[80px] justify-center" : "md:min-h-0 md:pt-[220px] md:pb-[420px] justify-start"}`}
       style={bgImage ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)), url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
     >
-      <span className="text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-10">
+      <span className="relative z-10 text-[12px] font-medium text-akac-light uppercase tracking-[0.18px] block mb-10">
         {t.cta.label}
       </span>
 
       <h2
         ref={headlineRef}
-        className="text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
+        className="relative z-10 text-[30px] font-medium text-akac-light tracking-[-0.6px] leading-[32px] mb-12 max-w-[700px] mx-auto uppercase"
       >
         {t.cta.headlineLine1}
         <br />
         {t.cta.headlineLine2}
       </h2>
 
-      <p className="text-[16px] font-semibold text-akac-light tracking-[0.24px] leading-[1.5] mb-12 max-w-[560px] mx-auto uppercase">
+      <p className="relative z-10 text-[16px] font-semibold text-akac-light tracking-[0.24px] leading-[1.5] mb-12 max-w-[560px] mx-auto uppercase">
         {t.cta.bodyLine1}
         <br />
         {t.cta.bodyLine2}
       </p>
 
-      <BracketButton label={t.cta.cta} color="#D9D9D9" href="/contact" />
+      <div className="relative z-10">
+        <BracketButton label={t.cta.cta} color="#D9D9D9" href="/contact" />
+      </div>
     </section>
   );
 }

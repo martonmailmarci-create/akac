@@ -178,6 +178,7 @@ export default function WorkGallery() {
   const ALL_PROJECTS: Project[] = [
     { id: "01", name: t.workGallery.p1Name, category: t.workGallery.p1Category, tags: [t.workGallery.p1Tag], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
     { id: "02", name: t.workGallery.p2Name, category: t.workGallery.p2Category, tags: [t.workGallery.p2Tag], thumb: "/project2/project2.jpg", large: "/project2/project2.jpg", slug: "bombanno" },
+    { id: "03", name: t.workGallery.p3Name, category: t.workGallery.p3Category, tags: [t.workGallery.p3Tag], thumb: "/project3/project3.png", large: "/project3/project3.png", slug: "costa-otthon" },
   ];
   const CATEGORIES = [t.workGallery.all, ...Array.from(new Set(ALL_PROJECTS.map((p) => p.category)))];
 

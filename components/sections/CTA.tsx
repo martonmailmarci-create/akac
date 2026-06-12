@@ -16,7 +16,7 @@ export default function CTA({ centered = false, bgImage }: { centered?: boolean;
     if (prefersReduced) return;
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.fromTo(headlineRef.current,
           { yPercent: -10 },

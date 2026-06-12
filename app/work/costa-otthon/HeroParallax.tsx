@@ -18,7 +18,7 @@ export default function HeroParallax({ children }: Props) {
     let ctx: { revert: () => void } | null = null;
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.fromTo(innerRef.current, { yPercent: -8 }, {
           yPercent: 8,

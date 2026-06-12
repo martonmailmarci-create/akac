@@ -72,7 +72,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//app.cal.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <JsonLd />
-        {/* Initialise gtag + set consent defaults to denied before anything loads */}
+        {/* Initialise gtag + set consent defaults to denied. The gtag.js
+            script itself is only injected by CookieBanner after consent. */}
         <Script id="gtag-consent-init" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -80,7 +81,6 @@ export default function RootLayout({
           gtag('js', new Date());
           gtag('config', 'G-6YGXL6DBCF');
         `}</Script>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6YGXL6DBCF" strategy="afterInteractive" />
       </head>
       <body>
         <LocaleProvider>

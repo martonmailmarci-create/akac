@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>?[]{}|~+-=_";
 const ORANGE = "#ED6D40";
@@ -20,7 +20,15 @@ export default function ScrambleText({ text, color, className, style, triggered 
   const frameRef = useRef<number | null>(null);
   const startRef = useRef<number>(0);
 
-  const startScramble = useCallback(() => {
+  // Reset display during render when the text prop changes (e.g. locale switch)
+  const [prevText, setPrevText] = useState(text);
+  if (prevText !== text) {
+    setPrevText(text);
+    setDisplay(text.split(""));
+    setIsOrange(text.split("").map(() => false));
+  }
+
+  const startScramble = () => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
     startRef.current = performance.now();
 
@@ -53,23 +61,23 @@ export default function ScrambleText({ text, color, className, style, triggered 
     };
 
     frameRef.current = requestAnimationFrame(animate);
-  }, [text]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  const stopScramble = useCallback(() => {
+  const stopScramble = () => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
     setDisplay(text.split(""));
     setIsOrange(text.split("").map(() => false));
-  }, [text]);
+  };
 
-  // Reset display immediately when the text prop changes (e.g. locale switch)
+  // Cancel any in-flight animation when the text prop changes
   useEffect(() => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
-    setDisplay(text.split(""));
-    setIsOrange(text.split("").map(() => false));
   }, [text]);
 
   useEffect(() => {
     if (triggered === undefined) return;
+    // Prop-driven animation control: resetting state here is intentional
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (triggered) startScramble(); else stopScramble();
   }, [triggered]); // eslint-disable-line react-hooks/exhaustive-deps
 

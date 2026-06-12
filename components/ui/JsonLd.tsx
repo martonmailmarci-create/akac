@@ -48,11 +48,6 @@ export default function JsonLd() {
         url: "https://akac.studio",
         name: "AKAC Studio",
         publisher: { "@id": "https://akac.studio/#organization" },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: "https://akac.studio/?s={search_term_string}",
-          "query-input": "required name=search_term_string",
-        },
       },
     ],
   };

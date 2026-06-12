@@ -55,7 +55,7 @@ export default function Services() {
     if (prefersReduced) return;
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.from(gridRef.current?.children ?? [], {
           y: 40, opacity: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",

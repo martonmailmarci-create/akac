@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>?[]{}|~+-=_";
 const ORANGE = "#ED6D40";
@@ -30,7 +30,15 @@ export default function BracketButton({
   const frameRef = useRef<number | null>(null);
   const startRef = useRef<number>(0);
 
-  const startScramble = useCallback(() => {
+  // Reset display during render when the label changes (e.g. locale switch)
+  const [prevLabel, setPrevLabel] = useState(label);
+  if (prevLabel !== label) {
+    setPrevLabel(label);
+    setDisplay(label.split(""));
+    setIsOrange(label.split("").map(() => false));
+  }
+
+  const startScramble = () => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
     startRef.current = performance.now();
 
@@ -63,19 +71,17 @@ export default function BracketButton({
     };
 
     frameRef.current = requestAnimationFrame(animate);
-  }, [label]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  const stopScramble = useCallback(() => {
+  const stopScramble = () => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
     setDisplay(chars);
     setIsOrange(chars.map(() => false));
-  }, [label]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  // Reset display immediately when label changes (e.g. locale switch)
+  // Cancel any in-flight animation when the label changes
   useEffect(() => {
     if (frameRef.current) cancelAnimationFrame(frameRef.current);
-    setDisplay(label.split(""));
-    setIsOrange(label.split("").map(() => false));
   }, [label]);
 
   useEffect(() => {

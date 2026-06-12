@@ -25,7 +25,7 @@ export default function WhyUs() {
     if (prefersReduced) return;
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.from(leftRef.current, { x: -40, opacity: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 75%" } });
         gsap.from(rightRef.current, { x: 40, opacity: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 75%" } });

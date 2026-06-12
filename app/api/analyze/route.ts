@@ -1,5 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Simple in-memory rate limit: max 10 analyses per IP per hour.
+// Resets on cold start, which is acceptable for this tool.
+const requests = new Map<string, number[]>();
+const RATE_WINDOW_MS = 60 * 60 * 1000;
+const RATE_MAX = 10;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (requests.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_MAX) {
+    requests.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  requests.set(ip, recent);
+  return false;
+}
+
 async function runOnce(normalized: string, strategy: string, key: string | undefined) {
   const apiUrl =
     `https://www.googleapis.com/pagespeedonline/v5/runPagespeed` +
@@ -15,6 +33,14 @@ async function runOnce(normalized: string, strategy: string, key: string | undef
 }
 
 export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
   const url = searchParams.get("url");
   const strategy = searchParams.get("strategy") ?? "mobile";

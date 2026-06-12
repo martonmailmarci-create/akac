@@ -20,6 +20,9 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("locale") as Locale | null;
+    // Must run after hydration: reading localStorage during render would
+    // mismatch the server-rendered English markup for HU visitors.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved === "hu") setLocaleState("hu");
   }, []);
 

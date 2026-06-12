@@ -35,7 +35,7 @@ export default function HowWeWork() {
     }
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.fromTo(
           wipeRef.current,

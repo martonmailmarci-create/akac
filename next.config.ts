@@ -1,5 +1,21 @@
 import type { NextConfig } from "next";
 
+// 'unsafe-inline' is required for Next.js inline scripts and the gtag init
+// snippet; the remaining sources cover Google Analytics and the Cal.com embed.
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://app.cal.com https://*.cal.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com https://app.cal.com https://cal.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://app.cal.com https://*.cal.com",
+  "frame-src https://app.cal.com https://cal.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
@@ -11,9 +27,9 @@ const nextConfig: NextConfig = {
     {
       source: "/(.*)",
       headers: [
+        { key: "Content-Security-Policy", value: csp },
         { key: "X-Content-Type-Options", value: "nosniff" },
         { key: "X-Frame-Options", value: "DENY" },
-        { key: "X-XSS-Protection", value: "1; mode=block" },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
       ],

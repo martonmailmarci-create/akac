@@ -50,6 +50,15 @@ export default function ContextMenu() {
 
   useEffect(() => {
     const onContext = (e: MouseEvent) => {
+      // Keep the native menu on form fields and editable content
+      // (spell-check, paste, etc.)
+      const target = e.target as HTMLElement;
+      if (
+        target.closest("input, textarea, select, [contenteditable='true']")
+      ) {
+        setPos(null);
+        return;
+      }
       e.preventDefault();
       // Clamp so menu stays inside viewport
       const menuW = 240;

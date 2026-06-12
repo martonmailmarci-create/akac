@@ -32,7 +32,7 @@ function RevealHeadlineInner({
     let ctx: { revert: () => void } | null = null;
 
     (async () => {
-      const { gsap, ScrollTrigger, SplitText } = await import("@/lib/gsap");
+      const { gsap, SplitText } = await import("@/lib/gsap");
       if (!el) return;
 
       ctx = gsap.context(() => {

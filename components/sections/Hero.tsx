@@ -62,7 +62,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       ctxRef.current?.revert();
       ctxRef.current = null;
     };
-  }, [ready, locale]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ready, locale]);
 
   return (
     <section

@@ -151,14 +151,14 @@ export default function Navbar() {
                 <span style={{ color: "#666", fontSize: "10px", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", display: "block", marginBottom: "8px" }}>
                   {t.nav.contactHeading}
                 </span>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 14px", letterSpacing: "0.1px" }}>info@akac.studio</p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>Marcell: marcell@akac.studio</p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>Viktor: viktor@akac.studio</p>
+                <p style={{ margin: "0 0 14px" }}><a href="mailto:info@akac.studio" style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, letterSpacing: "0.1px", textDecoration: "none" }}>info@akac.studio</a></p>
+                <p style={{ margin: "0 0 4px" }}><a href="mailto:marcell@akac.studio" style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, letterSpacing: "0.1px", textDecoration: "none" }}>Marcell: marcell@akac.studio</a></p>
+                <p style={{ margin: 0 }}><a href="mailto:viktor@akac.studio" style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, letterSpacing: "0.1px", textDecoration: "none" }}>Viktor: viktor@akac.studio</a></p>
               </div>
 
               <div style={{ marginBottom: "24px" }}>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: "0 0 4px", letterSpacing: "0.1px" }}>Instagram: @akac.studio</p>
-                <p style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, margin: 0, letterSpacing: "0.1px" }}>LinkedIn: @akac-studio</p>
+                <p style={{ margin: "0 0 4px" }}><a href="https://www.instagram.com/akac.studio" target="_blank" rel="noopener noreferrer" style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, letterSpacing: "0.1px", textDecoration: "none" }}>Instagram: @akac.studio</a></p>
+                <p style={{ margin: 0 }}><a href="https://linkedin.com/company/akac-studio" target="_blank" rel="noopener noreferrer" style={{ color: "#F9F9F4", fontSize: "13px", fontWeight: 400, letterSpacing: "0.1px", textDecoration: "none" }}>LinkedIn: @akac-studio</a></p>
               </div>
 
               <div style={{ height: "1px", backgroundColor: "#2a2a2a", marginBottom: "20px" }} />

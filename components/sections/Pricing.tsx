@@ -36,7 +36,7 @@ export default function Pricing() {
     if (prefersReduced) return;
 
     (async () => {
-      const { gsap, ScrollTrigger } = await import("@/lib/gsap");
+      const { gsap } = await import("@/lib/gsap");
       ctx = gsap.context(() => {
         gsap.from(cardsRef.current?.children ?? [], {
           scale: 0.95, opacity: 0, duration: 0.7, stagger: 0.12, ease: "power3.out",

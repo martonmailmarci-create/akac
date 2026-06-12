@@ -1,35 +1,31 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { getCalApi } from "@calcom/embed-react";
 import BracketButton from "@/components/ui/BracketButton";
-
-const QUESTIONS = [
-  {
-    id: "budget",
-    label: "WHAT'S YOUR BUDGET?",
-    options: ["UNDER €2,500", "€2,500 – €6,000", "€6,000 – €12,000", "€12,000+"],
-  },
-  {
-    id: "need",
-    label: "WHAT DO YOU NEED?",
-    options: ["NEW WEBSITE", "WEB APP", "E-COMMERCE", "REDESIGN", "NOT SURE YET"],
-  },
-  {
-    id: "timeline",
-    label: "WHAT'S YOUR TIMELINE?",
-    options: ["ASAP", "1–3 MONTHS", "3–6 MONTHS", "JUST EXPLORING"],
-  },
-];
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 interface Props {
   onClose: () => void;
 }
 
 export default function BookCallModal({ onClose }: Props) {
+  const { t } = useLocale();
+  const bm = t.bookModal;
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [step, setStep] = useState<"questions" | "calendar">("questions");
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const answersRef = useRef(answers);
+  useEffect(() => {
+    answersRef.current = answers;
+  }, [answers]);
+
+  const questions = [
+    { id: "budget", label: bm.budgetLabel, options: [bm.budget1, bm.budget2, bm.budget3, bm.budget4] },
+    { id: "need", label: bm.needLabel, options: [bm.need1, bm.need2, bm.need3, bm.need4, bm.need5] },
+    { id: "timeline", label: bm.timelineLabel, options: [bm.timeline1, bm.timeline2, bm.timeline3, bm.timeline4] },
+  ];
 
   const toggle = (id: string, option: string) => {
     setAnswers((prev) => ({ ...prev, [id]: prev[id] === option ? "" : option }));
@@ -37,9 +33,31 @@ export default function BookCallModal({ onClose }: Props) {
 
   const handleContinue = () => setStep("calendar");
 
+  // Escape closes the modal
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  // Move focus into the modal on open
+  useEffect(() => {
+    closeBtnRef.current?.focus();
+  }, []);
+
   // Fires exactly when the calendar container div enters the DOM
   const calRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return;
+    // Prefill the booking notes with the visitor's answers
+    const a = answersRef.current;
+    const notes = [
+      a.budget && `${bm.notesBudget}: ${a.budget}`,
+      a.need && `${bm.notesNeed}: ${a.need}`,
+      a.timeline && `${bm.notesTimeline}: ${a.timeline}`,
+    ].filter(Boolean).join(" · ");
+
     (async () => {
       const cal = await getCalApi({ namespace: "15min" });
       cal("ui", {
@@ -54,8 +72,10 @@ export default function BookCallModal({ onClose }: Props) {
       cal("inline", {
         elementOrSelector: node,
         calLink: "akac-studio/15min",
+        config: notes ? { notes } : undefined,
       });
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -75,6 +95,9 @@ export default function BookCallModal({ onClose }: Props) {
       {/* Modal container */}
       <motion.div
         key="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={step === "questions" ? bm.questionsTitle : bm.pickTime}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
@@ -99,16 +122,17 @@ export default function BookCallModal({ onClose }: Props) {
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-[7px] h-[7px] bg-akac-orange flex-shrink-0" style={{ borderRadius: "2px" }} />
                 <span className="text-[10px] font-semibold text-akac-cream/40 uppercase tracking-[0.18px]">
-                  / BOOK A CALL
+                  {bm.label}
                 </span>
               </div>
               <h2 className="text-[28px] font-semibold text-akac-cream tracking-[-0.8px] leading-[1.1]">
-                {step === "questions" ? "A FEW QUICK QUESTIONS" : "PICK A TIME"}
+                {step === "questions" ? bm.questionsTitle : bm.pickTime}
               </h2>
             </div>
             <button
+              ref={closeBtnRef}
               onClick={onClose}
-              aria-label="Close"
+              aria-label={bm.close}
               className="mt-1 ml-6 flex-shrink-0 transition-opacity hover:opacity-50 cursor-pointer"
               style={{ background: "none", border: "none", padding: 0 }}
             >
@@ -129,7 +153,7 @@ export default function BookCallModal({ onClose }: Props) {
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               >
                 <div className="flex flex-col gap-8 px-8 py-8">
-                  {QUESTIONS.map((q) => (
+                  {questions.map((q) => (
                     <div key={q.id}>
                       <div className="flex items-center gap-2 mb-4">
                         <div className="w-[7px] h-[7px] bg-akac-orange flex-shrink-0" style={{ borderRadius: "2px" }} />
@@ -144,6 +168,7 @@ export default function BookCallModal({ onClose }: Props) {
                             <button
                               key={opt}
                               onClick={() => toggle(q.id, opt)}
+                              aria-pressed={active}
                               className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18px] cursor-pointer transition-all duration-200"
                               style={{
                                 borderRadius: "999px",
@@ -161,7 +186,7 @@ export default function BookCallModal({ onClose }: Props) {
                   ))}
                 </div>
                 <div className="px-8 pb-8 flex justify-center" style={{ borderTop: "1px solid rgba(249,249,244,0.08)", paddingTop: "24px" }}>
-                  <BracketButton label="CONTINUE" color="#F9F9F4" onClick={handleContinue} />
+                  <BracketButton label={bm.continueBtn} color="#F9F9F4" onClick={handleContinue} />
                 </div>
               </motion.div>
             ) : (

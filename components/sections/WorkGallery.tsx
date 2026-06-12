@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -172,8 +172,14 @@ function Grid3View({ projects }: { projects: Project[] }) {
 }
 
 // ── Main Component ───────────────────────────────────────────────────────────
+function subscribeToMobile(callback: () => void) {
+  const mq = window.matchMedia("(max-width: 767px)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
 export default function WorkGallery() {
-  const { t, locale } = useLocale();
+  const { t } = useLocale();
 
   const ALL_PROJECTS: Project[] = [
     { id: "01", name: t.workGallery.p1Name, category: t.workGallery.p1Category, tags: [t.workGallery.p1Tag], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
@@ -182,21 +188,23 @@ export default function WorkGallery() {
   ];
   const CATEGORIES = [t.workGallery.all, ...Array.from(new Set(ALL_PROJECTS.map((p) => p.category)))];
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const isMobile = useSyncExternalStore(
+    subscribeToMobile,
+    () => window.matchMedia("(max-width: 767px)").matches,
+    () => false
+  );
   const [view, setView] = useState<View>("grid2");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [filter, setFilter] = useState<string>(t.workGallery.all);
+  const [filterState, setFilter] = useState<string>(t.workGallery.all);
   const [filterOpen, setFilterOpen] = useState(false);
   const [direction, setDirection] = useState(1);
 
+  // When the locale changes, the stored filter string no longer matches any
+  // translated category — fall back to "all" instead of resetting via effect.
+  const filter = CATEGORIES.includes(filterState) ? filterState : t.workGallery.all;
+
   const filtered = filter === t.workGallery.all ? ALL_PROJECTS : ALL_PROJECTS.filter((p) => p.category === filter);
   const safeActive = Math.min(activeIndex, Math.max(0, filtered.length - 1));
-
-  // Reset filter to "all" when locale changes so the translated value matches
-  useEffect(() => {
-    setFilter(t.workGallery.all);
-    setActiveIndex(0);
-  }, [locale]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const prev = () => {
     setDirection(-1);

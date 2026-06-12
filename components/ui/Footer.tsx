@@ -60,14 +60,14 @@ export default function Footer() {
           <span className="block text-[10px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mb-3">
             {t.footer.contact}
           </span>
-          <p className="text-[13px] font-normal text-akac-black tracking-[0.1px] mb-1">
-            info@akac.studio
+          <p className="mb-1">
+            <a href="mailto:info@akac.studio" className="text-[13px] font-normal text-akac-black tracking-[0.1px] no-underline">info@akac.studio</a>
           </p>
-          <p className="text-[13px] font-normal text-akac-black tracking-[0.1px] mb-1">
-            Marcell: marcell@akac.studio
+          <p className="mb-1">
+            <a href="mailto:marcell@akac.studio" className="text-[13px] font-normal text-akac-black tracking-[0.1px] no-underline">Marcell: marcell@akac.studio</a>
           </p>
-          <p className="text-[13px] font-normal text-akac-black tracking-[0.1px]">
-            Viktor: viktor@akac.studio
+          <p>
+            <a href="mailto:viktor@akac.studio" className="text-[13px] font-normal text-akac-black tracking-[0.1px] no-underline">Viktor: viktor@akac.studio</a>
           </p>
         </div>
 
@@ -76,11 +76,11 @@ export default function Footer() {
           <span className="block text-[10px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mb-3">
             {t.footer.socials}
           </span>
-          <p className="text-[13px] font-normal text-akac-black tracking-[0.1px] mb-1">
-            Instagram: @akac.studio
+          <p className="mb-1">
+            <a href="https://www.instagram.com/akac.studio" target="_blank" rel="noopener noreferrer" className="text-[13px] font-normal text-akac-black tracking-[0.1px] no-underline">Instagram: @akac.studio</a>
           </p>
-          <p className="text-[13px] font-normal text-akac-black tracking-[0.1px]">
-            LinkedIn: @akac-studio
+          <p>
+            <a href="https://linkedin.com/company/akac-studio" target="_blank" rel="noopener noreferrer" className="text-[13px] font-normal text-akac-black tracking-[0.1px] no-underline">LinkedIn: @akac-studio</a>
           </p>
         </div>
 

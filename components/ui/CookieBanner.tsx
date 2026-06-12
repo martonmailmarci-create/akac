@@ -4,11 +4,20 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "@/components/providers/LocaleProvider";
 
+const GA_ID = "G-6YGXL6DBCF";
+
 function grantAnalytics() {
   if (typeof window === "undefined") return;
   const gtag = (window as unknown as Record<string, (...a: unknown[]) => void>).gtag;
   if (typeof gtag === "function") {
     gtag("consent", "update", { analytics_storage: "granted" });
+  }
+  // gtag.js is not loaded in the layout — only inject it once consent is given
+  if (!document.querySelector(`script[src*="googletagmanager.com/gtag"]`)) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    document.head.appendChild(script);
   }
 }
 

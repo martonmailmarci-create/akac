@@ -21,10 +21,10 @@ export default function AsciiBackground() {
     const OPACITY_BASE = 0.25
     const OPACITY_PEAK = 0.55
 
-    let DOT_SPACING = isMobile ? 32 : 28
-    let DOT_RADIUS = 1.5
-    let WAVE_AMPLITUDE = isMobile ? 6 : 10
-    let WAVE_FREQUENCY = 0.015
+    const DOT_SPACING = isMobile ? 32 : 28
+    const DOT_RADIUS = 1.5
+    const WAVE_AMPLITUDE = isMobile ? 6 : 10
+    const WAVE_FREQUENCY = 0.015
 
     let cols = 0
     let rows = 0

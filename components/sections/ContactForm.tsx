@@ -35,6 +35,7 @@ export default function ContactForm() {
       company: (form.elements.namedItem("company") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      website: (form.elements.namedItem("website") as HTMLInputElement).value,
     };
     try {
       const res = await fetch("/api/contact", {
@@ -148,6 +149,16 @@ export default function ContactForm() {
                 noValidate
                 className="flex flex-col gap-5 pl-[19px]"
               >
+                {/* Honeypot — hidden from real users, bots fill it in */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }}
+                />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <input type="text" name="name" placeholder={cf.namePlaceholder} required className={inputClass} style={inputStyle} />
                   <input type="text" name="company" placeholder={cf.companyPlaceholder} className={inputClass} style={inputStyle} />

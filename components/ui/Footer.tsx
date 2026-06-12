@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import BracketButton from "@/components/ui/BracketButton";
 import { useLocale } from "@/components/providers/LocaleProvider";
@@ -89,13 +90,13 @@ export default function Footer() {
         {/* Legal + credits */}
         <div className="flex flex-col gap-2">
           {legalLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px] no-underline opacity-50"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <span className="text-[12px] font-medium text-akac-black uppercase tracking-[0.18px] opacity-50 mt-1">
             {t.footer.rights}
@@ -125,14 +126,14 @@ export default function Footer() {
           <div>
             <nav className="mb-10">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNav(e, link.href)}
                   className="block text-[30px] font-medium text-akac-black tracking-[-0.6px] leading-[32px] no-underline hover:opacity-60 transition-opacity"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
             <div className="flex flex-col gap-[2px]">
@@ -147,13 +148,13 @@ export default function Footer() {
 
           <div className="flex flex-col gap-1 text-right">
             {legalLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="text-[16px] font-semibold text-akac-black tracking-[0.24px] uppercase no-underline hover:opacity-60 transition-opacity"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import ScrambleText from "@/components/ui/ScrambleText";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { useLocale } from "@/components/providers/LocaleProvider";
@@ -73,11 +74,11 @@ export default function Navbar() {
           padding: "0 20px", zIndex: 50, transition: pillTransition, gap: "8px",
         }}
       >
-        <a href="/" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+        <Link href="/" style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
           <Image src="/icons/akac-logo.svg" alt="AKAC" width={36} height={36} />
-        </a>
+        </Link>
         {navLinks.map((link) => (
-          <a
+          <Link
             key={link.href}
             href={link.href}
             onClick={(e) => handleNav(e, link.href)}
@@ -88,7 +89,7 @@ export default function Navbar() {
               color="#F9F9F4"
               style={{ fontSize: "clamp(10px, 1.5vw, 12px)", fontWeight: 500, letterSpacing: "0.18px", textTransform: "uppercase", whiteSpace: "nowrap" }}
             />
-          </a>
+          </Link>
         ))}
         <LanguageSwitcher />
       </nav>
@@ -107,9 +108,9 @@ export default function Navbar() {
           height: "55px", display: "flex", alignItems: "center",
           justifyContent: "space-between", padding: "0 20px", flexShrink: 0,
         }}>
-          <a href="/" style={{ display: "flex", alignItems: "center" }}>
+          <Link href="/" style={{ display: "flex", alignItems: "center" }}>
             <Image src="/icons/akac-logo.svg" alt="AKAC" width={30} height={30} />
-          </a>
+          </Link>
           <button
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
@@ -128,14 +129,14 @@ export default function Navbar() {
               {/* Nav links */}
               <nav style={{ display: "flex", flexDirection: "column", gap: "2px", marginBottom: "20px" }}>
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
                     onClick={(e) => { handleNav(e, link.href); setMenuOpen(false); }}
                     style={{ textDecoration: "none", lineHeight: 1.15 }}
                   >
                     <ScrambleText text={link.label} color="#F9F9F4" style={{ fontSize: "28px", fontWeight: 600, letterSpacing: "-0.8px" }} />
-                  </a>
+                  </Link>
                 ))}
               </nav>
 

@@ -1,6 +1,33 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Simple in-memory rate limit: max 3 submissions per IP per 10 minutes.
+// Resets on cold start, which is acceptable for a contact form.
+const submissions = new Map<string, number[]>();
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = 3;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (submissions.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_MAX) {
+    submissions.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  submissions.set(ip, recent);
+  return false;
+}
+
 const autoReplyHtml = (name: string) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -132,12 +159,34 @@ const internalHtml = (name: string, company: string, email: string, message: str
 export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
-    const body = await request.json();
-    const { name, company, email, message } = body;
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
 
-    if (!name || !email || !message) {
+    const body = await request.json();
+    const { name, company, email, message, website } = body;
+
+    // Honeypot — hidden field real users never fill in. Pretend success for bots.
+    if (website) {
+      return NextResponse.json({ success: true });
+    }
+
+    if (typeof name !== "string" || typeof email !== "string" || typeof message !== "string" ||
+        !name.trim() || !email.trim() || !message.trim()) {
       return NextResponse.json(
         { error: "Name, email, and message are required." },
+        { status: 400 }
+      );
+    }
+
+    if (name.length > 200 || email.length > 320 || message.length > 5000 ||
+        (typeof company === "string" && company.length > 200)) {
+      return NextResponse.json(
+        { error: "One or more fields are too long." },
         { status: 400 }
       );
     }
@@ -150,6 +199,11 @@ export async function POST(request: Request) {
       );
     }
 
+    const safeName = escapeHtml(name.trim());
+    const safeCompany = typeof company === "string" ? escapeHtml(company.trim()) : "";
+    const safeEmail = escapeHtml(email.trim());
+    const safeMessage = escapeHtml(message.trim());
+
     // Send both emails in parallel
     await Promise.all([
       // Internal notification
@@ -157,8 +211,8 @@ export async function POST(request: Request) {
         from: "AKAC Studio <contact@akac.studio>",
         to: ["info@akac.studio"],
         replyTo: email,
-        subject: `New enquiry from ${name}`,
-        html: internalHtml(name, company, email, message),
+        subject: `New enquiry from ${name.trim().slice(0, 100)}`,
+        html: internalHtml(safeName, safeCompany, safeEmail, safeMessage),
       }),
       // Auto-reply to sender
       resend.emails.send({
@@ -166,7 +220,7 @@ export async function POST(request: Request) {
         to: [email],
         replyTo: "info@akac.studio",
         subject: "We got your message — AKAC Studio",
-        html: autoReplyHtml(name),
+        html: autoReplyHtml(safeName),
       }),
     ]);
 

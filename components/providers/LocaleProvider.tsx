@@ -23,6 +23,11 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     if (saved === "hu") setLocaleState("hu");
   }, []);
 
+  // Keep <html lang> in sync for screen readers and search engines
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   const setLocale = (l: Locale) => {
     setLocaleState(l);
     localStorage.setItem("locale", l);

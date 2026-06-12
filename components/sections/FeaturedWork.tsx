@@ -11,9 +11,8 @@ export default function FeaturedWork() {
   const { t } = useLocale();
 
   const projects = [
-    { id: "01", name: t.featuredWork.p1Name, tags: [t.featuredWork.p1Tag1, t.featuredWork.p1Tag2], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
-    { id: "02", name: t.featuredWork.p2Name, tags: [t.featuredWork.p2Tag1, t.featuredWork.p2Tag2], thumb: "/project2/project2.jpg", large: "/project2/project2.jpg", slug: "bombanno" },
-    { id: "03", name: t.featuredWork.p3Name, tags: [t.featuredWork.p3Tag1, t.featuredWork.p3Tag2], thumb: "/project3/project3.png", large: "/project3/project3.png", slug: "costa-otthon" },
+    { id: "01", name: t.featuredWork.p3Name, tags: [t.featuredWork.p3Tag1, t.featuredWork.p3Tag2], thumb: "/project3/project3.jpg", large: "/project3/project3.jpg", slug: "costa-otthon" },
+    { id: "02", name: t.featuredWork.p1Name, tags: [t.featuredWork.p1Tag1, t.featuredWork.p1Tag2], thumb: "/project1/project1.jpg", large: "/project1/project1.jpg", slug: "annalabno" },
   ];
   const sectionRef = useRef<HTMLElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);

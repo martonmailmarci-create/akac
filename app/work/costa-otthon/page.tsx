@@ -50,7 +50,7 @@ export default function CostaOtthonPage() {
         {/* ── First impact: desktop shot ── */}
         <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "60px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
-            <Image src="/project3/4.png" alt="Costa Otthon — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
+            <Image src="/project3/4.jpg" alt="Costa Otthon — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
           </div>
         </section>
 
@@ -58,10 +58,10 @@ export default function CostaOtthonPage() {
         <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "80px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "3/4" }}>
-              <Image src="/project3/2.png" alt="Costa Otthon — mobile" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/project3/2.jpg" alt="Costa Otthon — mobile" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "3/4" }}>
-              <Image src="/project3/3.png" alt="Costa Otthon — mobile pages" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/project3/3.jpg" alt="Costa Otthon — mobile pages" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
         </section>
@@ -94,7 +94,7 @@ export default function CostaOtthonPage() {
         {/* ── Tablet shot ── */}
         <section className="bg-akac-black px-6 md:px-[100px]" style={{ paddingBottom: "80px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
-            <Image src="/project3/1.png" alt="Costa Otthon — tablet" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
+            <Image src="/project3/1.jpg" alt="Costa Otthon — tablet" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
           </div>
         </section>
 
@@ -139,10 +139,10 @@ export default function CostaOtthonPage() {
         <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "100px" }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/10" }}>
-              <Image src="/project3/5.png" alt="Costa Otthon — detail" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/project3/5.jpg" alt="Costa Otthon — detail" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
             <div className="relative w-full rounded-[20px] overflow-hidden" style={{ aspectRatio: "16/10" }}>
-              <Image src="/project3/6.png" alt="Costa Otthon — pages" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/project3/6.jpg" alt="Costa Otthon — pages" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
         </section>

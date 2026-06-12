@@ -50,7 +50,7 @@ export default function CostaOtthonPage() {
         {/* ── First impact: desktop shot ── */}
         <section className="bg-akac-cream px-6 md:px-[100px]" style={{ paddingBottom: "60px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
-            <Image src="/project3/1.png" alt="Costa Otthon — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
+            <Image src="/project3/4.png" alt="Costa Otthon — desktop" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" priority />
           </div>
         </section>
 
@@ -94,7 +94,7 @@ export default function CostaOtthonPage() {
         {/* ── Tablet shot ── */}
         <section className="bg-akac-black px-6 md:px-[100px]" style={{ paddingBottom: "80px" }}>
           <div className="relative w-full rounded-[20px] md:rounded-[28px] overflow-hidden" style={{ aspectRatio: "16/9" }}>
-            <Image src="/project3/4.png" alt="Costa Otthon — tablet" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
+            <Image src="/project3/1.png" alt="Costa Otthon — tablet" fill className="object-cover object-center" sizes="(max-width: 768px) 100vw, calc(100vw - 200px)" />
           </div>
         </section>
 

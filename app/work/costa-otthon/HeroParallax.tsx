@@ -56,7 +56,7 @@ export default function HeroParallax({ children }: Props) {
         style={{ position: "absolute", inset: 0, top: "-10%", height: "120%", zIndex: 0 }}
       >
         <Image
-          src="/project3/project3.jpg"
+          src="/project3/project3.png"
           alt="Costa Otthon"
           fill
           className="object-cover object-center"

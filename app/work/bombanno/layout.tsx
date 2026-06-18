@@ -5,6 +5,8 @@ export const metadata: Metadata = {
   description:
     "How AKAC Studio designed and built a high-performance website for Bombanő. Web design and development case study.",
   alternates: { canonical: "/work/bombanno" },
+  // Temporarily hidden from work listings — keep it out of search results too
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Bombanő — Case Study — AKAC Studio",
     description:

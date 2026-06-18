@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/analyze/"],
+      disallow: ["/api/"],
     },
     sitemap: "https://akac.studio/sitemap.xml",
   };

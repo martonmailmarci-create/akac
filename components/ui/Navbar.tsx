@@ -34,7 +34,6 @@ export default function Navbar() {
     { label: t.nav.services, href: "/#services" },
     { label: t.nav.pricing, href: "/pricing" },
     { label: t.nav.team, href: "/#team" },
-    { label: t.nav.speedTest, href: "/analyze" },
     { label: t.nav.contact, href: "/contact" },
   ];
 

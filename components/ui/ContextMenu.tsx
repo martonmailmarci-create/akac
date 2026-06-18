@@ -28,11 +28,6 @@ const ITEMS: Item[] = [
   },
   { divider: true },
   {
-    label: "Test your site speed",
-    sub: "free tool",
-    href: "/analyze",
-  },
-  {
     label: "Talk to us",
     sub: "we respond fast",
     href: "/contact",

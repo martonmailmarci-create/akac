@@ -26,8 +26,6 @@ export default function Pricing() {
   const addons = [
     { name: t.pricing.addon1Name, price: t.pricing.addon1Price, sub: t.pricing.addon1Huf },
     { name: t.pricing.addon2Name, price: t.pricing.addon2Price, sub: null },
-    { name: t.pricing.addon3Name, price: t.pricing.addon3Price, sub: null },
-    { name: t.pricing.addon4Name, price: t.pricing.addon4Price, sub: null },
   ];
 
   useEffect(() => {

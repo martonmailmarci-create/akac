@@ -55,10 +55,7 @@ export default function Terms() {
 
               <div>
                 <h2 className="text-[16px] font-semibold text-akac-black tracking-[-0.3px] mb-3">7. Elállási jog magánszemélyek esetén</h2>
-                <p className="mb-3">Ha jelen megállapodást magánszemélyként (fogyasztóként) kötöd velünk, és nem bejegyzett cégként, jogod van a szerződéstől indoklás nélkül elállni a szerződés megkötésétől számított 14 napon belül, az EU 2011/83/EU irányelve és a 45/2014. (II.26.) Korm. rendelet alapján.</p>
-                <p className="mb-3">Ennek gyakorlásához elegendő, ha a 14 napos határidőn belül e-mailben értesítesz minket az <a href="mailto:info@akac.studio" className="text-akac-orange underline underline-offset-2">info@akac.studio</a> címen.</p>
-                <p className="mb-3"><strong>Fontos kivétel:</strong> mivel szolgáltatásaink az egyedi igényeid szerint készülnek, ha kifejezetten kéred, hogy a 14 napos elállási időszak alatt megkezdjük a munkát, és elismered, hogy az egyedi szolgáltatás teljes teljesítése után elveszíted az elállási jogodat, az elállási jogod korábban megszűnhet, vagy az addig elvégzett munka arányában csökkenhet. A munka megkezdése előtt, ha az elállási időszakon belül kezdődik, mindig kifejezetten kérjük ezt a hozzájárulást.</p>
-                <p>Ez a pont nem vonatkozik rád, ha bejegyzett cégként szerződsz velünk.</p>
+                <p>Ha jelen megállapodást magánszemélyként (fogyasztóként) kötöd velünk, a 14 napos elállási jogról ‒ az EU 2011/83/EU irányelve és a 45/2014. (II.26.) Korm. rendelet alapján ‒ az egyedi szerződésedben kapsz részletes tájékoztatást. Ez a pont nem vonatkozik rád, ha bejegyzett cégként szerződsz velünk.</p>
               </div>
 
               <div>
@@ -110,10 +107,7 @@ export default function Terms() {
 
               <div>
                 <h2 className="text-[16px] font-semibold text-akac-black tracking-[-0.3px] mb-3">7. Right of withdrawal for consumers</h2>
-                <p className="mb-3">If you are entering into this agreement as a private individual (consumer) rather than a registered business, you have the right to withdraw from the contract within 14 days of the date the contract was concluded, without giving any reason, under EU Directive 2011/83/EU and Hungarian Government Decree 45/2014 (II.26.).</p>
-                <p className="mb-3">To exercise this right, simply notify us by email at <a href="mailto:info@akac.studio" className="text-akac-orange underline underline-offset-2">info@akac.studio</a> within the 14-day period.</p>
-                <p className="mb-3"><strong>Important exception:</strong> because our services are custom-made to your specific requirements, if you expressly request that we begin work during the 14-day withdrawal period and acknowledge that you lose your right of withdrawal once the bespoke service has been fully performed, your right of withdrawal may end early or be reduced proportionally to the work already completed. We will always ask for this acknowledgement explicitly before starting work within the withdrawal window.</p>
-                <p>This clause does not apply if you are contracting with us as a registered business.</p>
+                <p>If you are entering into this agreement as a private individual (consumer) rather than a registered business, you&apos;ll receive detailed information about your 14-day right of withdrawal — under EU Directive 2011/83/EU and Hungarian Government Decree 45/2014 (II.26.) — in your individual service contract. This clause does not apply if you are contracting with us as a registered business.</p>
               </div>
 
               <div>

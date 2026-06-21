@@ -30,6 +30,7 @@ export default function Footer() {
     { label: t.footer.privacy, href: "/privacy-policy" },
     { label: t.footer.terms, href: "/terms" },
     { label: t.footer.cookies, href: "/cookie-policy" },
+    { label: t.footer.legalNotice, href: "/legal-notice" },
   ];
 
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

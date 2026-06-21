@@ -36,10 +36,7 @@ export default function HowLong() {
       price: t.pricing.n_price,
       duration: hl.n_duration,
       phases: [
-        { name: hl.n_phase1, span: hl.n_phase1span, width: "15%" },
-        { name: hl.n_phase2, span: hl.n_phase2span, width: "20%" },
-        { name: hl.n_phase3, span: hl.n_phase3span, width: "50%" },
-        { name: hl.n_phase4, span: hl.n_phase4span, width: "15%" },
+        { name: hl.n_phase1, span: hl.n_phase1span, width: "100%" },
       ],
     },
   ];

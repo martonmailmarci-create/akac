@@ -30,20 +30,20 @@ export default function LenisProvider({
     lenisRef.current = lenis;
     (window as unknown as Record<string, unknown>).__lenis = lenis;
 
-    // Sync Lenis with GSAP ticker
-    gsap.ticker.add((time) => {
+    // Sync Lenis with GSAP ticker — keep the same reference for add/remove,
+    // otherwise the stale callback keeps driving a destroyed Lenis instance
+    const tickerUpdate = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(tickerUpdate);
     gsap.ticker.lagSmoothing(0);
 
     // Sync Lenis scroll position with ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
     return () => {
+      gsap.ticker.remove(tickerUpdate);
       lenis.destroy();
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
     };
   }, []);
 

@@ -25,6 +25,7 @@ export default function Footer() {
     { label: t.nav.pricing, href: "/pricing" },
     { label: t.nav.team, href: "/#team" },
     { label: t.nav.contact, href: "/contact" },
+    { label: t.footer.partners, href: "/partners" },
   ];
   const legalLinks = [
     { label: t.footer.privacy, href: "/privacy-policy" },

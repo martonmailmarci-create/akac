@@ -5,6 +5,7 @@ import HowWeWork from "@/components/sections/HowWeWork";
 import OurFocus from "@/components/sections/OurFocus";
 import OurTeam from "@/components/sections/OurTeam";
 import FeaturedWork from "@/components/sections/FeaturedWork";
+import Reviews from "@/components/sections/Reviews";
 import Services from "@/components/sections/Services";
 import WhyUs from "@/components/sections/WhyUs";
 import Pricing from "@/components/sections/Pricing";
@@ -23,6 +24,7 @@ export default function Home() {
         <Services />
         <WhyUs />
         <FeaturedWork />
+        <Reviews />
         <Pricing />
         <FAQ />
         <CTA />

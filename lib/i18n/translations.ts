@@ -166,6 +166,11 @@ const en = {
     addon2Name: "Rush delivery (<2 weeks)",
     addon2Price: "+25% surcharge",
   },
+  reviews: {
+    label: "/ REVIEWS",
+    headline: "WHAT OUR CLIENTS SAY",
+    onGoogle: "REVIEWS ON GOOGLE",
+  },
   faq: {
     label: "/ FAQ",
     title: "COMMON QUESTIONS",
@@ -543,6 +548,11 @@ const hu = {
     addon1Huf: "",
     addon2Name: "Sürgős szállítás (<2 hét)",
     addon2Price: "+25% felár",
+  },
+  reviews: {
+    label: "/ VÉLEMÉNYEK",
+    headline: "MIT MONDANAK AZ ÜGYFELEINK",
+    onGoogle: "VÉLEMÉNY A GOOGLE-ÖN",
   },
   faq: {
     label: "/ GYIK",
